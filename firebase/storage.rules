@@ -1,0 +1,51 @@
+rules_version = '2';
+
+// =============================================================================
+// Eslat — Cloud Storage Security Rules
+//
+//   users/{uid}/avatar/{file}  — profil rasmi (<= 2 MB, jpeg/png/webp)
+//   users/{uid}/sounds/{file}  — o'z budilnik musiqasi, FAQAT Pro (<= 10 MB)
+//
+// Fayllar ochiq havola bilan tarqatilmaydi: faqat egasi o'qiy oladi.
+// =============================================================================
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    function isPro(uid) {
+      let user = firestore.get(/databases/(default)/documents/users/$(uid)).data;
+      let expiresAt = user.get('planExpiresAt', null);
+      return user.get('plan', 'free') == 'pro'
+        && (expiresAt == null || expiresAt > request.time);
+    }
+
+    function smallerThan(megabytes) {
+      return request.resource.size < megabytes * 1024 * 1024;
+    }
+
+    match /users/{uid}/avatar/{fileName} {
+      allow read, delete: if isOwner(uid);
+      allow create, update: if isOwner(uid)
+        && fileName.matches('^avatar[.](jpg|png|webp)$')
+        && smallerThan(2)
+        && request.resource.contentType.matches('image/(jpeg|png|webp)');
+    }
+
+    match /users/{uid}/sounds/{fileName} {
+      allow read, delete: if isOwner(uid);
+      allow create, update: if isOwner(uid)
+        && fileName.matches('^[A-Za-z0-9_-]{1,64}[.](mp3|m4a|aac|ogg|wav)$')
+        && smallerThan(10)
+        && request.resource.contentType.matches('audio/(mpeg|mp4|aac|ogg|wav|x-wav|x-m4a)')
+        && isPro(uid);
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

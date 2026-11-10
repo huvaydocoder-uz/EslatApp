@@ -1,0 +1,236 @@
+rules_version = '2';
+
+// =============================================================================
+// Eslat — Firestore Security Rules
+//
+// Tamoyillar:
+//   1. Standart holat — TAQIQ. Faqat aniq ruxsat berilgan narsa ochiq.
+//   2. Har bir foydalanuvchi FAQAT o'z ma'lumotini ko'radi va o'zgartiradi.
+//   3. Har bir yozuv tekshiriladi: ruxsat etilgan maydonlar, turlari, uzunligi.
+//   4. Pul bilan bog'liq maydonlar (plan, planExpiresAt) va server yozadigan
+//      kolleksiyalar (smsLogs, telegramLoginSessions) mijoz uchun yopiq.
+//   5. Vaqt belgilari serverniki: createdAt/updatedAt == request.time.
+//
+// Sxema: docs/FIRESTORE.md   Testlar: firebase/rules-tests
+// =============================================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ------------------------------------------------------------------ helpers
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Pro tarif: faqat server yozadigan maydonlardan o'qiladi.
+    function isPro(uid) {
+      let user = get(/databases/$(database)/documents/users/$(uid)).data;
+      let expiresAt = user.get('planExpiresAt', null);
+      return user.get('plan', 'free') == 'pro'
+        && (expiresAt == null || expiresAt > request.time);
+    }
+
+    // Ixtiyoriy matn maydoni: yo'q, null yoki uzunligi <= max bo'lgan matn.
+    function optString(data, field, max) {
+      let value = data.get(field, null);
+      return value == null || (value is string && value.size() <= max);
+    }
+
+    function reqString(data, field, min, max) {
+      return data[field] is string
+        && data[field].size() >= min
+        && data[field].size() <= max;
+    }
+
+    // Xalqaro E.164 format: +998901234567
+    function isPhone(value) {
+      return value is string && value.matches('^[+][1-9][0-9]{7,14}$');
+    }
+
+    // "HH:mm" — 00:00 ... 23:59
+    function isTime(value) {
+      return value is string
+        && value.matches('^([01][0-9]|2[0-3]):[0-5][0-9]$');
+    }
+
+    function isLocale(value) {
+      return value in ['uz', 'ru', 'en'];
+    }
+
+    function createdNow() {
+      return incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+    }
+
+    function updatedNow() {
+      return incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time;
+    }
+
+    // ---------------------------------------------------------------- users
+    function validSettings(s) {
+      return s is map
+        && s.keys().hasOnly([
+          'themeMode', 'seedColor', 'notifyTime', 'alarmSound', 'defaultSmsText'
+        ])
+        && s.get('themeMode', 'system') in ['system', 'light', 'dark']
+        && s.get('seedColor', 0) is int
+        && (!('notifyTime' in s) || isTime(s.notifyTime))
+        && optString(s, 'alarmSound', 64)
+        && optString(s, 'defaultSmsText', 300);
+    }
+
+    function validUser(d) {
+      return d.keys().hasOnly([
+          'displayName', 'email', 'phoneNumber', 'photoUrl', 'locale',
+          'timezone', 'settings', 'plan', 'planExpiresAt', 'telegramId',
+          'createdAt', 'updatedAt'
+        ])
+        && d.keys().hasAll(['locale', 'timezone', 'plan', 'createdAt', 'updatedAt'])
+        && optString(d, 'displayName', 60)
+        && optString(d, 'email', 254)
+        && optString(d, 'photoUrl', 1024)
+        && (d.get('phoneNumber', null) == null || isPhone(d.phoneNumber))
+        && isLocale(d.locale)
+        && reqString(d, 'timezone', 1, 64)
+        && (!('settings' in d) || validSettings(d.settings));
+    }
+
+    match /users/{uid} {
+      allow read: if isOwner(uid);
+
+      // Yangi foydalanuvchi faqat "free" tarif bilan yaratiladi.
+      allow create: if isOwner(uid)
+        && validUser(incoming())
+        && incoming().plan == 'free'
+        && !incoming().keys().hasAny(['planExpiresAt', 'telegramId'])
+        && createdNow();
+
+      // Tarif, Telegram ID va yaratilgan vaqtni mijoz O'ZGARTIRA OLMAYDI.
+      allow update: if isOwner(uid)
+        && validUser(incoming())
+        && !incoming().diff(existing()).affectedKeys()
+              .hasAny(['plan', 'planExpiresAt', 'telegramId', 'createdAt'])
+        && incoming().updatedAt == request.time;
+
+      // Hisobni o'chirish faqat server orqali (ichki ma'lumotlar bilan birga).
+      allow delete: if false;
+
+      // ------------------------------------------------------------ events
+      function validEvent(d) {
+        return d.keys().hasOnly([
+            'title', 'personName', 'category', 'emoji', 'day', 'month', 'year',
+            'time', 'repeatYearly', 'remindDaysBefore', 'notifyTime',
+            'alarmEnabled', 'smsMode', 'phone', 'smsText', 'note',
+            'nextReminderAt', 'createdAt', 'updatedAt'
+          ])
+          && d.keys().hasAll([
+            'title', 'category', 'emoji', 'day', 'month', 'repeatYearly',
+            'remindDaysBefore', 'alarmEnabled', 'smsMode', 'createdAt',
+            'updatedAt'
+          ])
+          && reqString(d, 'title', 1, 80)
+          && optString(d, 'personName', 60)
+          && d.category in [
+            'birthday', 'anniversary', 'parentBirthday', 'meeting', 'other'
+          ]
+          && reqString(d, 'emoji', 1, 16)
+          && d.day is int && d.day >= 1 && d.day <= 31
+          && d.month is int && d.month >= 1 && d.month <= 12
+          && (d.get('year', null) == null
+              || (d.year is int && d.year >= 1900 && d.year <= 2200))
+          && (d.get('time', null) == null || isTime(d.time))
+          && d.repeatYearly is bool
+          && d.remindDaysBefore is list
+          && d.remindDaysBefore.size() >= 1
+          && d.remindDaysBefore.size() <= 5
+          && d.remindDaysBefore.hasOnly([0, 1, 2, 3, 7, 14, 30])
+          && (!('notifyTime' in d) || isTime(d.notifyTime))
+          && d.alarmEnabled is bool
+          && d.smsMode in ['off', 'manual', 'auto']
+          && (d.smsMode == 'off' || isPhone(d.get('phone', null)))
+          && (d.get('phone', null) == null || isPhone(d.phone))
+          && optString(d, 'smsText', 300)
+          && optString(d, 'note', 500)
+          && (d.get('nextReminderAt', null) == null
+              || d.nextReminderAt is timestamp);
+      }
+
+      // Pro imkoniyatlari: 2 tadan ortiq eslatma va avtomatik SMS.
+      function withinPlan(d) {
+        return (d.remindDaysBefore.size() <= 2 || isPro(uid))
+          && (d.smsMode != 'auto' || isPro(uid));
+      }
+
+      match /events/{eventId} {
+        allow read: if isOwner(uid);
+        allow create: if isOwner(uid)
+          && eventId.size() <= 64
+          && validEvent(incoming())
+          && withinPlan(incoming())
+          && createdNow();
+        allow update: if isOwner(uid)
+          && validEvent(incoming())
+          && withinPlan(incoming())
+          && updatedNow();
+        allow delete: if isOwner(uid);
+      }
+
+      // ----------------------------------------------------------- devices
+      function validDevice(d) {
+        return d.keys().hasOnly([
+            'fcmToken', 'platform', 'locale', 'timezone', 'appVersion',
+            'updatedAt'
+          ])
+          && d.keys().hasAll(['fcmToken', 'platform', 'updatedAt'])
+          && reqString(d, 'fcmToken', 1, 4096)
+          && d.platform in ['android', 'ios']
+          && isLocale(d.get('locale', 'uz'))
+          && optString(d, 'timezone', 64)
+          && optString(d, 'appVersion', 32)
+          && d.updatedAt == request.time;
+      }
+
+      match /devices/{deviceId} {
+        allow read, delete: if isOwner(uid);
+        allow create, update: if isOwner(uid)
+          && deviceId.size() <= 128
+          && validDevice(incoming());
+      }
+
+      // --------------------------------------------- smsLogs (faqat server)
+      match /smsLogs/{logId} {
+        allow read: if isOwner(uid);
+        allow write: if false;
+      }
+    }
+
+    // ------------------------------------------- plans (tarif katalogi)
+    match /plans/{planId} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+
+    // -------------------- telegramLoginSessions (faqat Cloud Functions)
+    match /telegramLoginSessions/{sessionId} {
+      allow read, write: if false;
+    }
+
+    // Qolgan hamma narsa — yopiq.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

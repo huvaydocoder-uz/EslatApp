@@ -1,0 +1,67 @@
+name: eslat
+description: "Eslat — yaqinlaringizning muhim kunlarini eslatuvchi ilova."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.13.0
+  flutter: ">=3.47.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # --- Dizayn: Material 3 ---
+  # Flutter 3.44+ da Material kutubxonasi rasmiy alohida paketga ko'chirilgan
+  # (avval `package:flutter/material.dart` edi). go_router 18 ham shuni ishlatadi.
+  material_ui: ^1.11.0
+
+  # --- Navigatsiya ---
+  go_router: ^18.1.4
+
+  # --- State management ---
+  flutter_riverpod: ^3.5.0
+  riverpod_annotation: ^4.0.8
+
+  # --- Firebase ---
+  firebase_core: ^5.1.0
+  firebase_auth: ^7.0.1
+  cloud_firestore: ^7.1.0
+  firebase_storage: ^14.0.1
+  firebase_messaging: ^17.0.1
+
+  # --- Ma'lumot modellari ---
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.12.0
+
+  # --- Konfiguratsiya (kalitlar .env da, git'ga tushmaydi) ---
+  flutter_dotenv: ^6.0.1
+
+  # --- TASDIQLASHINGIZ KUTILMOQDA (hozircha o'chirilgan) ---
+  # Sabablari docs/PROJECT.md -> "Qo'shimcha paketlar" bo'limida.
+  # google_sign_in: ^7.2.0               # Gmail orqali kirish (native oyna)
+  # flutter_local_notifications: ^23.0.0 # Internetsiz, aniq vaqtli eslatma
+  # timezone: ^0.11.2                    # Eslatmani to'g'ri soat mintaqasida rejalash
+  # flutter_timezone: ^5.1.1             # Qurilma soat mintaqasini aniqlash
+  # alarm: ^5.15.0                       # Tinimsiz chaladigan to'liq ekranli budilnik
+  # url_launcher: ^6.3.3                 # SMS ilovasini/Telegram botni ochish
+  # cloud_functions: ^7.0.1              # Telegram kirish, Pro avto-SMS (server)
+  # firebase_app_check: ^0.5.1           # Soxta so'rovlardan himoya
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+  # Kod generatsiyasi: freezed, json_serializable, riverpod_generator
+  build_runner: ^2.17.1
+  freezed: ^4.0.3
+  json_serializable: ^6.15.2
+  riverpod_generator: ^4.0.10
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    # Firebase sozlamalari. Fayl git'da yo'q: `cp .env.example .env` qiling.
+    - .env
