@@ -60,6 +60,7 @@ lib/firebase_options.dart
 .firebase/
 *.keystore
 *.jks
+!android/app/eslat-test.keystore
 **/android/key.properties
 *.p8
 *.p12

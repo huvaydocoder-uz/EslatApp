@@ -9,7 +9,11 @@ part of 'theme_settings.dart';
 _ThemeSettings _$ThemeSettingsFromJson(Map<String, dynamic> json) =>
     _ThemeSettings(
       themeMode:
-          $enumDecodeNullable(_$ThemeModeEnumMap, json['themeMode']) ??
+          $enumDecodeNullable(
+            _$ThemeModeEnumMap,
+            json['themeMode'],
+            unknownValue: ThemeMode.system,
+          ) ??
           ThemeMode.system,
       seedColorValue:
           (json['seedColor'] as num?)?.toInt() ?? AppPalette.defaultSeedValue,

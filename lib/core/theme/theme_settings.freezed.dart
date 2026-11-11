@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ThemeSettings {
 
- ThemeMode get themeMode;@JsonKey(name: 'seedColor') int get seedColorValue;
+@JsonKey(unknownEnumValue: ThemeMode.system) ThemeMode get themeMode;@JsonKey(name: 'seedColor') int get seedColorValue;
 /// Create a copy of ThemeSettings
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -54,7 +54,7 @@ abstract mixin class $ThemeSettingsCopyWith<$Res>  {
   factory $ThemeSettingsCopyWith(ThemeSettings value, $Res Function(ThemeSettings) _then) = _$ThemeSettingsCopyWithImpl;
 @useResult
 $Res call({
- ThemeMode themeMode,@JsonKey(name: 'seedColor') int seedColorValue
+@JsonKey(unknownEnumValue: ThemeMode.system) ThemeMode themeMode,@JsonKey(name: 'seedColor') int seedColorValue
 });
 
 
@@ -160,7 +160,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeMode themeMode, @JsonKey(name: 'seedColor')  int seedColorValue)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(unknownEnumValue: ThemeMode.system)  ThemeMode themeMode, @JsonKey(name: 'seedColor')  int seedColorValue)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ThemeSettings() when $default != null:
 return $default(_that.themeMode,_that.seedColorValue);case _:
@@ -181,7 +181,7 @@ return $default(_that.themeMode,_that.seedColorValue);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeMode themeMode, @JsonKey(name: 'seedColor')  int seedColorValue)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(unknownEnumValue: ThemeMode.system)  ThemeMode themeMode, @JsonKey(name: 'seedColor')  int seedColorValue)  $default,) {final _that = this;
 switch (_that) {
 case _ThemeSettings():
 return $default(_that.themeMode,_that.seedColorValue);case _:
@@ -201,7 +201,7 @@ return $default(_that.themeMode,_that.seedColorValue);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeMode themeMode, @JsonKey(name: 'seedColor')  int seedColorValue)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(unknownEnumValue: ThemeMode.system)  ThemeMode themeMode, @JsonKey(name: 'seedColor')  int seedColorValue)?  $default,) {final _that = this;
 switch (_that) {
 case _ThemeSettings() when $default != null:
 return $default(_that.themeMode,_that.seedColorValue);case _:
@@ -216,10 +216,10 @@ return $default(_that.themeMode,_that.seedColorValue);case _:
 @JsonSerializable()
 
 class _ThemeSettings extends ThemeSettings {
-  const _ThemeSettings({this.themeMode = ThemeMode.system, @JsonKey(name: 'seedColor') this.seedColorValue = AppPalette.defaultSeedValue}): super._();
+  const _ThemeSettings({@JsonKey(unknownEnumValue: ThemeMode.system) this.themeMode = ThemeMode.system, @JsonKey(name: 'seedColor') this.seedColorValue = AppPalette.defaultSeedValue}): super._();
   factory _ThemeSettings.fromJson(Map<String, dynamic> json) => _$ThemeSettingsFromJson(json);
 
-@override@JsonKey() final  ThemeMode themeMode;
+@override@JsonKey(unknownEnumValue: ThemeMode.system) final  ThemeMode themeMode;
 @override@JsonKey(name: 'seedColor') final  int seedColorValue;
 
 /// Create a copy of ThemeSettings
@@ -257,7 +257,7 @@ abstract mixin class _$ThemeSettingsCopyWith<$Res> implements $ThemeSettingsCopy
   factory _$ThemeSettingsCopyWith(_ThemeSettings value, $Res Function(_ThemeSettings) _then) = __$ThemeSettingsCopyWithImpl;
 @override @useResult
 $Res call({
- ThemeMode themeMode,@JsonKey(name: 'seedColor') int seedColorValue
+@JsonKey(unknownEnumValue: ThemeMode.system) ThemeMode themeMode,@JsonKey(name: 'seedColor') int seedColorValue
 });
 
 

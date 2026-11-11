@@ -8,6 +8,16 @@ import 'env.dart';
 /// `flutterfire configure` yaratadigan `lib/firebase_options.dart` o'rniga
 /// ishlatiladi (u fayl ham .gitignore ga qo'shilgan).
 abstract final class EnvFirebaseOptions {
+  /// `.env` da joriy platforma uchun barcha Firebase qiymatlari bormi.
+  static bool get isConfigured {
+    try {
+      currentPlatform;
+      return true;
+    } on StateError {
+      return false;
+    }
+  }
+
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       throw UnsupportedError('Eslat faqat Android va iOS uchun.');

@@ -15,7 +15,9 @@ abstract class ThemeSettings with _$ThemeSettings {
   const ThemeSettings._();
 
   const factory ThemeSettings({
-    @Default(ThemeMode.system) ThemeMode themeMode,
+    @JsonKey(unknownEnumValue: ThemeMode.system)
+    @Default(ThemeMode.system)
+    ThemeMode themeMode,
     @JsonKey(name: 'seedColor')
     @Default(AppPalette.defaultSeedValue)
     int seedColorValue,
@@ -34,4 +36,12 @@ abstract class ThemeSettings with _$ThemeSettings {
   /// Xavfsizlik uchun: faqat palitradagi ranglar qabul qilinadi.
   static bool isAllowedSeed(Color color) =>
       AppPalette.colors.any((c) => c.color.toARGB32() == color.toARGB32());
+
+  /// Saqlangan sozlamani tekshirib qaytaradi: yo'q bo'lsa — standart,
+  /// palitrada yo'q rang (eski versiya / buzilgan ma'lumot) — standart rang.
+  static ThemeSettings sanitized(ThemeSettings? saved) {
+    if (saved == null) return defaults;
+    if (isAllowedSeed(saved.seedColor)) return saved;
+    return saved.copyWith(seedColorValue: AppPalette.defaultSeedValue);
+  }
 }

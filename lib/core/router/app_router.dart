@@ -12,7 +12,7 @@ import '../../features/events/presentation/events_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import '../../shared/widgets/coming_soon_screen.dart';
-import '../constants/app_strings.dart';
+import '../l10n/l10n.dart';
 import 'app_routes.dart';
 import 'auth_redirect.dart';
 import 'main_shell.dart';
@@ -45,22 +45,9 @@ GoRouter appRouter(Ref ref) {
     redirect: (_, state) => authRedirect(auth: authState.value, uri: state.uri),
     routes: [
       GoRoute(path: AppRoutes.splash, builder: (_, _) => const SplashScreen()),
-      GoRoute(
-        path: AppRoutes.auth,
-        builder: (_, _) => const LoginScreen(),
-        routes: [
-          GoRoute(
-            path: 'phone',
-            builder: (_, _) =>
-                const ComingSoonScreen(title: AppStrings.phoneLoginTitle),
-          ),
-          GoRoute(
-            path: 'telegram',
-            builder: (_, _) =>
-                const ComingSoonScreen(title: AppStrings.telegramLoginTitle),
-          ),
-        ],
-      ),
+      // Hozircha bitta usul — Gmail. Telefon va Telegram keyinroq
+      // `/auth/phone`, `/auth/telegram` sifatida qo'shiladi.
+      GoRoute(path: AppRoutes.auth, builder: (_, _) => const LoginScreen()),
       StatefulShellRoute.indexedStack(
         builder: (_, _, shell) => MainShell(navigationShell: shell),
         branches: [
@@ -74,28 +61,29 @@ GoRouter appRouter(Ref ref) {
       // DIQQAT: '/event/new' ':id' dan OLDIN turishi shart.
       GoRoute(
         path: AppRoutes.eventNew,
-        builder: (_, _) =>
-            const ComingSoonScreen(title: AppStrings.addEventTitle),
+        builder: (context, _) =>
+            ComingSoonScreen(title: context.l10n.addEventTitle),
       ),
       GoRoute(
         path: AppRoutes.eventDetailsPattern,
-        builder: (_, _) =>
-            const ComingSoonScreen(title: AppStrings.eventDetailsTitle),
+        builder: (context, _) =>
+            ComingSoonScreen(title: context.l10n.eventDetailsTitle),
         routes: [
           GoRoute(
             path: AppRoutes.eventEditSegment,
-            builder: (_, _) =>
-                const ComingSoonScreen(title: AppStrings.editEventTitle),
+            builder: (context, _) =>
+                ComingSoonScreen(title: context.l10n.editEventTitle),
           ),
         ],
       ),
       GoRoute(
         path: AppRoutes.alarmPattern,
-        builder: (_, _) => const ComingSoonScreen(title: AppStrings.alarmTitle),
+        builder: (context, _) =>
+            ComingSoonScreen(title: context.l10n.alarmTitle),
       ),
       GoRoute(
         path: AppRoutes.pro,
-        builder: (_, _) => const ComingSoonScreen(title: AppStrings.proTitle),
+        builder: (context, _) => ComingSoonScreen(title: context.l10n.proTitle),
       ),
     ],
   );

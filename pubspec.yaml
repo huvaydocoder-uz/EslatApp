@@ -10,6 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   # --- Dizayn: Material 3 ---
   # Flutter 3.44+ da Material kutubxonasi rasmiy alohida paketga ko'chirilgan
@@ -37,9 +39,14 @@ dependencies:
   # --- Konfiguratsiya (kalitlar .env da, git'ga tushmaydi) ---
   flutter_dotenv: ^6.0.1
 
+  # --- Kirish: Gmail (tasdiqlangan: Gmail orqali bepul ro'yxatdan o'tish) ---
+  google_sign_in: ^7.2.0
+
+  # --- 3 til: o'zbek, rus, ingliz (flutter gen-l10n uchun) ---
+  intl: any # versiyani flutter_localizations belgilaydi
+
   # --- TASDIQLASHINGIZ KUTILMOQDA (hozircha o'chirilgan) ---
   # Sabablari docs/PROJECT.md -> "Qo'shimcha paketlar" bo'limida.
-  # google_sign_in: ^7.2.0               # Gmail orqali kirish (native oyna)
   # flutter_local_notifications: ^23.0.0 # Internetsiz, aniq vaqtli eslatma
   # timezone: ^0.11.2                    # Eslatmani to'g'ri soat mintaqasida rejalash
   # flutter_timezone: ^5.1.1             # Qurilma soat mintaqasini aniqlash
@@ -61,6 +68,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true # lib/l10n/*.arb -> AppLocalizations
 
   assets:
     # Firebase sozlamalari. Fayl git'da yo'q: `cp .env.example .env` qiling.

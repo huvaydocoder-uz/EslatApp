@@ -1,4 +1,4 @@
-# Eslat — loyiha hujjati (1-qadam)
+# Eslat — loyiha hujjati
 
 ## LOYIHA
 
@@ -8,7 +8,7 @@ tavallud ayyomlari va muhim uchrashuvlarni unutmaslik uchun mobil ilova
 o'sha kun kelganda ilova push-xabar yuboradi, to'liq ekranda **to'xtatilmaguncha
 chaladigan budilnik** bilan kim va nima uchun tabriklash kerakligini aytadi,
 hamda tayyor matn bilan **SMS yuborishga** yordam beradi. Ilova O'zbekiston
-(o'zbek tili, `Asia/Tashkent`) va xalqaro bozor uchun mo'ljallangan, har qanday
+va xalqaro bozor uchun **3 tilda** (o'zbek, rus, ingliz) ishlaydi, har qanday
 yoshdagi odam uchun sodda: katta shriftlar, 4 ta aniq bo'lim, ortiqcha narsa yo'q.
 Asosiy imkoniyatlar bepul; arxitekturada **Pro** tarif uchun joy tayyor
 (avto-SMS, o'z musiqasi, ko'proq eslatma).
@@ -28,7 +28,7 @@ Bo'limlardan tashqari asosiy ekranlar:
 
 | Ekran | Yo'l (route) | Vazifasi |
 |-------|--------------|----------|
-| Kirish | `/auth`, `/auth/phone`, `/auth/telegram` | Gmail, telefon (SMS kod), Telegram bot kodi |
+| Kirish | `/auth` | **Gmail orqali, bepul, kod kiritilmaydi**; keyingi safar avtomatik (telefon va Telegram — keyinroq) |
 | Kun qo'shish / tahrirlash | `/event/new`, `/event/:id/edit` | Ism, sana, toifa, emoji, eslatma, SMS matni |
 | Kun tafsilotlari | `/event/:id` | Batafsil + "SMS yuborish", "Qo'ng'iroq" |
 | Budilnik | `/alarm/:id` | To'liq ekran, musiqa to'xtatilmaguncha chaladi |
@@ -59,16 +59,19 @@ lib/
 ├── app.dart                      # MaterialApp.router (mavzu + router + o'zbek tili)
 ├── core/
 │   ├── config/                   # env.dart (.env), firebase_options.dart
-│   ├── constants/                # app_strings.dart (BARCHA matnlar), app_constants.dart
+│   ├── constants/                # app_constants.dart (Firestore yo'llari va h.k.)
+│   ├── l10n/                     # AppLanguage (uz/ru/en), context.l10n
 │   ├── firebase/                 # Firebase providerlari (Auth, Firestore, Storage, FCM)
 │   ├── router/                   # app_router.dart, app_routes.dart, auth_redirect.dart, main_shell.dart
 │   └── theme/                    # app_theme.dart, app_palette.dart, theme_settings.dart, theme_controller.dart
+├── l10n/                         # app_uz.arb (asosiy), app_ru.arb, app_en.arb + gen/
 ├── features/
-│   ├── auth/{data,domain,presentation}
+│   ├── auth/{data,domain,presentation}   # Gmail kirish, AuthController
+│   ├── profile/{data,domain}             # users/{uid}: UserProfile, ProfileRepository
 │   ├── home/presentation
 │   ├── events/{data,domain,presentation}
 │   ├── calendar/presentation
-│   ├── settings/{data,domain,presentation}
+│   ├── settings/{data,presentation}      # til, mavzu, rang, chiqish
 │   ├── alarm/{data,presentation}        # 4-qadam
 │   └── subscription/domain              # AppPlan + Entitlements (Pro uchun joy)
 └── shared/widgets/               # AppButton, AppLogo, Loading/Error/EmptyView, AsyncValueView
@@ -80,7 +83,10 @@ Qoidalar qanday ta'minlangan:
 
 - **Biznes mantiq faqat Riverpod'da** (`@riverpod` kod generatsiyasi). Widgetlar faqat ko'rsatadi.
 - **3 holat**: har bir ma'lumotli ekran `AsyncValueView` orqali → `LoadingView` / `ErrorView` / `EmptyView`.
-- **Matnlar** faqat `AppStrings` da. **Modellar** — `freezed` + `json_serializable`.
+- **Matnlar** faqat `lib/l10n/app_*.arb` da (3 til, kalitlar bir xil). Yangi matn avval
+  `app_uz.arb` ga, so'ng `app_ru.arb` va `app_en.arb` ga. **Modellar** — `freezed` + `json_serializable`.
+- **Til**: foydalanuvchi tanlasa — profildagi til; aks holda telefon tili (uz/ru), boshqa
+  tillarda — ingliz. **Mavzu va rang** ham profilda saqlanadi va barcha qurilmalarda bir xil.
 - **Router** kirish holatini kuzatadi: kirmagan → `/auth`, kirgan → `/home`; bildirishnomadan
   ochilgan manzil (masalan `/alarm/abc`) splash'dan keyin yo'qolmaydi.
 - **Material 3**: bitta seed rangdan kunduzgi + tungi sxema; foydalanuvchi 12 ta rangdan tanlaydi
@@ -98,11 +104,13 @@ Qoidalar qanday ta'minlangan:
 `firebase_messaging`, `freezed_annotation`, `json_annotation`, `flutter_dotenv`;
 dev: `build_runner`, `freezed`, `json_serializable`, `riverpod_generator`, `flutter_lints`.
 
+**Tasdiqlangan va qo'shilgan:** `google_sign_in` (Gmail orqali kirish), `intl` +
+`flutter_localizations` (3 til — Flutter'ning standart tarjima tizimi).
+
 **Tasdiqlashingiz kerak** (pubspec'da izohda turibdi, ruxsatsiz qo'shilmaydi):
 
 | Paket | Nega kerak | Muqobil (paketsiz) |
 |-------|-----------|--------------------|
-| `google_sign_in` | Gmail bilan kirishda native akkaunt tanlash oynasi | `FirebaseAuth.signInWithProvider` — brauzer oynasi, noqulayroq |
 | `flutter_local_notifications` + `timezone` + `flutter_timezone` | Eslatma internetsiz, aniq soatda, to'g'ri mintaqada | Faqat FCM — internet va serverga bog'liq, kechikadi |
 | `alarm` | To'liq ekranli, **tinimsiz** chaladigan budilnik (Android'da ishonchli) | Yo'q — oddiy bildirishnoma ovozi ~30 soniya |
 | `url_launcher` | Tayyor matnli SMS ilovasini va Telegram botni ochish | Yo'q |
@@ -142,11 +150,22 @@ Emoji va rang tanlash uchun paket **kerak emas** — o'zimiz tayyor katta emoji 
 - `createdAt`/`updatedAt` — faqat server vaqti; hisobni o'chirish — faqat server orqali.
 - **29 ta avtomatik test** (Firebase Emulator): `firebase/rules-tests`.
 
+## APK, PWA va iOS
+
+- **Hozir — Android APK** (sinov uchun): `flutter build apk --release`. Firebase'ni ulash:
+  [`docs/FIREBASE_SETUP.md`](FIREBASE_SETUP.md).
+- **PWA tavsiya etilmaydi**: Flutter veb-versiya qila oladi, lekin brauzerda ilova yopiq
+  bo'lganda budilnik chalmaydi, rejalashtirilgan eslatmalar ishlamaydi, iPhone'da push faqat
+  "Bosh ekranga qo'shilgan" saytda ishlaydi. Eslat'ning asosiy vazifasi aynan shular.
+- **iOS** — xuddi shu kod (qayta yozilmaydi). Kerak bo'ladi: Mac + Xcode (yoki bulutli
+  macOS CI), Apple Developer hisobi (yiliga $99), `GoogleService-Info.plist` va Gmail kirish
+  uchun URL sxemasi, push uchun APNs kaliti.
+
 ## Keyingi qadamlar (taklif)
 
 | Qadam | Nima qilinadi |
 |-------|---------------|
-| **2** | Kirish: Gmail + telefon (SMS kod); `users` profili; Sozlamalar (mavzu/rang saqlash, chiqish) |
+| **2** ✅ | Gmail orqali kirish (bepul, kodsiz), `users` profili, 3 til, Sozlamalar (til, mavzu, rang, chiqish), Android APK |
 | **3** | Muhim kunlar: model, repository, qo'shish/tahrirlash (emoji to'plami), Asosiy, Kunlar, Taqvim |
 | **4** | Eslatmalar: lokal bildirishnoma, budilnik ekrani, FCM, SMS ilovasini ochish |
 | **5** | Server (Cloud Functions): Telegram bot orqali kirish, server eslatmalari, App Check |

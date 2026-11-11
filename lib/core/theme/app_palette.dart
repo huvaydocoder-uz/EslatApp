@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../constants/app_strings.dart';
+import '../l10n/l10n.dart';
 
 /// Foydalanuvchi tanlay oladigan asosiy (seed) ranglar.
 ///
@@ -13,26 +13,26 @@ class PaletteColor {
 
   final Color color;
 
-  /// Ekran o'quvchilari (TalkBack/VoiceOver) uchun rang nomi.
-  final String label;
+  /// Ekran o'quvchilari (TalkBack/VoiceOver) uchun rang nomi — joriy tilda.
+  final String Function(AppLocalizations l10n) label;
 }
 
 abstract final class AppPalette {
   static const int defaultSeedValue = 0xFF3F51B5;
   static const Color defaultSeed = Color(defaultSeedValue);
 
-  static const List<PaletteColor> colors = [
-    PaletteColor(defaultSeed, AppStrings.colorIndigo),
-    PaletteColor(Color(0xFF1E88E5), AppStrings.colorBlue),
-    PaletteColor(Color(0xFF00897B), AppStrings.colorTeal),
-    PaletteColor(Color(0xFF43A047), AppStrings.colorGreen),
-    PaletteColor(Color(0xFF7C8B3C), AppStrings.colorOlive),
-    PaletteColor(Color(0xFFFFB300), AppStrings.colorAmber),
-    PaletteColor(Color(0xFFF4511E), AppStrings.colorOrange),
-    PaletteColor(Color(0xFFFF7262), AppStrings.colorCoral),
-    PaletteColor(Color(0xFFE53935), AppStrings.colorRed),
-    PaletteColor(Color(0xFFD81B60), AppStrings.colorPink),
-    PaletteColor(Color(0xFF8E24AA), AppStrings.colorPurple),
-    PaletteColor(Color(0xFF795548), AppStrings.colorBrown),
+  static final List<PaletteColor> colors = [
+    PaletteColor(defaultSeed, (l) => l.colorIndigo),
+    PaletteColor(const Color(0xFF1E88E5), (l) => l.colorBlue),
+    PaletteColor(const Color(0xFF00897B), (l) => l.colorTeal),
+    PaletteColor(const Color(0xFF43A047), (l) => l.colorGreen),
+    PaletteColor(const Color(0xFF7C8B3C), (l) => l.colorOlive),
+    PaletteColor(const Color(0xFFFFB300), (l) => l.colorAmber),
+    PaletteColor(const Color(0xFFF4511E), (l) => l.colorOrange),
+    PaletteColor(const Color(0xFFFF7262), (l) => l.colorCoral),
+    PaletteColor(const Color(0xFFE53935), (l) => l.colorRed),
+    PaletteColor(const Color(0xFFD81B60), (l) => l.colorPink),
+    PaletteColor(const Color(0xFF8E24AA), (l) => l.colorPurple),
+    PaletteColor(const Color(0xFF795548), (l) => l.colorBrown),
   ];
 }

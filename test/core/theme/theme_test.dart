@@ -1,8 +1,7 @@
 import 'package:eslat/core/theme/app_palette.dart';
 import 'package:eslat/core/theme/app_theme.dart';
-import 'package:eslat/core/theme/theme_controller.dart';
 import 'package:eslat/core/theme/theme_settings.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:eslat/l10n/gen/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -51,39 +50,44 @@ void main() {
     });
   });
 
-  group('ThemeController', () {
-    late ProviderContainer container;
-    ThemeSettings read() => container.read(themeControllerProvider);
-    ThemeController controller() =>
-        container.read(themeControllerProvider.notifier);
-
-    setUp(() => container = ProviderContainer());
-    tearDown(() => container.dispose());
-
-    test('rejim va palitradagi rangni o\'zgartiradi', () {
-      final teal = AppPalette.colors[2].color;
-      controller()
-        ..setThemeMode(ThemeMode.dark)
-        ..setSeedColor(teal);
-
-      expect(read().themeMode, ThemeMode.dark);
-      expect(read().isSelected(teal), isTrue);
+  group('ThemeSettings.sanitized', () {
+    test('profil yo\'q — standart mavzu', () {
+      expect(ThemeSettings.sanitized(null), ThemeSettings.defaults);
     });
 
-    test('palitrada yo\'q rangni qabul qilmaydi', () {
-      controller().setSeedColor(const Color(0xFF123456));
-      expect(read(), ThemeSettings.defaults);
+    test('palitradagi rang saqlanadi', () {
+      const saved = ThemeSettings(
+        themeMode: ThemeMode.dark,
+        seedColorValue: 0xFF00897B,
+      );
+      expect(ThemeSettings.sanitized(saved), saved);
     });
 
-    test('buzilgan saqlangan rangni standartga qaytaradi', () {
-      controller().restore(
+    test('palitrada yo\'q rang standartga qaytadi, rejim saqlanadi', () {
+      final result = ThemeSettings.sanitized(
         const ThemeSettings(
           themeMode: ThemeMode.light,
           seedColorValue: 0xFF123456,
         ),
       );
-      expect(read().themeMode, ThemeMode.light);
-      expect(read().seedColorValue, AppPalette.defaultSeedValue);
+      expect(result.themeMode, ThemeMode.light);
+      expect(result.seedColorValue, AppPalette.defaultSeedValue);
     });
+
+    test('noma\'lum themeMode qiymati — tizim rejimi', () {
+      final result = ThemeSettings.fromJson(const {'themeMode': 'neon'});
+      expect(result.themeMode, ThemeMode.system);
+    });
+  });
+
+  test('palitra: 12 ta noyob rang, har birining 3 tilda nomi bor', () {
+    final values = AppPalette.colors.map((c) => c.color.toARGB32()).toSet();
+    expect(values.length, 12);
+    for (final code in ['uz', 'ru', 'en']) {
+      final l10n = lookupAppLocalizations(Locale(code));
+      for (final color in AppPalette.colors) {
+        expect(color.label(l10n), isNotEmpty);
+      }
+    }
   });
 }

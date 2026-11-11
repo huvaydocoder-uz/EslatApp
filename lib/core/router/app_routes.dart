@@ -3,8 +3,6 @@ abstract final class AppRoutes {
   // --- Ochilish va kirish ---
   static const splash = '/splash';
   static const auth = '/auth';
-  static const authPhone = '/auth/phone';
-  static const authTelegram = '/auth/telegram';
 
   // --- Pastki menyu (4 ta bo'lim) ---
   static const home = '/home';

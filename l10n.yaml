@@ -1,0 +1,10 @@
+# Tarjimalar: lib/l10n/app_<til>.arb  ->  lib/l10n/gen/app_localizations.dart
+# Asosiy (shablon) til — o'zbekcha. Yangi matn avval app_uz.arb ga qo'shiladi,
+# so'ng app_ru.arb va app_en.arb ga tarjimasi yoziladi.
+arb-dir: lib/l10n
+template-arb-file: app_uz.arb
+output-dir: lib/l10n/gen
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+nullable-getter: false
+required-resource-attributes: false

@@ -12,3 +12,6 @@ GeneratedPluginRegistrant.java
 key.properties
 **/*.keystore
 **/*.jks
+# Sinov (test) kaliti ataylab git'da: Google kirish uchun SHA-1 hamma joyda bir xil
+# bo'lsin. Play Market'ga chiqarish kaliti (key.properties) HECH QACHON git'ga tushmaydi.
+!app/eslat-test.keystore

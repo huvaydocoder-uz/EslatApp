@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../../core/constants/app_strings.dart';
+import '../../core/l10n/l10n.dart';
 import 'state_views.dart';
 
 /// Vaqtinchalik ekran: router to'liq ishlashi uchun keyingi qadamlarda
@@ -14,9 +14,9 @@ class ComingSoonScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      body: const EmptyView(
+      body: EmptyView(
         icon: Icons.construction_rounded,
-        title: AppStrings.comingSoon,
+        title: context.l10n.comingSoon,
       ),
     );
   }

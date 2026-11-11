@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../../core/constants/app_strings.dart';
+import '../../core/l10n/l10n.dart';
 
 /// Har bir ekranning 3 ta majburiy holati uchun umumiy widgetlar:
 /// [LoadingView] — yuklanish, [ErrorView] — xatolik, [EmptyView] — bo'sh.
@@ -12,7 +12,7 @@ class LoadingView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Semantics(
-        label: AppStrings.loading,
+        label: context.l10n.loading,
         child: const CircularProgressIndicator(),
       ),
     );
@@ -29,17 +29,18 @@ class ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return _StateLayout(
       icon: Icons.wifi_off_rounded,
       iconColor: Theme.of(context).colorScheme.error,
-      title: AppStrings.errorTitle,
-      message: message ?? AppStrings.errorMessage,
+      title: l10n.errorTitle,
+      message: message ?? l10n.errorMessage,
       action: onRetry == null
           ? null
           : FilledButton.tonalIcon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh_rounded),
-              label: const Text(AppStrings.retry),
+              label: Text(l10n.retry),
             ),
     );
   }

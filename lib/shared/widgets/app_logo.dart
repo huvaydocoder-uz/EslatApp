@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../../core/constants/app_strings.dart';
+import '../../core/l10n/l10n.dart';
 
 /// Eslat logotipi: yumaloq kvadrat ichida qo'ng'iroqcha (bell).
 ///
@@ -16,7 +16,7 @@ class AppLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     return Semantics(
-      label: AppStrings.appName,
+      label: context.l10n.appName,
       image: true,
       child: Container(
         width: size,

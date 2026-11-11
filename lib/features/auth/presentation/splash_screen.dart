@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../../../core/constants/app_strings.dart';
+import '../../../core/l10n/l10n.dart';
 import '../../../shared/widgets/app_logo.dart';
 import '../../../shared/widgets/state_views.dart';
 
@@ -18,7 +18,7 @@ class SplashScreen extends StatelessWidget {
             const AppLogo(size: 120),
             const SizedBox(height: 24),
             Text(
-              AppStrings.appName,
+              context.l10n.appName,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(height: 40),

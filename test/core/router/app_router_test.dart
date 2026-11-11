@@ -1,64 +1,101 @@
 import 'package:eslat/app.dart';
-import 'package:eslat/core/constants/app_strings.dart';
-import 'package:eslat/features/auth/data/auth_repository.dart';
-import 'package:eslat/features/auth/domain/app_user.dart';
+import 'package:eslat/core/firebase/firebase_providers.dart';
+import 'package:eslat/features/profile/domain/user_profile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
-Widget _app(AppUser? user) => ProviderScope(
-  overrides: [authStateProvider.overrideWith((ref) => Stream.value(user))],
-  child: const EslatApp(),
-);
+import '../../helpers.dart';
 
 void main() {
-  testWidgets('kirilmagan: kirish ekrani va 3 ta usul', (tester) async {
-    await tester.pumpWidget(_app(null));
+  // Test muhitida telefon tili — en_US.
+  final en = l10nFor('en');
+
+  testWidgets('kirilmagan: faqat Gmail tugmasi', (tester) async {
+    await tester.pumpWidget(testApp());
     await tester.pumpAndSettle();
 
-    expect(find.text(AppStrings.loginTitle), findsOneWidget);
-    expect(find.text(AppStrings.loginWithGoogle), findsOneWidget);
-    expect(find.text(AppStrings.loginWithPhone), findsOneWidget);
-    expect(find.text(AppStrings.loginWithTelegram), findsOneWidget);
+    expect(find.text(en.loginTitle), findsOneWidget);
+    expect(find.text(en.loginWithGoogle), findsOneWidget);
+    expect(find.text(en.loginAutoNote), findsOneWidget);
     expect(find.byType(NavigationBar), findsNothing);
   });
 
   testWidgets('kirgan: pastki menyuda 4 bo\'lim, almashtirish ishlaydi', (
     tester,
   ) async {
-    await tester.pumpWidget(_app(const AppUser(uid: 'u1')));
+    await tester.pumpWidget(testApp(user: testUser));
     await tester.pumpAndSettle();
 
     expect(find.byType(NavigationDestination), findsNWidgets(4));
     for (final label in [
-      AppStrings.navHome,
-      AppStrings.navEvents,
-      AppStrings.navCalendar,
-      AppStrings.navSettings,
+      en.navHome,
+      en.navEvents,
+      en.navCalendar,
+      en.navSettings,
     ]) {
       expect(find.text(label), findsOneWidget);
     }
-    expect(find.text(AppStrings.homeEmptyTitle), findsOneWidget);
+    expect(find.text(en.homeEmptyTitle), findsOneWidget);
 
-    await tester.tap(find.text(AppStrings.navCalendar));
+    await tester.tap(find.text(en.navCalendar));
     await tester.pumpAndSettle();
-    expect(find.text(AppStrings.calendarEmptyTitle), findsOneWidget);
-
-    await tester.tap(find.text(AppStrings.navSettings));
-    await tester.pumpAndSettle();
-    expect(find.text(AppStrings.settingsEmptyTitle), findsOneWidget);
+    expect(find.text(en.calendarEmptyTitle), findsOneWidget);
   });
 
-  testWidgets('"Qo\'shish" tugmasi to\'liq ekranli sahifani ochadi', (
+  testWidgets('"Qo\'shish" to\'liq ekranli sahifani ochadi', (tester) async {
+    await tester.pumpWidget(testApp(user: testUser));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text(en.addEvent));
+    await tester.pumpAndSettle();
+
+    expect(find.text(en.addEventTitle), findsOneWidget);
+    expect(find.byType(NavigationBar), findsNothing);
+  });
+
+  group('3 til', () {
+    for (final code in ['uz', 'ru', 'en']) {
+      testWidgets('profil tili "$code" — butun ilova shu tilda', (
+        tester,
+      ) async {
+        final l10n = l10nFor(code);
+        await tester.pumpWidget(
+          testApp(
+            user: testUser,
+            profile: UserProfile(locale: code),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        expect(find.text(l10n.navHome), findsOneWidget);
+        expect(find.text(l10n.navSettings), findsOneWidget);
+        expect(find.text(l10n.homeEmptyTitle), findsOneWidget);
+      });
+    }
+
+    test('har bir tarjima o\'zbekcha shablondan farq qiladi', () {
+      final uz = l10nFor('uz');
+      expect(l10nFor('ru').loginTitle, isNot(uz.loginTitle));
+      expect(l10nFor('en').loginTitle, isNot(uz.loginTitle));
+    });
+  });
+
+  testWidgets('Firebase sozlanmagan: ilova yiqilmaydi, tushunarli xabar', (
     tester,
   ) async {
-    await tester.pumpWidget(_app(const AppUser(uid: 'u1')));
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [firebaseReadyProvider.overrideWithValue(false)],
+        child: const EslatApp(),
+      ),
+    );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text(AppStrings.addEvent));
+    await tester.tap(find.text(en.loginWithGoogle));
     await tester.pumpAndSettle();
 
-    expect(find.text(AppStrings.addEventTitle), findsOneWidget);
-    expect(find.byType(NavigationBar), findsNothing);
+    expect(find.text(en.authErrorNotConfigured), findsOneWidget);
+    expect(find.text(en.loginTitle), findsOneWidget);
   });
 }

@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../constants/app_strings.dart';
+import '../l10n/l10n.dart';
 
 /// Pastki menyuli asosiy karkas: 4 ta bo'lim, katta ikonka va yozuvlar.
 class MainShell extends StatelessWidget {
@@ -9,19 +9,17 @@ class MainShell extends StatelessWidget {
 
   final StatefulNavigationShell navigationShell;
 
-  static const _destinations = [
-    (Icons.home_outlined, Icons.home_rounded, AppStrings.navHome),
-    (
-      Icons.celebration_outlined,
-      Icons.celebration_rounded,
-      AppStrings.navEvents,
-    ),
+  static List<(IconData, IconData, String)> _destinations(
+    AppLocalizations l10n,
+  ) => [
+    (Icons.home_outlined, Icons.home_rounded, l10n.navHome),
+    (Icons.celebration_outlined, Icons.celebration_rounded, l10n.navEvents),
     (
       Icons.calendar_month_outlined,
       Icons.calendar_month_rounded,
-      AppStrings.navCalendar,
+      l10n.navCalendar,
     ),
-    (Icons.settings_outlined, Icons.settings_rounded, AppStrings.navSettings),
+    (Icons.settings_outlined, Icons.settings_rounded, l10n.navSettings),
   ];
 
   void _onSelect(int index) {
@@ -40,7 +38,7 @@ class MainShell extends StatelessWidget {
         selectedIndex: navigationShell.currentIndex,
         onDestinationSelected: _onSelect,
         destinations: [
-          for (final (icon, selectedIcon, label) in _destinations)
+          for (final (icon, selectedIcon, label) in _destinations(context.l10n))
             NavigationDestination(
               icon: Icon(icon),
               selectedIcon: Icon(selectedIcon),

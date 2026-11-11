@@ -1,27 +1,41 @@
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../../core/constants/app_strings.dart';
-import '../../../core/router/app_routes.dart';
+import '../../../core/l10n/l10n.dart';
 import '../../../shared/widgets/app_button.dart';
 import '../../../shared/widgets/app_logo.dart';
+import '../domain/auth_failure.dart';
+import 'auth_controller.dart';
 
-/// Kirish usulini tanlash: Gmail, telefon (SMS kod), Telegram.
-///
-/// 1-qadamda faqat ko'rinish va navigatsiya. Kirish mantiqi 2-qadamda
-/// `AuthController` (Riverpod) ichida yoziladi.
-class LoginScreen extends StatelessWidget {
+/// Kirish: bitta katta tugma — "Gmail orqali kirish". Ro'yxatdan o'tish
+/// bepul, kod kiritilmaydi. Mantiq `AuthController` da.
+class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
 
-  void _showComingSoon(BuildContext context) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(const SnackBar(content: Text(AppStrings.comingSoon)));
+  static String errorMessage(AppLocalizations l10n, Object? error) {
+    return switch (error) {
+      AuthFailure(reason: AuthFailureReason.network) => l10n.authErrorNetwork,
+      AuthFailure(reason: AuthFailureReason.notConfigured) =>
+        l10n.authErrorNotConfigured,
+      _ => l10n.authErrorUnknown,
+    };
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(authControllerProvider, (_, next) {
+      if (next is AsyncError) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(content: Text(errorMessage(context.l10n, next.error))),
+          );
+      }
+    });
+    final isLoading = ref.watch(authControllerProvider).isLoading;
+    final l10n = context.l10n;
     final text = Theme.of(context).textTheme;
+
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -35,35 +49,30 @@ class LoginScreen extends StatelessWidget {
                   const Center(child: AppLogo(size: 112)),
                   const SizedBox(height: 24),
                   Text(
-                    AppStrings.loginTitle,
+                    l10n.loginTitle,
                     style: text.headlineMedium,
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 12),
                   Text(
-                    AppStrings.loginSubtitle,
+                    l10n.loginSubtitle,
                     style: text.bodyLarge,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 40),
                   AppButton(
                     icon: Icons.mail_rounded,
-                    label: AppStrings.loginWithGoogle,
-                    onPressed: () => _showComingSoon(context),
+                    label: l10n.loginWithGoogle,
+                    isLoading: isLoading,
+                    onPressed: () => ref
+                        .read(authControllerProvider.notifier)
+                        .signInWithGoogle(),
                   ),
                   const SizedBox(height: 16),
-                  AppButton(
-                    variant: AppButtonVariant.tonal,
-                    icon: Icons.phone_rounded,
-                    label: AppStrings.loginWithPhone,
-                    onPressed: () => context.push(AppRoutes.authPhone),
-                  ),
-                  const SizedBox(height: 16),
-                  AppButton(
-                    variant: AppButtonVariant.outlined,
-                    icon: Icons.send_rounded,
-                    label: AppStrings.loginWithTelegram,
-                    onPressed: () => context.push(AppRoutes.authTelegram),
+                  Text(
+                    l10n.loginAutoNote,
+                    style: text.bodyMedium,
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),

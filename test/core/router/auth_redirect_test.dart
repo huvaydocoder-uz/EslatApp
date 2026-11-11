@@ -34,8 +34,8 @@ void main() {
 
     test('kirish oqimida qoladi', () {
       expect(go(signedOut, AppRoutes.auth), isNull);
-      expect(go(signedOut, AppRoutes.authPhone), isNull);
-      expect(go(signedOut, AppRoutes.authTelegram), isNull);
+      expect(go(signedOut, '/auth/phone'), isNull);
+      expect(go(signedOut, '/auth/telegram'), isNull);
     });
 
     test('xatolik bo\'lsa — kirilmagan deb hisoblanadi', () {
@@ -51,7 +51,7 @@ void main() {
     test('splash va kirish ekranlaridan asosiyga', () {
       expect(go(signedIn, AppRoutes.splash), AppRoutes.home);
       expect(go(signedIn, AppRoutes.auth), AppRoutes.home);
-      expect(go(signedIn, AppRoutes.authPhone), AppRoutes.home);
+      expect(go(signedIn, '/auth/phone'), AppRoutes.home);
     });
 
     test('ichki sahifalarda qoladi', () {
@@ -69,7 +69,7 @@ void main() {
         '//evil.com/x',
         AppRoutes.splash,
         AppRoutes.auth,
-        AppRoutes.authPhone,
+        '/auth/phone',
         'alarm/abc',
       ]) {
         final uri = Uri(

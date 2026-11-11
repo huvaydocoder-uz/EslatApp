@@ -1,7 +1,15 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
+}
+
+// Play Market kaliti: android/key.properties (git'da YO'Q). Bo'lmasa — sinov kaliti.
+val releaseKeystore = Properties().apply {
+    val file = rootProject.file("key.properties")
+    if (file.exists()) file.inputStream().use { load(it) }
 }
 
 android {
@@ -15,7 +23,6 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "uz.eslat"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
@@ -29,11 +36,34 @@ android {
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        // Sinov kaliti git'da: hamma kompyuterda SHA-1 bir xil, shuning uchun
+        // Firebase'dagi Gmail kirish sozlamasi buzilmaydi.
+        // SHA-1: 3B:DF:34:9F:3D:2F:DC:17:C9:9C:35:92:A2:C6:B1:9B:0A:1A:6F:3A
+        // DIQQAT: Play Market'ga bu kalit bilan EMAS, key.properties bilan.
+        create("eslatTest") {
+            storeFile = file("eslat-test.keystore")
+            storePassword = "eslat-test"
+            keyAlias = "eslat"
+            keyPassword = "eslat-test"
+        }
+        if (!releaseKeystore.isEmpty) {
+            create("release") {
+                storeFile = file(releaseKeystore.getProperty("storeFile"))
+                storePassword = releaseKeystore.getProperty("storePassword")
+                keyAlias = releaseKeystore.getProperty("keyAlias")
+                keyPassword = releaseKeystore.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
+        debug {
+            signingConfig = signingConfigs.getByName("eslatTest")
+        }
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.findByName("release")
+                ?: signingConfigs.getByName("eslatTest")
         }
     }
 }

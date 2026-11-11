@@ -14,14 +14,16 @@ class AsyncValueView<T> extends StatelessWidget {
     super.key,
     required this.value,
     required this.data,
-    required this.empty,
+    this.empty,
     this.isEmpty,
     this.onRetry,
-  });
+  }) : assert(isEmpty == null || empty != null);
 
   final AsyncValue<T> value;
   final Widget Function(T data) data;
-  final Widget empty;
+
+  /// [isEmpty] `true` qaytarganda ko'rsatiladi.
+  final Widget? empty;
 
   /// Ma'lumot "bo'sh"mi? Masalan: `(list) => list.isEmpty`.
   final bool Function(T data)? isEmpty;
@@ -32,7 +34,7 @@ class AsyncValueView<T> extends StatelessWidget {
     return value.when(
       loading: () => const LoadingView(),
       error: (_, _) => ErrorView(onRetry: onRetry),
-      data: (value) => (isEmpty?.call(value) ?? false) ? empty : data(value),
+      data: (value) => (isEmpty?.call(value) ?? false) ? empty! : data(value),
     );
   }
 }

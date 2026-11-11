@@ -1,6 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Firebase (kirish, baza) uchun. Flutter shabloni buni faqat debug'ga qo'yadi. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
-        android:label="eslat"
+        android:label="Eslat"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

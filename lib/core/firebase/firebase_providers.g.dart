@@ -10,18 +10,64 @@ part of 'firebase_providers.dart';
 // ignore_for_file: type=lint, type=warning
 /// Firebase xizmatlari providerlar orqali beriladi — testlarda oson
 /// almashtiriladi (override) va kodda `X.instance` tarqalib ketmaydi.
+/// Firebase ishga tushganmi. `.env` to'ldirilmagan bo'lsa `main` buni `false`
+/// qiladi: ilova yiqilmaydi, kirish ekrani "ulanmagan" deb tushuntiradi.
+
+@ProviderFor(firebaseReady)
+final firebaseReadyProvider = FirebaseReadyProvider._();
+
+/// Firebase xizmatlari providerlar orqali beriladi — testlarda oson
+/// almashtiriladi (override) va kodda `X.instance` tarqalib ketmaydi.
+/// Firebase ishga tushganmi. `.env` to'ldirilmagan bo'lsa `main` buni `false`
+/// qiladi: ilova yiqilmaydi, kirish ekrani "ulanmagan" deb tushuntiradi.
+
+final class FirebaseReadyProvider extends $FunctionalProvider<bool, bool, bool>
+    with $Provider<bool> {
+  /// Firebase xizmatlari providerlar orqali beriladi — testlarda oson
+  /// almashtiriladi (override) va kodda `X.instance` tarqalib ketmaydi.
+  /// Firebase ishga tushganmi. `.env` to'ldirilmagan bo'lsa `main` buni `false`
+  /// qiladi: ilova yiqilmaydi, kirish ekrani "ulanmagan" deb tushuntiradi.
+  FirebaseReadyProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'firebaseReadyProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$firebaseReadyHash();
+
+  @$internal
+  @override
+  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  bool create(Ref ref) {
+    return firebaseReady(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+}
+
+String _$firebaseReadyHash() => r'40b31f523f0951779f32fd4acd06a74e06ae95df';
 
 @ProviderFor(firebaseAuth)
 final firebaseAuthProvider = FirebaseAuthProvider._();
 
-/// Firebase xizmatlari providerlar orqali beriladi — testlarda oson
-/// almashtiriladi (override) va kodda `X.instance` tarqalib ketmaydi.
-
 final class FirebaseAuthProvider
     extends $FunctionalProvider<FirebaseAuth, FirebaseAuth, FirebaseAuth>
     with $Provider<FirebaseAuth> {
-  /// Firebase xizmatlari providerlar orqali beriladi — testlarda oson
-  /// almashtiriladi (override) va kodda `X.instance` tarqalib ketmaydi.
   FirebaseAuthProvider._()
     : super(
         from: null,

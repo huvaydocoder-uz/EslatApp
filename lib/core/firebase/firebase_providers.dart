@@ -9,6 +9,11 @@ part 'firebase_providers.g.dart';
 /// Firebase xizmatlari providerlar orqali beriladi — testlarda oson
 /// almashtiriladi (override) va kodda `X.instance` tarqalib ketmaydi.
 
+/// Firebase ishga tushganmi. `.env` to'ldirilmagan bo'lsa `main` buni `false`
+/// qiladi: ilova yiqilmaydi, kirish ekrani "ulanmagan" deb tushuntiradi.
+@Riverpod(keepAlive: true)
+bool firebaseReady(Ref ref) => true;
+
 @Riverpod(keepAlive: true)
 FirebaseAuth firebaseAuth(Ref ref) => FirebaseAuth.instance;
 

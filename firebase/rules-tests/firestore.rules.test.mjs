@@ -92,6 +92,35 @@ describe('users/{uid}', () => {
     await assertFails(updateDoc(ref, { 'settings.themeMode': 'light' }));
   });
 
+  test("ilova yozadigan sozlamalar: til va rang (Sozlamalar ekrani)", async () => {
+    await seed(env, 'users/alice', storedUser());
+    const ref = doc(db('alice'), 'users/alice');
+    for (const locale of ['uz', 'ru', 'en']) {
+      await assertSucceeds(updateDoc(ref, { locale, updatedAt: serverTimestamp() }));
+    }
+    await assertSucceeds(
+      updateDoc(ref, { 'settings.seedColor': 0xff00897b, updatedAt: serverTimestamp() }),
+    );
+    await assertFails(updateDoc(ref, { locale: 'de', updatedAt: serverTimestamp() }));
+    await assertFails(
+      updateDoc(ref, { 'settings.seedColor': '#00897b', updatedAt: serverTimestamp() }),
+    );
+  });
+
+  test('ilova yaratadigan profil (rasm/ism yo\'q holat ham) qabul qilinadi', async () => {
+    // lib/features/profile: include_if_null=false — null maydonlar yozilmaydi.
+    const appProfile = {
+      email: 'ali@gmail.com',
+      locale: 'ru',
+      timezone: 'Asia/Tashkent',
+      plan: 'free',
+      settings: { themeMode: 'system', seedColor: 0xff3f51b5 },
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    };
+    await assertSucceeds(setDoc(doc(db('alice'), 'users/alice'), appProfile));
+  });
+
   test("profilni mijoz o'chira olmaydi (faqat server)", async () => {
     await seed(env, 'users/alice', storedUser());
     await assertFails(deleteDoc(doc(db('alice'), 'users/alice')));

@@ -10,7 +10,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 abstract final class Env {
   static const fileName = '.env';
 
-  static Future<void> load() => dotenv.load(fileName: fileName);
+  static Future<void> load() =>
+      dotenv.load(fileName: fileName, isOptional: true);
 
   static String get firebaseProjectId => _require('FIREBASE_PROJECT_ID');
   static String get firebaseMessagingSenderId =>
@@ -32,7 +33,7 @@ abstract final class Env {
   static String? get telegramBotUsername => _optional('TELEGRAM_BOT_USERNAME');
 
   static String _require(String key) {
-    final value = dotenv.maybeGet(key);
+    final value = dotenv.isInitialized ? dotenv.maybeGet(key) : null;
     if (value == null || value.isEmpty) {
       throw StateError(
         '.env faylida "$key" topilmadi. .env.example dan nusxa oling.',
@@ -42,6 +43,7 @@ abstract final class Env {
   }
 
   static String? _optional(String key) {
+    if (!dotenv.isInitialized) return null;
     final value = dotenv.maybeGet(key);
     return (value == null || value.isEmpty) ? null : value;
   }
