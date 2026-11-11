@@ -77,7 +77,7 @@
   "formPersonHint": "For example: Mom",
   "formChooseEmoji": "Choose an icon",
   "formDate": "Date",
-  "formYearUnknown": "Year unknown",
+  "formYearUnknown": "I don't know the year",
   "formTime": "Time",
   "formNoTime": "Not set",
   "formRepeatYearly": "Repeat every year",
@@ -116,7 +116,6 @@
   "formSmsAuto": "Send greeting SMS automatically",
   "formSmsAutoHint": "On the day, at the reminder time, it is sent from your phone and your own number.",
   "formPickContact": "Pick from contacts",
-  "smsPermissionDenied": "SMS permission was not granted. Turn it on in phone settings.",
   "notifySmsSent": "Greeting SMS sent",
   "notifySmsFailed": "SMS not sent — please send it yourself",
   "detailsSmsAuto": "SMS will be sent automatically",
@@ -131,5 +130,9 @@
   "deleteTypeConfirmMessage": "Days of this type stay — they move to \"Other\".",
   "emojiOtherLabel": "Other emoji (from keyboard)",
   "emojiOtherInvalid": "Enter one emoji",
-  "done": "Done"
+  "done": "Done",
+  "formYearUnknownHint": "When on, age isn't calculated — only the day and month are used. If you know the year, keep it off to see \"turns 60\".",
+  "smsPermissionTitle": "SMS permission needed",
+  "smsPermissionSteps": "Your phone blocks the SMS permission for apps installed from an APK file. You need to turn it on once:\n\n1. Tap \"Open settings\".\n2. \"Permissions\" → \"SMS\". If a \"Restricted setting\" window appears, tap OK and go back.\n3. Tap ⋮ at the top right → \"Allow restricted settings\". Your phone may ask for your PIN.\n4. Again \"Permissions\" → \"SMS\" → \"Allow\".\n5. Return to the app and turn \"Send greeting SMS automatically\" on again.\n\nXiaomi / Redmi: also enable \"Send SMS\" under \"Other permissions\".",
+  "openSettings": "Open settings"
 }

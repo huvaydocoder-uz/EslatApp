@@ -9,6 +9,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.telephony.SmsManager
+import android.telephony.SubscriptionManager
 
 /**
  * Tabrik SMS'ni foydalanuvchining o'z SIM kartasidan yuboradi (bepul, uning
@@ -26,12 +27,7 @@ object SmsSender {
             return
         }
         try {
-            val sms = if (Build.VERSION.SDK_INT >= 31) {
-                context.getSystemService(SmsManager::class.java)
-            } else {
-                @Suppress("DEPRECATION")
-                SmsManager.getDefault()
-            }
+            val sms = smsManager(context)
             val result = Intent(context, SmsResultReceiver::class.java)
                 .putExtra("notificationId", resultId)
                 .putExtra("sentTitle", r.smsSentTitle)
@@ -47,6 +43,27 @@ object SmsSender {
             sms.sendMultipartTextMessage(r.smsPhone, null, parts, sentIntents, null)
         } catch (e: Exception) {
             Notifier.show(context, resultId, r.smsFailedTitle ?: "SMS", r.smsPhone.orEmpty(), r.route)
+        }
+    }
+
+    /**
+     * Ikki SIM kartali telefonlar: SMS uchun tanlangan SIM; "har safar so'rash"
+     * rejimida — asosiy SIM. Aks holda fon rejimida SMS ketmay qolishi mumkin.
+     */
+    private fun smsManager(context: Context): SmsManager {
+        val invalid = SubscriptionManager.INVALID_SUBSCRIPTION_ID
+        val subId = SubscriptionManager.getDefaultSmsSubscriptionId().takeIf { it != invalid }
+            ?: SubscriptionManager.getDefaultSubscriptionId()
+        return if (Build.VERSION.SDK_INT >= 31) {
+            val base = context.getSystemService(SmsManager::class.java)
+            if (subId != invalid) base.createForSubscriptionId(subId) else base
+        } else {
+            @Suppress("DEPRECATION")
+            if (subId != invalid) {
+                SmsManager.getSmsManagerForSubscriptionId(subId)
+            } else {
+                SmsManager.getDefault()
+            }
         }
     }
 }

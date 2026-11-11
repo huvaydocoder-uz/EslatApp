@@ -565,7 +565,7 @@ abstract class AppLocalizations {
   /// No description provided for @formYearUnknown.
   ///
   /// In uz, this message translates to:
-  /// **'Yili noma\'lum'**
+  /// **'Yilini bilmayman'**
   String get formYearUnknown;
 
   /// No description provided for @formTime.
@@ -796,12 +796,6 @@ abstract class AppLocalizations {
   /// **'Kontaktlardan tanlash'**
   String get formPickContact;
 
-  /// No description provided for @smsPermissionDenied.
-  ///
-  /// In uz, this message translates to:
-  /// **'SMS yuborishga ruxsat berilmadi. Uni telefon sozlamalarida yoqing.'**
-  String get smsPermissionDenied;
-
   /// No description provided for @notifySmsSent.
   ///
   /// In uz, this message translates to:
@@ -891,6 +885,30 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Tayyor'**
   String get done;
+
+  /// No description provided for @formYearUnknownHint.
+  ///
+  /// In uz, this message translates to:
+  /// **'Yoqsangiz, yosh hisoblanmaydi — faqat kun va oy bo\'yicha eslatiladi. Yilini bilsangiz, o\'chiq qoldiring: \"60 yoshga to\'ladi\" deb ko\'rsatiladi.'**
+  String get formYearUnknownHint;
+
+  /// No description provided for @smsPermissionTitle.
+  ///
+  /// In uz, this message translates to:
+  /// **'SMS ruxsati kerak'**
+  String get smsPermissionTitle;
+
+  /// No description provided for @smsPermissionSteps.
+  ///
+  /// In uz, this message translates to:
+  /// **'Telefon APK fayldan o\'rnatilgan ilovalarga SMS ruxsatini yopib qo\'yadi. Uni bir marta yoqish kerak:\n\n1. \"Sozlamalarni ochish\" ni bosing.\n2. \"Ruxsatlar\" → \"SMS\" ni bosing. \"Cheklangan sozlama\" degan oyna chiqsa — OK bosib, orqaga qayting.\n3. Tepada o\'ngdagi ⋮ belgisini bosing → \"Cheklangan sozlamalarga ruxsat berish\" (ruscha: «Разрешить ограниченные настройки»). Telefon PIN-kodini so\'rashi mumkin.\n4. Yana \"Ruxsatlar\" → \"SMS\" → \"Ruxsat berish\".\n5. Ilovaga qaytib, \"Tabrik SMS o\'zi yuborilsin\" ni qayta yoqing.\n\nXiaomi / Redmi: \"Boshqa ruxsatlar\" ichida \"SMS yuborish\" ham yoqilgan bo\'lsin.'**
+  String get smsPermissionSteps;
+
+  /// No description provided for @openSettings.
+  ///
+  /// In uz, this message translates to:
+  /// **'Sozlamalarni ochish'**
+  String get openSettings;
 }
 
 class _AppLocalizationsDelegate

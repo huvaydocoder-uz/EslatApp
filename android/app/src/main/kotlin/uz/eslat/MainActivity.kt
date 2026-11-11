@@ -4,8 +4,10 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.provider.ContactsContract.CommonDataKinds.Phone
+import android.provider.Settings
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -14,6 +16,8 @@ import io.flutter.plugin.common.MethodChannel
  * Flutter <-> Android ko'prigi ("uz.eslat/native"):
  *  - syncReminders: eslatmalarni (va avtomatik SMS'ni) AlarmManager'ga yozish
  *  - requestPermission: "sms" yoki "notifications" ruxsatini so'rash
+ *  - openAppSettings: ilovaning telefon sozlamalaridagi sahifasini ochish
+ *    (APK'dan o'rnatilganda SMS ruxsati "cheklangan sozlama" bo'ladi)
  *  - pickContact: tizim oynasidan bitta kontakt raqamini olish
  *    (ilova butun kontaktlar ro'yxatini O'QIMAYDI — READ_CONTACTS kerak emas)
  */
@@ -32,6 +36,14 @@ class MainActivity : FlutterActivity() {
                         result.success(null)
                     }
                     "requestPermission" -> requestPermission(call.argument("name"), result)
+                    "openAppSettings" -> {
+                        startActivity(
+                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                .setData(Uri.fromParts("package", packageName, null))
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                        )
+                        result.success(null)
+                    }
                     "pickContact" -> pickContact(result)
                     else -> result.notImplemented()
                 }
@@ -50,7 +62,8 @@ class MainActivity : FlutterActivity() {
         ) {
             return result.success(true)
         }
-        if (pendingPermission != null) return result.error("busy", null, null)
+        // Boshqa ruxsat oynasi ochiq bo'lsa — kutmasdan joriy holatni qaytaramiz.
+        if (pendingPermission != null) return result.success(false)
         pendingPermission = result
         requestPermissions(arrayOf(permission), REQUEST_PERMISSION)
     }

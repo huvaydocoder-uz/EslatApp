@@ -90,6 +90,10 @@ class EventFormController extends _$EventFormController {
     );
   }
 
+  /// SMS ruxsatini qo'lda yoqish uchun telefon sozlamalari.
+  Future<void> openAppSettings() =>
+      ref.read(nativeBridgeProvider).openAppSettings();
+
   /// Tizimning kontakt oynasidan raqam (va bo'sh bo'lsa — ism) olinadi.
   Future<void> pickContact() async {
     final contact = await ref.read(nativeBridgeProvider).pickContact();

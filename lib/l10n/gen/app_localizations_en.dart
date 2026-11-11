@@ -282,7 +282,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get formDate => 'Date';
 
   @override
-  String get formYearUnknown => 'Year unknown';
+  String get formYearUnknown => 'I don\'t know the year';
 
   @override
   String get formTime => 'Time';
@@ -410,10 +410,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get formPickContact => 'Pick from contacts';
 
   @override
-  String get smsPermissionDenied =>
-      'SMS permission was not granted. Turn it on in phone settings.';
-
-  @override
   String get notifySmsSent => 'Greeting SMS sent';
 
   @override
@@ -458,4 +454,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get done => 'Done';
+
+  @override
+  String get formYearUnknownHint =>
+      'When on, age isn\'t calculated — only the day and month are used. If you know the year, keep it off to see \"turns 60\".';
+
+  @override
+  String get smsPermissionTitle => 'SMS permission needed';
+
+  @override
+  String get smsPermissionSteps =>
+      'Your phone blocks the SMS permission for apps installed from an APK file. You need to turn it on once:\n\n1. Tap \"Open settings\".\n2. \"Permissions\" → \"SMS\". If a \"Restricted setting\" window appears, tap OK and go back.\n3. Tap ⋮ at the top right → \"Allow restricted settings\". Your phone may ask for your PIN.\n4. Again \"Permissions\" → \"SMS\" → \"Allow\".\n5. Return to the app and turn \"Send greeting SMS automatically\" on again.\n\nXiaomi / Redmi: also enable \"Send SMS\" under \"Other permissions\".';
+
+  @override
+  String get openSettings => 'Open settings';
 }

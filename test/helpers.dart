@@ -1,5 +1,6 @@
 import 'package:eslat/app.dart';
 import 'package:eslat/core/firebase/firebase_providers.dart';
+import 'package:eslat/core/platform/native_bridge.dart';
 import 'package:eslat/features/auth/data/auth_repository.dart';
 import 'package:eslat/features/auth/domain/app_user.dart';
 import 'package:eslat/features/events/data/categories_repository.dart';
@@ -42,6 +43,7 @@ Widget testApp({
   UserProfile? profile,
   List<ImportantEvent> events = const [],
   InMemoryEventsRepository? eventsRepo,
+  NativeBridge? bridge,
 }) {
   final repo = eventsRepo ?? InMemoryEventsRepository();
   if (user != null) {
@@ -60,6 +62,7 @@ Widget testApp({
         InMemoryCategoriesRepository(),
       ),
       todayProvider.overrideWithValue(testToday),
+      if (bridge != null) nativeBridgeProvider.overrideWithValue(bridge),
     ],
     child: const EslatApp(),
   );

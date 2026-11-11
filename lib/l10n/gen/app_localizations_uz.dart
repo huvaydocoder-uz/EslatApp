@@ -279,7 +279,7 @@ class AppLocalizationsUz extends AppLocalizations {
   String get formDate => 'Sana';
 
   @override
-  String get formYearUnknown => 'Yili noma\'lum';
+  String get formYearUnknown => 'Yilini bilmayman';
 
   @override
   String get formTime => 'Vaqti';
@@ -409,10 +409,6 @@ class AppLocalizationsUz extends AppLocalizations {
   String get formPickContact => 'Kontaktlardan tanlash';
 
   @override
-  String get smsPermissionDenied =>
-      'SMS yuborishga ruxsat berilmadi. Uni telefon sozlamalarida yoqing.';
-
-  @override
   String get notifySmsSent => 'Tabrik SMS yuborildi';
 
   @override
@@ -457,4 +453,18 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get done => 'Tayyor';
+
+  @override
+  String get formYearUnknownHint =>
+      'Yoqsangiz, yosh hisoblanmaydi — faqat kun va oy bo\'yicha eslatiladi. Yilini bilsangiz, o\'chiq qoldiring: \"60 yoshga to\'ladi\" deb ko\'rsatiladi.';
+
+  @override
+  String get smsPermissionTitle => 'SMS ruxsati kerak';
+
+  @override
+  String get smsPermissionSteps =>
+      'Telefon APK fayldan o\'rnatilgan ilovalarga SMS ruxsatini yopib qo\'yadi. Uni bir marta yoqish kerak:\n\n1. \"Sozlamalarni ochish\" ni bosing.\n2. \"Ruxsatlar\" → \"SMS\" ni bosing. \"Cheklangan sozlama\" degan oyna chiqsa — OK bosib, orqaga qayting.\n3. Tepada o\'ngdagi ⋮ belgisini bosing → \"Cheklangan sozlamalarga ruxsat berish\" (ruscha: «Разрешить ограниченные настройки»). Telefon PIN-kodini so\'rashi mumkin.\n4. Yana \"Ruxsatlar\" → \"SMS\" → \"Ruxsat berish\".\n5. Ilovaga qaytib, \"Tabrik SMS o\'zi yuborilsin\" ni qayta yoqing.\n\nXiaomi / Redmi: \"Boshqa ruxsatlar\" ichida \"SMS yuborish\" ham yoqilgan bo\'lsin.';
+
+  @override
+  String get openSettings => 'Sozlamalarni ochish';
 }

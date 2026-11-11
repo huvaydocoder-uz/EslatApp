@@ -192,5 +192,8 @@ class FakeBridge implements NativeBridge {
   Future<bool> requestPermission(AppPermission permission) async => grant;
 
   @override
+  Future<void> openAppSettings() async {}
+
+  @override
   Future<PickedContact?> pickContact() async => contact;
 }

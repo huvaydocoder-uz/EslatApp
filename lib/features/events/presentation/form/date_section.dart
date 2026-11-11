@@ -80,6 +80,8 @@ class DateSection extends ConsumerWidget {
           SwitchListTile(
             secondary: const Icon(Icons.help_outline_rounded),
             title: Text(l10n.formYearUnknown),
+            subtitle: Text(l10n.formYearUnknownHint),
+            isThreeLine: true,
             value: state.yearUnknown,
             onChanged: form.setYearUnknown,
           ),

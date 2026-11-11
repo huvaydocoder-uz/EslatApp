@@ -290,7 +290,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get formDate => 'Дата';
 
   @override
-  String get formYearUnknown => 'Год неизвестен';
+  String get formYearUnknown => 'Не знаю год';
 
   @override
   String get formTime => 'Время';
@@ -422,10 +422,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get formPickContact => 'Выбрать из контактов';
 
   @override
-  String get smsPermissionDenied =>
-      'Нет разрешения на отправку SMS. Включите его в настройках телефона.';
-
-  @override
   String get notifySmsSent => 'SMS-поздравление отправлено';
 
   @override
@@ -470,4 +466,18 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get done => 'Готово';
+
+  @override
+  String get formYearUnknownHint =>
+      'Если включить, возраст не считается — напомним только по дню и месяцу. Если год известен, оставьте выключенным: будет «исполнится 60 лет».';
+
+  @override
+  String get smsPermissionTitle => 'Нужно разрешение на SMS';
+
+  @override
+  String get smsPermissionSteps =>
+      'Телефон блокирует разрешение на SMS для приложений, установленных из APK-файла. Его нужно включить один раз:\n\n1. Нажмите «Открыть настройки».\n2. «Разрешения» → «SMS». Если появится окно «Ограниченная настройка» — нажмите ОК и вернитесь назад.\n3. Нажмите ⋮ вверху справа → «Разрешить ограниченные настройки». Телефон может запросить PIN-код.\n4. Снова «Разрешения» → «SMS» → «Разрешить».\n5. Вернитесь в приложение и снова включите «Отправить SMS-поздравление автоматически».\n\nXiaomi / Redmi: в «Другие разрешения» также включите «Отправка SMS».';
+
+  @override
+  String get openSettings => 'Открыть настройки';
 }

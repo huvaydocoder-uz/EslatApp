@@ -19,6 +19,9 @@ abstract interface class NativeBridge {
   Future<void> syncReminders(List<Map<String, Object?>> reminders);
   Future<bool> requestPermission(AppPermission permission);
 
+  /// Ilovaning telefon sozlamalaridagi sahifasi (ruxsatlarni qo'lda yoqish).
+  Future<void> openAppSettings();
+
   /// Foydalanuvchi bekor qilsa — `null`.
   Future<PickedContact?> pickContact();
 }
@@ -34,11 +37,19 @@ class AndroidNativeBridge implements NativeBridge {
       _channel.invokeMethod('syncReminders', {'reminders': reminders});
 
   @override
-  Future<bool> requestPermission(AppPermission permission) async =>
-      await _channel.invokeMethod<bool>('requestPermission', {
-        'name': permission.name,
-      }) ??
-      false;
+  Future<bool> requestPermission(AppPermission permission) async {
+    try {
+      return await _channel.invokeMethod<bool>('requestPermission', {
+            'name': permission.name,
+          }) ??
+          false;
+    } on PlatformException {
+      return false;
+    }
+  }
+
+  @override
+  Future<void> openAppSettings() => _channel.invokeMethod('openAppSettings');
 
   @override
   Future<PickedContact?> pickContact() async {
@@ -60,7 +71,10 @@ class NoopNativeBridge implements NativeBridge {
   Future<void> syncReminders(List<Map<String, Object?>> reminders) async {}
 
   @override
-  Future<bool> requestPermission(AppPermission permission) async => false;
+  Future<bool> requestPermission(AppPermission permission) async => true;
+
+  @override
+  Future<void> openAppSettings() async {}
 
   @override
   Future<PickedContact?> pickContact() async => null;

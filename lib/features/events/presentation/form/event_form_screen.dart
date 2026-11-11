@@ -9,6 +9,7 @@ import 'date_section.dart';
 import 'emoji_category_section.dart';
 import 'event_form_controller.dart';
 import 'reminder_section.dart';
+import 'sms_permission_dialog.dart';
 import 'text_sections.dart';
 
 /// Muhim kun qo'shish ([eventId] `null`) yoki tahrirlash.
@@ -37,7 +38,12 @@ class EventFormScreen extends ConsumerWidget {
       }
       if (next.smsPermissionDenied &&
           !(previous?.smsPermissionDenied ?? false)) {
-        show(l10n.smsPermissionDenied);
+        showSmsPermissionDialog(
+          context,
+          onOpenSettings: ref
+              .read(eventFormControllerProvider(eventId).notifier)
+              .openAppSettings,
+        );
       }
     });
 
