@@ -89,7 +89,7 @@ final class AuthRepositoryProvider
   }
 }
 
-String _$authRepositoryHash() => r'adb96870202ed6805f49f837280f805ee65cf3b8';
+String _$authRepositoryHash() => r'519b3572e29d84df54dd87a907d2ced25db8cc7b';
 
 /// Kirish holati: `null` — kirilmagan, `AppUser` — kirgan.
 
@@ -128,4 +128,4 @@ final class AuthStateProvider
   }
 }
 
-String _$authStateHash() => r'ecba88ec575b22936d8e5ac646efacd35148d9d1';
+String _$authStateHash() => r'6ce439e56f78a7861b8f3d71d298011f47656b9a';

@@ -54,7 +54,7 @@ final class ProfileRepositoryProvider
   }
 }
 
-String _$profileRepositoryHash() => r'ed313d5b8c2f089eb314c8903d3d4aa1bf4ded83';
+String _$profileRepositoryHash() => r'770d470b6f0e8816f6f8fa1d3abf7d2b386b222a';
 
 /// Kirgan foydalanuvchining profili (real vaqtda). Kirilmagan — `null`.
 ///

@@ -1,21 +1,32 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/config/env.dart';
 import '../../../core/firebase/firebase_providers.dart';
+import '../../../core/utils/live_value.dart';
 import '../domain/app_user.dart';
 import '../domain/auth_failure.dart';
 
 part 'auth_repository.g.dart';
 
-/// Firebase Auth bilan ishlovchi yagona joy.
-///
-/// Hozircha bitta usul — Gmail (Google). Kod kiritish yo'q: foydalanuvchi
-/// Google hisobini tanlaydi, Firebase sessiyani qurilmada eslab qoladi va
-/// keyingi ochilishlarda avtomatik kiradi.
-class AuthRepository {
-  AuthRepository({
+/// Kirish (autentifikatsiya). Hozircha bitta usul — Gmail (Google).
+abstract interface class AuthRepository {
+  Stream<AppUser?> authStateChanges();
+
+  /// Foydalanuvchi oynani yopsa — `null` (xato emas).
+  Future<AppUser?> signInWithGoogle();
+
+  Future<void> signOut();
+}
+
+/// Firebase Auth + Google. Kod kiritish yo'q: foydalanuvchi Google hisobini
+/// tanlaydi, Firebase sessiyani qurilmada eslab qoladi va keyingi
+/// ochilishlarda avtomatik kiradi.
+class FirebaseAuthRepository implements AuthRepository {
+  FirebaseAuthRepository({
     required this._auth,
     required this._google,
     required this._serverClientId,
@@ -29,12 +40,11 @@ class AuthRepository {
 
   Future<void>? _googleInit;
 
+  @override
   Stream<AppUser?> authStateChanges() =>
       _auth.authStateChanges().map(_toAppUser);
 
-  AppUser? get currentUser => _toAppUser(_auth.currentUser);
-
-  /// Gmail orqali kirish. Foydalanuvchi oynani yopsa — `null` (xato emas).
+  @override
   Future<AppUser?> signInWithGoogle() async {
     if (_serverClientId == null) {
       throw const AuthFailure(AuthFailureReason.notConfigured);
@@ -70,6 +80,7 @@ class AuthRepository {
 
   /// Chiqish: Firebase sessiyasi va Google tanlovi tozalanadi — keyingi
   /// kirishda boshqa hisobni tanlash mumkin bo'ladi.
+  @override
   Future<void> signOut() async {
     await _auth.signOut();
     if (_serverClientId == null) return;
@@ -102,19 +113,45 @@ class AuthRepository {
   }
 }
 
+/// Sinov rejimi (Firebase sozlanmagan): kirish telefon ichida taqlid qilinadi.
+/// Ma'lumot hech qayerga yuborilmaydi va ilova yopilganda yo'qoladi.
+class DemoAuthRepository implements AuthRepository {
+  static const demoUser = AppUser(uid: 'demo');
+
+  AppUser? _current;
+  final _changes = StreamController<AppUser?>.broadcast();
+
+  @override
+  Stream<AppUser?> authStateChanges() =>
+      liveValue(() => _current, _changes.stream);
+
+  @override
+  Future<AppUser?> signInWithGoogle() async => _set(demoUser);
+
+  @override
+  Future<void> signOut() async => _set(null);
+
+  AppUser? _set(AppUser? user) {
+    _current = user;
+    _changes.add(user);
+    return user;
+  }
+}
+
 @Riverpod(keepAlive: true)
 GoogleSignIn googleSignIn(Ref ref) => GoogleSignIn.instance;
 
 @Riverpod(keepAlive: true)
-AuthRepository authRepository(Ref ref) => AuthRepository(
-  auth: ref.watch(firebaseAuthProvider),
-  google: ref.watch(googleSignInProvider),
-  serverClientId: Env.googleServerClientId,
-);
+AuthRepository authRepository(Ref ref) {
+  if (!ref.watch(firebaseReadyProvider)) return DemoAuthRepository();
+  return FirebaseAuthRepository(
+    auth: ref.watch(firebaseAuthProvider),
+    google: ref.watch(googleSignInProvider),
+    serverClientId: Env.googleServerClientId,
+  );
+}
 
 /// Kirish holati: `null` — kirilmagan, `AppUser` — kirgan.
 @Riverpod(keepAlive: true)
-Stream<AppUser?> authState(Ref ref) {
-  if (!ref.watch(firebaseReadyProvider)) return Stream.value(null);
-  return ref.watch(authRepositoryProvider).authStateChanges();
-}
+Stream<AppUser?> authState(Ref ref) =>
+    ref.watch(authRepositoryProvider).authStateChanges();

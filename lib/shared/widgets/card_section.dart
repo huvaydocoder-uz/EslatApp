@@ -1,8 +1,8 @@
 import 'package:material_ui/material_ui.dart';
 
-/// Sozlamalar bo'limi: sarlavha + karta.
-class SettingsSection extends StatelessWidget {
-  const SettingsSection({super.key, required this.title, required this.child});
+/// Bo'lim: sarlavha + karta (Sozlamalar, forma).
+class CardSection extends StatelessWidget {
+  const CardSection({super.key, required this.title, required this.child});
 
   final String title;
   final Widget child;

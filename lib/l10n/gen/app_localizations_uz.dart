@@ -13,9 +13,6 @@ class AppLocalizationsUz extends AppLocalizations {
   String get appName => 'Eslat';
 
   @override
-  String get appTagline => 'Yaqinlaringizning muhim kunlarini unutmang';
-
-  @override
   String get navHome => 'Asosiy';
 
   @override
@@ -88,17 +85,7 @@ class AppLocalizationsUz extends AppLocalizations {
   String get calendarTitle => 'Taqvim';
 
   @override
-  String get calendarEmptyTitle => 'Bu oyda muhim kun yo\'q';
-
-  @override
-  String get calendarEmptyMessage =>
-      'Qo\'shilgan kunlar taqvimda belgi bilan ko\'rinadi.';
-
-  @override
   String get settingsTitle => 'Sozlamalar';
-
-  @override
-  String get settingsAccount => 'Hisob';
 
   @override
   String get settingsPlanFree => 'Bepul tarif';
@@ -198,4 +185,217 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get colorBrown => 'Jigarrang';
+
+  @override
+  String get categoryBirthday => 'Tug\'ilgan kun';
+
+  @override
+  String get categoryAnniversary => 'To\'y kuni';
+
+  @override
+  String get categoryParentBirthday => 'Ota-ona tug\'ilgan kuni';
+
+  @override
+  String get categoryMeeting => 'Uchrashuv';
+
+  @override
+  String get categoryOther => 'Boshqa';
+
+  @override
+  String get filterAll => 'Hammasi';
+
+  @override
+  String get homeUpcomingSection => 'Yaqin 30 kun';
+
+  @override
+  String get homeNothingSoonTitle => 'Yaqin 30 kunda muhim kun yo\'q';
+
+  @override
+  String get homeNothingSoonMessage =>
+      'Barcha kunlaringiz \"Kunlar\" bo\'limida.';
+
+  @override
+  String get today => 'Bugun!';
+
+  @override
+  String get tomorrow => 'Ertaga';
+
+  @override
+  String daysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count kundan keyin',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String daysAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count kun oldin o\'tdi',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String turnsAge(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count yoshga to\'ladi',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String anniversaryYears(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count yillik',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get formTitle => 'Nomi';
+
+  @override
+  String get formTitleHint => 'Masalan: Onamning tug\'ilgan kuni';
+
+  @override
+  String get formPerson => 'Kim?';
+
+  @override
+  String get formPersonHint => 'Masalan: Onam';
+
+  @override
+  String get formChooseEmoji => 'Belgini tanlang';
+
+  @override
+  String get formDate => 'Sana';
+
+  @override
+  String get formYearUnknown => 'Yili noma\'lum';
+
+  @override
+  String get formTime => 'Vaqti';
+
+  @override
+  String get formNoTime => 'Belgilanmagan';
+
+  @override
+  String get formRepeatYearly => 'Har yili takrorlansin';
+
+  @override
+  String get formReminders => 'Qachon eslatilsin?';
+
+  @override
+  String get reminderOnDay => 'O\'sha kuni';
+
+  @override
+  String reminderDaysBefore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count kun oldin',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get formRemindersLimit =>
+      'Bepul tarifda 2 tagacha eslatma tanlash mumkin.';
+
+  @override
+  String get formAlarm => 'Budilnik chalsin';
+
+  @override
+  String get formAlarmHint =>
+      'O\'sha kuni musiqa siz to\'xtatmaguningizcha chaladi.';
+
+  @override
+  String get formSms => 'Tabrik SMS';
+
+  @override
+  String get formSmsHint =>
+      'O\'sha kuni tayyor matnli SMS ochiladi — faqat \"Yuborish\"ni bosasiz.';
+
+  @override
+  String get formPhone => 'Telefon raqami';
+
+  @override
+  String get formPhoneHint => '+998 90 123 45 67';
+
+  @override
+  String get formSmsText => 'SMS matni';
+
+  @override
+  String get formSmsTextHint => 'Tug\'ilgan kuningiz muborak!';
+
+  @override
+  String get formNote => 'Izoh';
+
+  @override
+  String get formSave => 'Saqlash';
+
+  @override
+  String get formErrorRequired => 'Bu maydonni to\'ldiring';
+
+  @override
+  String get formErrorPhone => 'Raqamni +998901234567 ko\'rinishida yozing';
+
+  @override
+  String get formErrorYear => 'Bir martalik kun uchun yilni kiriting';
+
+  @override
+  String get saveError =>
+      'Saqlab bo\'lmadi. Internetni tekshirib, qaytadan urinib ko\'ring.';
+
+  @override
+  String get deleteAction => 'O\'chirish';
+
+  @override
+  String get deleteConfirmTitle => 'O\'chirilsinmi?';
+
+  @override
+  String get deleteConfirmMessage =>
+      'Bu muhim kun va uning eslatmalari butunlay o\'chiriladi.';
+
+  @override
+  String get detailsNotFoundTitle => 'Bu muhim kun topilmadi';
+
+  @override
+  String get detailsNotFoundMessage => 'Ehtimol, u o\'chirilgan.';
+
+  @override
+  String get detailsReminders => 'Eslatmalar';
+
+  @override
+  String get detailsAlarmOn => 'Budilnik yoqilgan';
+
+  @override
+  String get detailsAlarmOff => 'Budilnik o\'chirilgan';
+
+  @override
+  String get calendarGoToday => 'Bugun';
+
+  @override
+  String get calendarPrevMonth => 'Oldingi oy';
+
+  @override
+  String get calendarNextMonth => 'Keyingi oy';
+
+  @override
+  String get calendarNoEventsDay => 'Bu kunda muhim kun yo\'q';
+
+  @override
+  String get demoBanner =>
+      'Sinov rejimi: ma\'lumotlar ilova yopilguncha saqlanadi. Firebase ulangach hammasi bulutda saqlanadi.';
+
+  @override
+  String get demoUser => 'Sinov foydalanuvchisi';
 }

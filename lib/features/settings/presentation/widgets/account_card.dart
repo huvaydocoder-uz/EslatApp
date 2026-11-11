@@ -15,7 +15,7 @@ class AccountCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
-    final name = user.displayName ?? user.email ?? '';
+    final name = user.displayName ?? user.email ?? l10n.demoUser;
     final photo = user.photoUrl;
 
     return Card(

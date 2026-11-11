@@ -24,6 +24,7 @@ void main() {
   testWidgets('kirgan: pastki menyuda 4 bo\'lim, almashtirish ishlaydi', (
     tester,
   ) async {
+    usePhoneScreen(tester);
     await tester.pumpWidget(testApp(user: testUser));
     await tester.pumpAndSettle();
 
@@ -40,7 +41,7 @@ void main() {
 
     await tester.tap(find.text(en.navCalendar));
     await tester.pumpAndSettle();
-    expect(find.text(en.calendarEmptyTitle), findsOneWidget);
+    expect(find.text(en.calendarNoEventsDay), findsOneWidget);
   });
 
   testWidgets('"Qo\'shish" to\'liq ekranli sahifani ochadi', (tester) async {
@@ -81,7 +82,7 @@ void main() {
     });
   });
 
-  testWidgets('Firebase sozlanmagan: ilova yiqilmaydi, tushunarli xabar', (
+  testWidgets('Firebase sozlanmagan: sinov rejimida kiradi va ogohlantiradi', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -95,7 +96,7 @@ void main() {
     await tester.tap(find.text(en.loginWithGoogle));
     await tester.pumpAndSettle();
 
-    expect(find.text(en.authErrorNotConfigured), findsOneWidget);
-    expect(find.text(en.loginTitle), findsOneWidget);
+    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.text(en.demoBanner), findsOneWidget);
   });
 }

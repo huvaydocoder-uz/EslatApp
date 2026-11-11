@@ -13,9 +13,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get appName => 'Eslat';
 
   @override
-  String get appTagline => 'Не забывайте важные даты близких';
-
-  @override
   String get navHome => 'Главная';
 
   @override
@@ -88,17 +85,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get calendarTitle => 'Календарь';
 
   @override
-  String get calendarEmptyTitle => 'В этом месяце важных дат нет';
-
-  @override
-  String get calendarEmptyMessage =>
-      'Добавленные даты будут отмечены в календаре.';
-
-  @override
   String get settingsTitle => 'Настройки';
-
-  @override
-  String get settingsAccount => 'Аккаунт';
 
   @override
   String get settingsPlanFree => 'Бесплатный тариф';
@@ -198,4 +185,230 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get colorBrown => 'Коричневый';
+
+  @override
+  String get categoryBirthday => 'День рождения';
+
+  @override
+  String get categoryAnniversary => 'Годовщина свадьбы';
+
+  @override
+  String get categoryParentBirthday => 'День рождения родителей';
+
+  @override
+  String get categoryMeeting => 'Встреча';
+
+  @override
+  String get categoryOther => 'Другое';
+
+  @override
+  String get filterAll => 'Все';
+
+  @override
+  String get homeUpcomingSection => 'Ближайшие 30 дней';
+
+  @override
+  String get homeNothingSoonTitle => 'В ближайшие 30 дней важных дат нет';
+
+  @override
+  String get homeNothingSoonMessage => 'Все ваши даты — в разделе «Даты».';
+
+  @override
+  String get today => 'Сегодня!';
+
+  @override
+  String get tomorrow => 'Завтра';
+
+  @override
+  String daysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'через $count дня',
+      many: 'через $count дней',
+      few: 'через $count дня',
+      one: 'через $count день',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String daysAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count дня назад',
+      many: '$count дней назад',
+      few: '$count дня назад',
+      one: '$count день назад',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String turnsAge(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'исполнится $count года',
+      many: 'исполнится $count лет',
+      few: 'исполнится $count года',
+      one: 'исполнится $count год',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String anniversaryYears(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count года',
+      many: '$count лет',
+      few: '$count года',
+      one: '$count год',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get formTitle => 'Название';
+
+  @override
+  String get formTitleHint => 'Например: День рождения мамы';
+
+  @override
+  String get formPerson => 'Кто?';
+
+  @override
+  String get formPersonHint => 'Например: Мама';
+
+  @override
+  String get formChooseEmoji => 'Выберите значок';
+
+  @override
+  String get formDate => 'Дата';
+
+  @override
+  String get formYearUnknown => 'Год неизвестен';
+
+  @override
+  String get formTime => 'Время';
+
+  @override
+  String get formNoTime => 'Не указано';
+
+  @override
+  String get formRepeatYearly => 'Повторять каждый год';
+
+  @override
+  String get formReminders => 'Когда напомнить?';
+
+  @override
+  String get reminderOnDay => 'В тот же день';
+
+  @override
+  String reminderDaysBefore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'за $count дня',
+      many: 'за $count дней',
+      few: 'за $count дня',
+      one: 'за $count день',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get formRemindersLimit => 'В бесплатном тарифе — до 2 напоминаний.';
+
+  @override
+  String get formAlarm => 'Будильник';
+
+  @override
+  String get formAlarmHint =>
+      'В этот день музыка будет играть, пока вы её не остановите.';
+
+  @override
+  String get formSms => 'SMS-поздравление';
+
+  @override
+  String get formSmsHint =>
+      'В этот день откроется SMS с готовым текстом — останется нажать «Отправить».';
+
+  @override
+  String get formPhone => 'Номер телефона';
+
+  @override
+  String get formPhoneHint => '+998 90 123 45 67';
+
+  @override
+  String get formSmsText => 'Текст SMS';
+
+  @override
+  String get formSmsTextHint => 'С днём рождения!';
+
+  @override
+  String get formNote => 'Заметка';
+
+  @override
+  String get formSave => 'Сохранить';
+
+  @override
+  String get formErrorRequired => 'Заполните это поле';
+
+  @override
+  String get formErrorPhone => 'Введите номер в формате +998901234567';
+
+  @override
+  String get formErrorYear => 'Для разовой даты укажите год';
+
+  @override
+  String get saveError =>
+      'Не удалось сохранить. Проверьте интернет и попробуйте снова.';
+
+  @override
+  String get deleteAction => 'Удалить';
+
+  @override
+  String get deleteConfirmTitle => 'Удалить?';
+
+  @override
+  String get deleteConfirmMessage =>
+      'Эта дата и её напоминания будут удалены навсегда.';
+
+  @override
+  String get detailsNotFoundTitle => 'Дата не найдена';
+
+  @override
+  String get detailsNotFoundMessage => 'Возможно, она была удалена.';
+
+  @override
+  String get detailsReminders => 'Напоминания';
+
+  @override
+  String get detailsAlarmOn => 'Будильник включён';
+
+  @override
+  String get detailsAlarmOff => 'Будильник выключен';
+
+  @override
+  String get calendarGoToday => 'Сегодня';
+
+  @override
+  String get calendarPrevMonth => 'Предыдущий месяц';
+
+  @override
+  String get calendarNextMonth => 'Следующий месяц';
+
+  @override
+  String get calendarNoEventsDay => 'В этот день важных дат нет';
+
+  @override
+  String get demoBanner =>
+      'Тестовый режим: данные хранятся, пока приложение открыто. После подключения Firebase всё будет сохраняться в облаке.';
+
+  @override
+  String get demoUser => 'Тестовый пользователь';
 }

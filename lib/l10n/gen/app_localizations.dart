@@ -106,12 +106,6 @@ abstract class AppLocalizations {
   /// **'Eslat'**
   String get appName;
 
-  /// No description provided for @appTagline.
-  ///
-  /// In uz, this message translates to:
-  /// **'Yaqinlaringizning muhim kunlarini unutmang'**
-  String get appTagline;
-
   /// No description provided for @navHome.
   ///
   /// In uz, this message translates to:
@@ -244,29 +238,11 @@ abstract class AppLocalizations {
   /// **'Taqvim'**
   String get calendarTitle;
 
-  /// No description provided for @calendarEmptyTitle.
-  ///
-  /// In uz, this message translates to:
-  /// **'Bu oyda muhim kun yo\'q'**
-  String get calendarEmptyTitle;
-
-  /// No description provided for @calendarEmptyMessage.
-  ///
-  /// In uz, this message translates to:
-  /// **'Qo\'shilgan kunlar taqvimda belgi bilan ko\'rinadi.'**
-  String get calendarEmptyMessage;
-
   /// No description provided for @settingsTitle.
   ///
   /// In uz, this message translates to:
   /// **'Sozlamalar'**
   String get settingsTitle;
-
-  /// No description provided for @settingsAccount.
-  ///
-  /// In uz, this message translates to:
-  /// **'Hisob'**
-  String get settingsAccount;
 
   /// No description provided for @settingsPlanFree.
   ///
@@ -459,6 +435,348 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Jigarrang'**
   String get colorBrown;
+
+  /// No description provided for @categoryBirthday.
+  ///
+  /// In uz, this message translates to:
+  /// **'Tug\'ilgan kun'**
+  String get categoryBirthday;
+
+  /// No description provided for @categoryAnniversary.
+  ///
+  /// In uz, this message translates to:
+  /// **'To\'y kuni'**
+  String get categoryAnniversary;
+
+  /// No description provided for @categoryParentBirthday.
+  ///
+  /// In uz, this message translates to:
+  /// **'Ota-ona tug\'ilgan kuni'**
+  String get categoryParentBirthday;
+
+  /// No description provided for @categoryMeeting.
+  ///
+  /// In uz, this message translates to:
+  /// **'Uchrashuv'**
+  String get categoryMeeting;
+
+  /// No description provided for @categoryOther.
+  ///
+  /// In uz, this message translates to:
+  /// **'Boshqa'**
+  String get categoryOther;
+
+  /// No description provided for @filterAll.
+  ///
+  /// In uz, this message translates to:
+  /// **'Hammasi'**
+  String get filterAll;
+
+  /// No description provided for @homeUpcomingSection.
+  ///
+  /// In uz, this message translates to:
+  /// **'Yaqin 30 kun'**
+  String get homeUpcomingSection;
+
+  /// No description provided for @homeNothingSoonTitle.
+  ///
+  /// In uz, this message translates to:
+  /// **'Yaqin 30 kunda muhim kun yo\'q'**
+  String get homeNothingSoonTitle;
+
+  /// No description provided for @homeNothingSoonMessage.
+  ///
+  /// In uz, this message translates to:
+  /// **'Barcha kunlaringiz \"Kunlar\" bo\'limida.'**
+  String get homeNothingSoonMessage;
+
+  /// No description provided for @today.
+  ///
+  /// In uz, this message translates to:
+  /// **'Bugun!'**
+  String get today;
+
+  /// No description provided for @tomorrow.
+  ///
+  /// In uz, this message translates to:
+  /// **'Ertaga'**
+  String get tomorrow;
+
+  /// No description provided for @daysLeft.
+  ///
+  /// In uz, this message translates to:
+  /// **'{count, plural, other{{count} kundan keyin}}'**
+  String daysLeft(int count);
+
+  /// No description provided for @daysAgo.
+  ///
+  /// In uz, this message translates to:
+  /// **'{count, plural, other{{count} kun oldin o\'tdi}}'**
+  String daysAgo(int count);
+
+  /// No description provided for @turnsAge.
+  ///
+  /// In uz, this message translates to:
+  /// **'{count, plural, other{{count} yoshga to\'ladi}}'**
+  String turnsAge(int count);
+
+  /// No description provided for @anniversaryYears.
+  ///
+  /// In uz, this message translates to:
+  /// **'{count, plural, other{{count} yillik}}'**
+  String anniversaryYears(int count);
+
+  /// No description provided for @formTitle.
+  ///
+  /// In uz, this message translates to:
+  /// **'Nomi'**
+  String get formTitle;
+
+  /// No description provided for @formTitleHint.
+  ///
+  /// In uz, this message translates to:
+  /// **'Masalan: Onamning tug\'ilgan kuni'**
+  String get formTitleHint;
+
+  /// No description provided for @formPerson.
+  ///
+  /// In uz, this message translates to:
+  /// **'Kim?'**
+  String get formPerson;
+
+  /// No description provided for @formPersonHint.
+  ///
+  /// In uz, this message translates to:
+  /// **'Masalan: Onam'**
+  String get formPersonHint;
+
+  /// No description provided for @formChooseEmoji.
+  ///
+  /// In uz, this message translates to:
+  /// **'Belgini tanlang'**
+  String get formChooseEmoji;
+
+  /// No description provided for @formDate.
+  ///
+  /// In uz, this message translates to:
+  /// **'Sana'**
+  String get formDate;
+
+  /// No description provided for @formYearUnknown.
+  ///
+  /// In uz, this message translates to:
+  /// **'Yili noma\'lum'**
+  String get formYearUnknown;
+
+  /// No description provided for @formTime.
+  ///
+  /// In uz, this message translates to:
+  /// **'Vaqti'**
+  String get formTime;
+
+  /// No description provided for @formNoTime.
+  ///
+  /// In uz, this message translates to:
+  /// **'Belgilanmagan'**
+  String get formNoTime;
+
+  /// No description provided for @formRepeatYearly.
+  ///
+  /// In uz, this message translates to:
+  /// **'Har yili takrorlansin'**
+  String get formRepeatYearly;
+
+  /// No description provided for @formReminders.
+  ///
+  /// In uz, this message translates to:
+  /// **'Qachon eslatilsin?'**
+  String get formReminders;
+
+  /// No description provided for @reminderOnDay.
+  ///
+  /// In uz, this message translates to:
+  /// **'O\'sha kuni'**
+  String get reminderOnDay;
+
+  /// No description provided for @reminderDaysBefore.
+  ///
+  /// In uz, this message translates to:
+  /// **'{count, plural, other{{count} kun oldin}}'**
+  String reminderDaysBefore(int count);
+
+  /// No description provided for @formRemindersLimit.
+  ///
+  /// In uz, this message translates to:
+  /// **'Bepul tarifda 2 tagacha eslatma tanlash mumkin.'**
+  String get formRemindersLimit;
+
+  /// No description provided for @formAlarm.
+  ///
+  /// In uz, this message translates to:
+  /// **'Budilnik chalsin'**
+  String get formAlarm;
+
+  /// No description provided for @formAlarmHint.
+  ///
+  /// In uz, this message translates to:
+  /// **'O\'sha kuni musiqa siz to\'xtatmaguningizcha chaladi.'**
+  String get formAlarmHint;
+
+  /// No description provided for @formSms.
+  ///
+  /// In uz, this message translates to:
+  /// **'Tabrik SMS'**
+  String get formSms;
+
+  /// No description provided for @formSmsHint.
+  ///
+  /// In uz, this message translates to:
+  /// **'O\'sha kuni tayyor matnli SMS ochiladi — faqat \"Yuborish\"ni bosasiz.'**
+  String get formSmsHint;
+
+  /// No description provided for @formPhone.
+  ///
+  /// In uz, this message translates to:
+  /// **'Telefon raqami'**
+  String get formPhone;
+
+  /// No description provided for @formPhoneHint.
+  ///
+  /// In uz, this message translates to:
+  /// **'+998 90 123 45 67'**
+  String get formPhoneHint;
+
+  /// No description provided for @formSmsText.
+  ///
+  /// In uz, this message translates to:
+  /// **'SMS matni'**
+  String get formSmsText;
+
+  /// No description provided for @formSmsTextHint.
+  ///
+  /// In uz, this message translates to:
+  /// **'Tug\'ilgan kuningiz muborak!'**
+  String get formSmsTextHint;
+
+  /// No description provided for @formNote.
+  ///
+  /// In uz, this message translates to:
+  /// **'Izoh'**
+  String get formNote;
+
+  /// No description provided for @formSave.
+  ///
+  /// In uz, this message translates to:
+  /// **'Saqlash'**
+  String get formSave;
+
+  /// No description provided for @formErrorRequired.
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu maydonni to\'ldiring'**
+  String get formErrorRequired;
+
+  /// No description provided for @formErrorPhone.
+  ///
+  /// In uz, this message translates to:
+  /// **'Raqamni +998901234567 ko\'rinishida yozing'**
+  String get formErrorPhone;
+
+  /// No description provided for @formErrorYear.
+  ///
+  /// In uz, this message translates to:
+  /// **'Bir martalik kun uchun yilni kiriting'**
+  String get formErrorYear;
+
+  /// No description provided for @saveError.
+  ///
+  /// In uz, this message translates to:
+  /// **'Saqlab bo\'lmadi. Internetni tekshirib, qaytadan urinib ko\'ring.'**
+  String get saveError;
+
+  /// No description provided for @deleteAction.
+  ///
+  /// In uz, this message translates to:
+  /// **'O\'chirish'**
+  String get deleteAction;
+
+  /// No description provided for @deleteConfirmTitle.
+  ///
+  /// In uz, this message translates to:
+  /// **'O\'chirilsinmi?'**
+  String get deleteConfirmTitle;
+
+  /// No description provided for @deleteConfirmMessage.
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu muhim kun va uning eslatmalari butunlay o\'chiriladi.'**
+  String get deleteConfirmMessage;
+
+  /// No description provided for @detailsNotFoundTitle.
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu muhim kun topilmadi'**
+  String get detailsNotFoundTitle;
+
+  /// No description provided for @detailsNotFoundMessage.
+  ///
+  /// In uz, this message translates to:
+  /// **'Ehtimol, u o\'chirilgan.'**
+  String get detailsNotFoundMessage;
+
+  /// No description provided for @detailsReminders.
+  ///
+  /// In uz, this message translates to:
+  /// **'Eslatmalar'**
+  String get detailsReminders;
+
+  /// No description provided for @detailsAlarmOn.
+  ///
+  /// In uz, this message translates to:
+  /// **'Budilnik yoqilgan'**
+  String get detailsAlarmOn;
+
+  /// No description provided for @detailsAlarmOff.
+  ///
+  /// In uz, this message translates to:
+  /// **'Budilnik o\'chirilgan'**
+  String get detailsAlarmOff;
+
+  /// No description provided for @calendarGoToday.
+  ///
+  /// In uz, this message translates to:
+  /// **'Bugun'**
+  String get calendarGoToday;
+
+  /// No description provided for @calendarPrevMonth.
+  ///
+  /// In uz, this message translates to:
+  /// **'Oldingi oy'**
+  String get calendarPrevMonth;
+
+  /// No description provided for @calendarNextMonth.
+  ///
+  /// In uz, this message translates to:
+  /// **'Keyingi oy'**
+  String get calendarNextMonth;
+
+  /// No description provided for @calendarNoEventsDay.
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu kunda muhim kun yo\'q'**
+  String get calendarNoEventsDay;
+
+  /// No description provided for @demoBanner.
+  ///
+  /// In uz, this message translates to:
+  /// **'Sinov rejimi: ma\'lumotlar ilova yopilguncha saqlanadi. Firebase ulangach hammasi bulutda saqlanadi.'**
+  String get demoBanner;
+
+  /// No description provided for @demoUser.
+  ///
+  /// In uz, this message translates to:
+  /// **'Sinov foydalanuvchisi'**
+  String get demoUser;
 }
 
 class _AppLocalizationsDelegate

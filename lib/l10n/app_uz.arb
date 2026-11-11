@@ -1,7 +1,6 @@
 {
   "@@locale": "uz",
   "appName": "Eslat",
-  "appTagline": "Yaqinlaringizning muhim kunlarini unutmang",
   "navHome": "Asosiy",
   "navEvents": "Kunlar",
   "navCalendar": "Taqvim",
@@ -24,10 +23,7 @@
   "editEventTitle": "Tahrirlash",
   "eventDetailsTitle": "Batafsil",
   "calendarTitle": "Taqvim",
-  "calendarEmptyTitle": "Bu oyda muhim kun yo'q",
-  "calendarEmptyMessage": "Qo'shilgan kunlar taqvimda belgi bilan ko'rinadi.",
   "settingsTitle": "Sozlamalar",
-  "settingsAccount": "Hisob",
   "settingsPlanFree": "Bepul tarif",
   "settingsPlanPro": "Pro tarif",
   "settingsLanguage": "Til",
@@ -59,5 +55,97 @@
   "colorRed": "Qizil",
   "colorPink": "Pushti",
   "colorPurple": "Binafsha",
-  "colorBrown": "Jigarrang"
+  "colorBrown": "Jigarrang",
+  "categoryBirthday": "Tug'ilgan kun",
+  "categoryAnniversary": "To'y kuni",
+  "categoryParentBirthday": "Ota-ona tug'ilgan kuni",
+  "categoryMeeting": "Uchrashuv",
+  "categoryOther": "Boshqa",
+  "filterAll": "Hammasi",
+  "homeUpcomingSection": "Yaqin 30 kun",
+  "homeNothingSoonTitle": "Yaqin 30 kunda muhim kun yo'q",
+  "homeNothingSoonMessage": "Barcha kunlaringiz \"Kunlar\" bo'limida.",
+  "today": "Bugun!",
+  "tomorrow": "Ertaga",
+  "daysLeft": "{count, plural, other{{count} kundan keyin}}",
+  "@daysLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "daysAgo": "{count, plural, other{{count} kun oldin o'tdi}}",
+  "@daysAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "turnsAge": "{count, plural, other{{count} yoshga to'ladi}}",
+  "@turnsAge": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "anniversaryYears": "{count, plural, other{{count} yillik}}",
+  "@anniversaryYears": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "formTitle": "Nomi",
+  "formTitleHint": "Masalan: Onamning tug'ilgan kuni",
+  "formPerson": "Kim?",
+  "formPersonHint": "Masalan: Onam",
+  "formChooseEmoji": "Belgini tanlang",
+  "formDate": "Sana",
+  "formYearUnknown": "Yili noma'lum",
+  "formTime": "Vaqti",
+  "formNoTime": "Belgilanmagan",
+  "formRepeatYearly": "Har yili takrorlansin",
+  "formReminders": "Qachon eslatilsin?",
+  "reminderOnDay": "O'sha kuni",
+  "reminderDaysBefore": "{count, plural, other{{count} kun oldin}}",
+  "@reminderDaysBefore": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "formRemindersLimit": "Bepul tarifda 2 tagacha eslatma tanlash mumkin.",
+  "formAlarm": "Budilnik chalsin",
+  "formAlarmHint": "O'sha kuni musiqa siz to'xtatmaguningizcha chaladi.",
+  "formSms": "Tabrik SMS",
+  "formSmsHint": "O'sha kuni tayyor matnli SMS ochiladi — faqat \"Yuborish\"ni bosasiz.",
+  "formPhone": "Telefon raqami",
+  "formPhoneHint": "+998 90 123 45 67",
+  "formSmsText": "SMS matni",
+  "formSmsTextHint": "Tug'ilgan kuningiz muborak!",
+  "formNote": "Izoh",
+  "formSave": "Saqlash",
+  "formErrorRequired": "Bu maydonni to'ldiring",
+  "formErrorPhone": "Raqamni +998901234567 ko'rinishida yozing",
+  "formErrorYear": "Bir martalik kun uchun yilni kiriting",
+  "saveError": "Saqlab bo'lmadi. Internetni tekshirib, qaytadan urinib ko'ring.",
+  "deleteAction": "O'chirish",
+  "deleteConfirmTitle": "O'chirilsinmi?",
+  "deleteConfirmMessage": "Bu muhim kun va uning eslatmalari butunlay o'chiriladi.",
+  "detailsNotFoundTitle": "Bu muhim kun topilmadi",
+  "detailsNotFoundMessage": "Ehtimol, u o'chirilgan.",
+  "detailsReminders": "Eslatmalar",
+  "detailsAlarmOn": "Budilnik yoqilgan",
+  "detailsAlarmOff": "Budilnik o'chirilgan",
+  "calendarGoToday": "Bugun",
+  "calendarPrevMonth": "Oldingi oy",
+  "calendarNextMonth": "Keyingi oy",
+  "calendarNoEventsDay": "Bu kunda muhim kun yo'q",
+  "demoBanner": "Sinov rejimi: ma'lumotlar ilova yopilguncha saqlanadi. Firebase ulangach hammasi bulutda saqlanadi.",
+  "demoUser": "Sinov foydalanuvchisi"
 }

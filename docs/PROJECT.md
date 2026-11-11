@@ -154,6 +154,9 @@ Emoji va rang tanlash uchun paket **kerak emas** — o'zimiz tayyor katta emoji 
 
 - **Hozir — Android APK** (sinov uchun): `flutter build apk --release`. Firebase'ni ulash:
   [`docs/FIREBASE_SETUP.md`](FIREBASE_SETUP.md).
+- **Sinov rejimi**: `.env` da Firebase sozlamalari bo'lmasa, ilova yiqilmaydi — kirish
+  telefon ichida taqlid qilinadi, barcha ekranlar ishlaydi, ma'lumot ilova yopilguncha
+  xotirada turadi (yuqorida doimiy ogohlantirish). Firebase ulangach — haqiqiy rejim.
 - **PWA tavsiya etilmaydi**: Flutter veb-versiya qila oladi, lekin brauzerda ilova yopiq
   bo'lganda budilnik chalmaydi, rejalashtirilgan eslatmalar ishlamaydi, iPhone'da push faqat
   "Bosh ekranga qo'shilgan" saytda ishlaydi. Eslat'ning asosiy vazifasi aynan shular.
@@ -166,7 +169,7 @@ Emoji va rang tanlash uchun paket **kerak emas** — o'zimiz tayyor katta emoji 
 | Qadam | Nima qilinadi |
 |-------|---------------|
 | **2** ✅ | Gmail orqali kirish (bepul, kodsiz), `users` profili, 3 til, Sozlamalar (til, mavzu, rang, chiqish), Android APK |
-| **3** | Muhim kunlar: model, repository, qo'shish/tahrirlash (emoji to'plami), Asosiy, Kunlar, Taqvim |
+| **3** ✅ | Muhim kunlar: model, repository, qo'shish/tahrirlash/o'chirish (emoji to'plami), Asosiy (bugun + 30 kun), Kunlar (filtr), Taqvim; sinov rejimi |
 | **4** | Eslatmalar: lokal bildirishnoma, budilnik ekrani, FCM, SMS ilovasini ochish |
 | **5** | Server (Cloud Functions): Telegram bot orqali kirish, server eslatmalari, App Check |
 | **6** | Pro (to'lov), rus/ingliz tillari, ilova ikonkasi, do'konlarga chiqarish |

@@ -13,9 +13,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'Eslat';
 
   @override
-  String get appTagline => 'Never forget your loved ones\' special days';
-
-  @override
   String get navHome => 'Home';
 
   @override
@@ -88,17 +85,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calendarTitle => 'Calendar';
 
   @override
-  String get calendarEmptyTitle => 'No special days this month';
-
-  @override
-  String get calendarEmptyMessage =>
-      'Added dates will be marked on the calendar.';
-
-  @override
   String get settingsTitle => 'Settings';
-
-  @override
-  String get settingsAccount => 'Account';
 
   @override
   String get settingsPlanFree => 'Free plan';
@@ -197,4 +184,219 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get colorBrown => 'Brown';
+
+  @override
+  String get categoryBirthday => 'Birthday';
+
+  @override
+  String get categoryAnniversary => 'Wedding anniversary';
+
+  @override
+  String get categoryParentBirthday => 'Parent\'s birthday';
+
+  @override
+  String get categoryMeeting => 'Meeting';
+
+  @override
+  String get categoryOther => 'Other';
+
+  @override
+  String get filterAll => 'All';
+
+  @override
+  String get homeUpcomingSection => 'Next 30 days';
+
+  @override
+  String get homeNothingSoonTitle => 'No special days in the next 30 days';
+
+  @override
+  String get homeNothingSoonMessage =>
+      'All your dates are in the \"Dates\" tab.';
+
+  @override
+  String get today => 'Today!';
+
+  @override
+  String get tomorrow => 'Tomorrow';
+
+  @override
+  String daysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'in $count days',
+      one: 'in $count day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String daysAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days ago',
+      one: '$count day ago',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String turnsAge(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'turns $count',
+      one: 'turns $count',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String anniversaryYears(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count years',
+      one: '$count year',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get formTitle => 'Title';
+
+  @override
+  String get formTitleHint => 'For example: Mom\'s birthday';
+
+  @override
+  String get formPerson => 'Who?';
+
+  @override
+  String get formPersonHint => 'For example: Mom';
+
+  @override
+  String get formChooseEmoji => 'Choose an icon';
+
+  @override
+  String get formDate => 'Date';
+
+  @override
+  String get formYearUnknown => 'Year unknown';
+
+  @override
+  String get formTime => 'Time';
+
+  @override
+  String get formNoTime => 'Not set';
+
+  @override
+  String get formRepeatYearly => 'Repeat every year';
+
+  @override
+  String get formReminders => 'When to remind?';
+
+  @override
+  String get reminderOnDay => 'On the day';
+
+  @override
+  String reminderDaysBefore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days before',
+      one: '$count day before',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get formRemindersLimit => 'The free plan allows up to 2 reminders.';
+
+  @override
+  String get formAlarm => 'Ring an alarm';
+
+  @override
+  String get formAlarmHint => 'On the day, music plays until you stop it.';
+
+  @override
+  String get formSms => 'Greeting SMS';
+
+  @override
+  String get formSmsHint =>
+      'On the day, an SMS with ready text opens — just tap \"Send\".';
+
+  @override
+  String get formPhone => 'Phone number';
+
+  @override
+  String get formPhoneHint => '+998 90 123 45 67';
+
+  @override
+  String get formSmsText => 'SMS text';
+
+  @override
+  String get formSmsTextHint => 'Happy birthday!';
+
+  @override
+  String get formNote => 'Note';
+
+  @override
+  String get formSave => 'Save';
+
+  @override
+  String get formErrorRequired => 'Please fill in this field';
+
+  @override
+  String get formErrorPhone => 'Enter the number like +998901234567';
+
+  @override
+  String get formErrorYear => 'Set the year for a one-time date';
+
+  @override
+  String get saveError => 'Couldn\'t save. Check your internet and try again.';
+
+  @override
+  String get deleteAction => 'Delete';
+
+  @override
+  String get deleteConfirmTitle => 'Delete?';
+
+  @override
+  String get deleteConfirmMessage =>
+      'This date and its reminders will be deleted permanently.';
+
+  @override
+  String get detailsNotFoundTitle => 'This date was not found';
+
+  @override
+  String get detailsNotFoundMessage => 'It may have been deleted.';
+
+  @override
+  String get detailsReminders => 'Reminders';
+
+  @override
+  String get detailsAlarmOn => 'Alarm is on';
+
+  @override
+  String get detailsAlarmOff => 'Alarm is off';
+
+  @override
+  String get calendarGoToday => 'Today';
+
+  @override
+  String get calendarPrevMonth => 'Previous month';
+
+  @override
+  String get calendarNextMonth => 'Next month';
+
+  @override
+  String get calendarNoEventsDay => 'No special days on this date';
+
+  @override
+  String get demoBanner =>
+      'Test mode: data is kept only while the app is open. Once Firebase is connected, everything is saved to the cloud.';
+
+  @override
+  String get demoUser => 'Test user';
 }

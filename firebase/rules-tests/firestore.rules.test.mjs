@@ -3,6 +3,7 @@ import { assertFails, assertSucceeds } from '@firebase/rules-unit-testing';
 import {
   collection,
   deleteDoc,
+  deleteField,
   doc,
   getDoc,
   getDocs,
@@ -182,6 +183,48 @@ describe('users/{uid}/events', () => {
     for (const extra of bad) {
       await assertFails(setDoc(eventRef('alice'), eventDoc(extra)), JSON.stringify(extra));
     }
+  });
+
+  test('ilova yozadigan shakl va barcha "og\'ir" emojilar qabul qilinadi', async () => {
+    // lib/features/events: include_if_null=false, smsMode='off', id yozilmaydi.
+    const appEvent = {
+      title: 'Onam',
+      category: 'parentBirthday',
+      emoji: '👵',
+      day: 29,
+      month: 2,
+      repeatYearly: true,
+      remindDaysBefore: [0, 1],
+      alarmEnabled: true,
+      smsMode: 'off',
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    };
+    await assertSucceeds(setDoc(eventRef('alice', 'alice', 'app1'), appEvent));
+    const emojis = ['🗓️', '🍽️', '✈️', '❤️', '🤱', '🕌'];
+    for (const [i, emoji] of emojis.entries()) {
+      await assertSucceeds(
+        setDoc(eventRef('alice', 'alice', `emoji${i}`), { ...appEvent, emoji }),
+      );
+    }
+  });
+
+  test("tahrirlashda bo'shatilgan maydon o'chiriladi (FieldValue.delete)", async () => {
+    await seed(env, 'users/alice/events/e1', {
+      ...eventDoc(),
+      createdAt: Timestamp.now(),
+      updatedAt: Timestamp.now(),
+    });
+    await assertSucceeds(
+      updateDoc(eventRef('alice'), {
+        personName: deleteField(),
+        note: deleteField(),
+        smsMode: 'off',
+        phone: deleteField(),
+        smsText: deleteField(),
+        updatedAt: serverTimestamp(),
+      }),
+    );
   });
 
   test("bepul tarif: avto-SMS va 2 tadan ortiq eslatma yo'q", async () => {

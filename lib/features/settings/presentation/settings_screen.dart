@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 import '../../../core/l10n/app_language.dart';
 import '../../../core/l10n/l10n.dart';
 import '../../../shared/widgets/async_value_view.dart';
+import '../../../shared/widgets/card_section.dart';
 import '../../auth/data/auth_repository.dart';
 import '../../profile/data/profile_repository.dart';
 import '../../profile/domain/user_profile.dart';
@@ -13,7 +14,6 @@ import 'settings_controller.dart';
 import 'widgets/account_card.dart';
 import 'widgets/color_palette_selector.dart';
 import 'widgets/language_selector.dart';
-import 'widgets/settings_section.dart';
 import 'widgets/sign_out_button.dart';
 import 'widgets/theme_mode_selector.dart';
 
@@ -66,21 +66,21 @@ class _SettingsList extends ConsumerWidget {
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
       children: [
         if (user != null) AccountCard(user: user, plan: plan),
-        SettingsSection(
+        CardSection(
           title: l10n.settingsLanguage,
           child: LanguageSelector(
             selected: language,
             onSelected: controller.setLanguage,
           ),
         ),
-        SettingsSection(
+        CardSection(
           title: l10n.settingsTheme,
           child: ThemeModeSelector(
             selected: theme.themeMode,
             onSelected: controller.setThemeMode,
           ),
         ),
-        SettingsSection(
+        CardSection(
           title: l10n.settingsColor,
           child: ColorPaletteSelector(
             selected: theme.seedColor,

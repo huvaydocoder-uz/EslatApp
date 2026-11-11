@@ -1,12 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/firebase/firebase_providers.dart';
 import '../../../core/l10n/app_language.dart';
 import '../../profile/data/profile_repository.dart';
 import '../data/auth_repository.dart';
 import '../domain/app_user.dart';
-import '../domain/auth_failure.dart';
 
 part 'auth_controller.g.dart';
 
@@ -23,9 +21,6 @@ class AuthController extends _$AuthController {
     if (state.isLoading) return;
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      if (!ref.read(firebaseReadyProvider)) {
-        throw const AuthFailure(AuthFailureReason.notConfigured);
-      }
       final user = await ref.read(authRepositoryProvider).signInWithGoogle();
       if (user == null) return; // foydalanuvchi oynani yopdi — xato emas
       await _ensureProfile(user);

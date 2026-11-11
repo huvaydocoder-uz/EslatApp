@@ -8,7 +8,9 @@ import '../../features/auth/domain/app_user.dart';
 import '../../features/auth/presentation/login_screen.dart';
 import '../../features/auth/presentation/splash_screen.dart';
 import '../../features/calendar/presentation/calendar_screen.dart';
+import '../../features/events/presentation/details/event_details_screen.dart';
 import '../../features/events/presentation/events_screen.dart';
+import '../../features/events/presentation/form/event_form_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import '../../shared/widgets/coming_soon_screen.dart';
@@ -61,18 +63,19 @@ GoRouter appRouter(Ref ref) {
       // DIQQAT: '/event/new' ':id' dan OLDIN turishi shart.
       GoRoute(
         path: AppRoutes.eventNew,
-        builder: (context, _) =>
-            ComingSoonScreen(title: context.l10n.addEventTitle),
+        builder: (_, _) => const EventFormScreen(),
       ),
       GoRoute(
         path: AppRoutes.eventDetailsPattern,
-        builder: (context, _) =>
-            ComingSoonScreen(title: context.l10n.eventDetailsTitle),
+        builder: (_, state) => EventDetailsScreen(
+          eventId: state.pathParameters[AppRoutes.idParam]!,
+        ),
         routes: [
           GoRoute(
             path: AppRoutes.eventEditSegment,
-            builder: (context, _) =>
-                ComingSoonScreen(title: context.l10n.editEventTitle),
+            builder: (_, state) => EventFormScreen(
+              eventId: state.pathParameters[AppRoutes.idParam],
+            ),
           ),
         ],
       ),
