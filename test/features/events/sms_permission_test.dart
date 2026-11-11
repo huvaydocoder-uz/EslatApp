@@ -14,7 +14,6 @@ class DeniedBridge implements NativeBridge {
   @override
   Future<void> syncReminders(List<Map<String, Object?>> reminders) async {}
 
-  @override
   var requests = 0;
 
   @override

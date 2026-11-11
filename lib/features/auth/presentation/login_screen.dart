@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 import '../../../core/l10n/l10n.dart';
 import '../../../shared/widgets/app_button.dart';
 import '../../../shared/widgets/app_logo.dart';
+import '../../settings/presentation/widgets/language_chips.dart';
 import '../domain/auth_failure.dart';
 import 'auth_controller.dart';
 
@@ -46,6 +47,8 @@ class LoginScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  const LanguageChips(),
+                  const SizedBox(height: 32),
                   const Center(child: AppLogo(size: 112)),
                   const SizedBox(height: 24),
                   Text(

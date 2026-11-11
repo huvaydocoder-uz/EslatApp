@@ -2,7 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../../../core/l10n/app_language.dart';
 
-/// 3 ta til — katta qatorlar, tanlangani belgi bilan.
+/// 3 ta til — bayroqli katta qatorlar, tanlangani belgi bilan.
 class LanguageSelector extends StatelessWidget {
   const LanguageSelector({
     super.key,
@@ -20,7 +20,7 @@ class LanguageSelector extends StatelessWidget {
       children: [
         for (final language in AppLanguage.values)
           ListTile(
-            leading: const Icon(Icons.language_rounded),
+            leading: Text(language.flag, style: const TextStyle(fontSize: 30)),
             title: Text(language.nativeName),
             selected: language == selected,
             trailing: language == selected

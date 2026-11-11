@@ -45,7 +45,7 @@ final class AuthControllerProvider
   AuthController create() => AuthController();
 }
 
-String _$authControllerHash() => r'9a59339e0bf869f1991941e78e7729d7ebb13f19';
+String _$authControllerHash() => r'cb6273b54094d0d6f7d380692daf0f42bd990848';
 
 /// Kirish va chiqish amallari. Holat: yuklanmoqda / xato (AuthFailure) / tayyor.
 ///

@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../../core/l10n/app_language.dart';
 import '../../../core/l10n/l10n.dart';
 import '../../../shared/widgets/async_value_view.dart';
 import '../../../shared/widgets/card_section.dart';
@@ -58,10 +57,7 @@ class _SettingsList extends ConsumerWidget {
     final user = ref.watch(authStateProvider).value;
     final theme = ref.watch(themeSettingsProvider);
     final controller = ref.read(settingsControllerProvider.notifier);
-    // Ekranda haqiqatda ko'rinayotgan til (profil yoki telefon tili).
-    final language = AppLanguage.fromCode(
-      Localizations.localeOf(context).languageCode,
-    );
+    final language = ref.watch(appLanguageProvider);
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),

@@ -62,7 +62,7 @@ final class EventFormControllerProvider
 }
 
 String _$eventFormControllerHash() =>
-    r'25a31b1bc06ca4ebd87ed910033193eeb1f78fd3';
+    r'91afa62b0e5d122b1eed0cd1820e3da2e1f65971';
 
 /// Qo'shish / tahrirlash formasi. `eventId == null` — yangi kun.
 

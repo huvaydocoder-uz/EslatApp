@@ -49,7 +49,7 @@ final class ReminderSyncProvider extends $NotifierProvider<ReminderSync, void> {
   }
 }
 
-String _$reminderSyncHash() => r'60931cae6a1415af9ce807f5b495a0294bf00c68';
+String _$reminderSyncHash() => r'8f6c8ee85fa5734925b8b59332b0820896c91661';
 
 /// Muhim kunlar o'zgarganda telefondagi eslatmalarni (va avtomatik SMS'ni)
 /// qayta rejalashtiradi. Chiqilganda ro'yxat bo'sh — hammasi bekor qilinadi.

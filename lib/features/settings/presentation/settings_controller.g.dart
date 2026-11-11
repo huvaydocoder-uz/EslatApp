@@ -46,7 +46,7 @@ final class SettingsControllerProvider
 }
 
 String _$settingsControllerHash() =>
-    r'cc345cb4d49cb3a08ae6d95647e10e20959c73ef';
+    r'50ae26b267976202c0b711857f788af522d6f9f5';
 
 /// Sozlamalarni saqlash: til, kunduzgi/tungi rejim, asosiy rang.
 ///

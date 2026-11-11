@@ -8,16 +8,16 @@ import 'package:material_ui/material_ui.dart';
 import '../../helpers.dart';
 
 void main() {
-  // Test muhitida telefon tili — en_US.
-  final en = l10nFor('en');
+  // Profil yo'q bo'lsa ilova o'zbekcha ochiladi (telefon tili en_US bo'lsa ham).
+  final uz = l10nFor('uz');
 
   testWidgets('kirilmagan: faqat Gmail tugmasi', (tester) async {
     await tester.pumpWidget(testApp());
     await tester.pumpAndSettle();
 
-    expect(find.text(en.loginTitle), findsOneWidget);
-    expect(find.text(en.loginWithGoogle), findsOneWidget);
-    expect(find.text(en.loginAutoNote), findsOneWidget);
+    expect(find.text(uz.loginTitle), findsOneWidget);
+    expect(find.text(uz.loginWithGoogle), findsOneWidget);
+    expect(find.text(uz.loginAutoNote), findsOneWidget);
     expect(find.byType(NavigationBar), findsNothing);
   });
 
@@ -30,28 +30,28 @@ void main() {
 
     expect(find.byType(NavigationDestination), findsNWidgets(4));
     for (final label in [
-      en.navHome,
-      en.navEvents,
-      en.navCalendar,
-      en.navSettings,
+      uz.navHome,
+      uz.navEvents,
+      uz.navCalendar,
+      uz.navSettings,
     ]) {
       expect(find.text(label), findsOneWidget);
     }
-    expect(find.text(en.homeEmptyTitle), findsOneWidget);
+    expect(find.text(uz.homeEmptyTitle), findsOneWidget);
 
-    await tester.tap(find.text(en.navCalendar));
+    await tester.tap(find.text(uz.navCalendar));
     await tester.pumpAndSettle();
-    expect(find.text(en.calendarNoEventsDay), findsOneWidget);
+    expect(find.text(uz.calendarNoEventsDay), findsOneWidget);
   });
 
   testWidgets('"Qo\'shish" to\'liq ekranli sahifani ochadi', (tester) async {
     await tester.pumpWidget(testApp(user: testUser));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text(en.addEvent));
+    await tester.tap(find.text(uz.addEvent));
     await tester.pumpAndSettle();
 
-    expect(find.text(en.addEventTitle), findsOneWidget);
+    expect(find.text(uz.addEventTitle), findsOneWidget);
     expect(find.byType(NavigationBar), findsNothing);
   });
 
@@ -93,10 +93,26 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text(en.loginWithGoogle));
+    await tester.tap(find.text(uz.loginWithGoogle));
     await tester.pumpAndSettle();
 
     expect(find.byType(NavigationBar), findsOneWidget);
-    expect(find.text(en.demoBanner), findsOneWidget);
+    expect(find.text(uz.demoBanner), findsOneWidget);
+  });
+
+  testWidgets('kirish ekranida bayroqli tillar, tanlansa darhol o\'zgaradi', (
+    tester,
+  ) async {
+    await tester.pumpWidget(testApp());
+    await tester.pumpAndSettle();
+
+    expect(find.text('🇺🇿'), findsOneWidget);
+    expect(find.text('🇷🇺'), findsOneWidget);
+    expect(find.text('🇬🇧'), findsOneWidget);
+    expect(find.text(uz.loginWithGoogle), findsOneWidget);
+
+    await tester.tap(find.text('Русский'));
+    await tester.pumpAndSettle();
+    expect(find.text(l10nFor('ru').loginWithGoogle), findsOneWidget);
   });
 }

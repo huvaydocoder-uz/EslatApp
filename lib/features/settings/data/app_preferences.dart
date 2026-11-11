@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/l10n/app_language.dart';
 import '../../../core/theme/theme_settings.dart';
 import '../../profile/data/profile_repository.dart';
 
@@ -12,7 +13,23 @@ part 'app_preferences.g.dart';
 ThemeSettings themeSettings(Ref ref) =>
     ThemeSettings.sanitized(ref.watch(currentProfileProvider).value?.settings);
 
-/// Foydalanuvchi tanlagan til. `null` — telefon tili bo'yicha avtomatik.
+/// Kirishdan oldin (kirish ekranida) tanlangan til. Kirgach profilga yoziladi.
 @Riverpod(keepAlive: true)
-Locale? appLocale(Ref ref) =>
-    ref.watch(currentProfileProvider).value?.language.locale;
+class LanguageChoice extends _$LanguageChoice {
+  @override
+  AppLanguage? build() => null;
+
+  void choose(AppLanguage language) => state = language;
+}
+
+/// Ekrandagi til: profildagi → kirishdan oldin tanlangan → o'zbekcha.
+@Riverpod(keepAlive: true)
+AppLanguage appLanguage(Ref ref) {
+  final saved = ref.watch(currentProfileProvider).value?.language;
+  return saved ??
+      ref.watch(languageChoiceProvider) ??
+      AppLanguage.defaultLanguage;
+}
+
+@Riverpod(keepAlive: true)
+Locale appLocale(Ref ref) => ref.watch(appLanguageProvider).locale;

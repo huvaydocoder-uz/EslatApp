@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:material_ui/material_ui.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -7,6 +5,7 @@ import '../../../core/l10n/app_language.dart';
 import '../../../core/theme/theme_settings.dart';
 import '../../auth/data/auth_repository.dart';
 import '../../profile/data/profile_repository.dart';
+import '../data/app_preferences.dart';
 
 part 'settings_controller.g.dart';
 
@@ -19,8 +18,10 @@ class SettingsController extends _$SettingsController {
   @override
   FutureOr<void> build() {}
 
-  Future<void> setLanguage(AppLanguage language) =>
-      _save((repo, uid) => repo.updateLocale(uid, language));
+  Future<void> setLanguage(AppLanguage language) {
+    ref.read(languageChoiceProvider.notifier).choose(language);
+    return _save((repo, uid) => repo.updateLocale(uid, language));
+  }
 
   Future<void> setThemeMode(ThemeMode mode) =>
       _save((repo, uid) => repo.updateThemeMode(uid, mode));
@@ -41,9 +42,7 @@ class SettingsController extends _$SettingsController {
     state = const AsyncLoading();
     final result = await AsyncValue.guard(() async {
       if (!hasProfile) {
-        final language = AppLanguage.fromDevice(
-          PlatformDispatcher.instance.locales,
-        );
+        final language = ref.read(appLanguageProvider);
         await repo.ensureProfile(user, language);
       }
       await action(repo, user.uid);

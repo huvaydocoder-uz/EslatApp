@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/l10n/app_language.dart';
 import '../../../core/platform/native_bridge.dart';
 import '../../../l10n/gen/app_localizations.dart';
 import '../../events/data/events_repository.dart';
@@ -27,9 +26,7 @@ class ReminderSync extends _$ReminderSync {
     if (!bridge.supportsReminders) return;
     final events = ref.watch(eventsProvider).value;
     if (events == null) return;
-    final locale =
-        ref.watch(appLocaleProvider) ??
-        AppLanguage.fromDevice(PlatformDispatcher.instance.locales).locale;
+    final locale = ref.watch(appLocaleProvider);
     final plan = ReminderPlanner.plan(
       events,
       DateTime.now(),

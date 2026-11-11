@@ -22,12 +22,9 @@ class EslatApp extends ConsumerWidget {
       darkTheme: AppTheme.dark(theme.seedColor),
       themeMode: theme.themeMode,
       routerConfig: router,
-      // 3 til: o'zbek, rus, ingliz. Foydalanuvchi tanlamagan bo'lsa —
-      // telefon tili; u ham mos kelmasa — ingliz tili.
+      // 3 til: o'zbek (birinchi ochilishda), rus, ingliz.
       locale: ref.watch(appLocaleProvider),
       supportedLocales: AppLanguage.supportedLocales,
-      localeListResolutionCallback: (deviceLocales, _) =>
-          AppLanguage.fromDevice(deviceLocales).locale,
       // Tizim matnlari (sana tanlagich, "Bekor qilish") material_ui dan.
       localizationsDelegates: const [
         AppLocalizations.delegate,

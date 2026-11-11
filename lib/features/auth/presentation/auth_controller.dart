@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/l10n/app_language.dart';
 import '../../profile/data/profile_repository.dart';
+import '../../settings/data/app_preferences.dart';
 import '../data/auth_repository.dart';
 import '../domain/app_user.dart';
 
@@ -37,9 +37,8 @@ class AuthController extends _$AuthController {
   /// Profil yaratilmasa ham kirish bekor qilinmaydi (masalan, internet
   /// uzildi) — sozlama birinchi marta saqlanganda profil qayta yaratiladi.
   Future<void> _ensureProfile(AppUser user) async {
-    final language = AppLanguage.fromDevice(
-      PlatformDispatcher.instance.locales,
-    );
+    // Kirish ekranida tanlangan (yoki standart o'zbek) til profilga yoziladi.
+    final language = ref.read(appLanguageProvider);
     try {
       await ref.read(profileRepositoryProvider).ensureProfile(user, language);
     } on Exception catch (error) {
