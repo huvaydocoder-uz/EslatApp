@@ -1,3 +1,4 @@
+import 'package:eslat/core/platform/native_bridge.dart';
 import 'package:eslat/features/auth/data/auth_repository.dart';
 import 'package:eslat/features/events/data/events_repository.dart';
 import 'package:eslat/features/events/domain/event_category.dart';
@@ -13,16 +14,19 @@ import '../../helpers.dart';
 
 void main() {
   late InMemoryEventsRepository repo;
+  late FakeBridge bridge;
   late ProviderContainer container;
 
   setUp(() async {
     repo = InMemoryEventsRepository();
+    bridge = FakeBridge();
     container = ProviderContainer(
       overrides: [
         authStateProvider.overrideWith((ref) => Stream.value(testUser)),
         currentProfileProvider.overrideWith((ref) => Stream.value(null)),
         eventsRepositoryProvider.overrideWithValue(repo),
         todayProvider.overrideWithValue(testToday),
+        nativeBridgeProvider.overrideWithValue(bridge),
       ],
     );
     addTearDown(container.dispose);
@@ -81,10 +85,9 @@ void main() {
   );
 
   test('SMS: raqam tekshiriladi va E.164 ko\'rinishida saqlanadi', () async {
-    form()
-      ..setTitle('  Dadamning tug\'ilgan kuni ')
-      ..setSmsEnabled(true)
-      ..setPhone('90 12');
+    form().setTitle('  Dadamning tug\'ilgan kuni ');
+    await form().setSmsEnabled(true, defaultText: 'Muborak!');
+    form().setPhone('90 12');
     expect(await form().save(), isFalse);
     expect(
       state().visibleError(EventFormField.phone),
@@ -96,7 +99,7 @@ void main() {
     final saved = (await savedEvents()).single;
     expect(saved.title, "Dadamning tug'ilgan kuni");
     expect(saved.phone, '+998901234567');
-    expect(saved.smsMode, SmsMode.manual);
+    expect(saved.smsMode, SmsMode.device);
   });
 
   test('"yili noma\'lum" — yil saqlanmaydi', () async {
@@ -126,4 +129,68 @@ void main() {
     expect(saved.personName, isNull);
     expect(saved.note, isNull);
   });
+
+  test('SMS ruxsati berilmasa — o\'chiq qoladi va xabar bayrog\'i', () async {
+    bridge.grant = false;
+    await form().setSmsEnabled(true, defaultText: 'Muborak!');
+    expect(state().smsEnabled, isFalse);
+    expect(state().smsPermissionDenied, isTrue);
+
+    bridge.grant = true;
+    await form().setSmsEnabled(true, defaultText: 'Muborak!');
+    expect(state().smsEnabled, isTrue);
+    expect(state().smsPermissionDenied, isFalse);
+    expect(state().draft.smsText, 'Muborak!');
+  });
+
+  test(
+    'kontaktdan: raqam E.164 ga, bo\'sh bo\'lsa ism ham to\'ldiriladi',
+    () async {
+      bridge.contact = (name: 'Onam', phone: '90 123-45-67');
+      await form().pickContact();
+      expect(state().phoneInput, '+998901234567');
+      expect(state().draft.personName, 'Onam');
+
+      form().setPerson('Oyijon');
+      bridge.contact = (name: 'Boshqa', phone: '+7 912 345 67 89');
+      await form().pickContact();
+      expect(state().phoneInput, '+79123456789');
+      expect(state().draft.personName, 'Oyijon');
+    },
+  );
+
+  test('avtomatik SMS saqlanganda — device rejimi, matn shart', () async {
+    form().setTitle('Onam');
+    await form().setSmsEnabled(true);
+    form()
+      ..setPhone('+998901234567')
+      ..setSmsText('');
+    expect(await form().save(), isFalse);
+    expect(state().visibleError(EventFormField.smsText), isNotNull);
+
+    form()
+      ..setSmsText('Muborak!')
+      ..setNotifyTime('07:45');
+    expect(await form().save(), isTrue);
+    final saved = (await savedEvents()).single;
+    expect(saved.smsMode, SmsMode.device);
+    expect(saved.notifyTime, '07:45');
+  });
+}
+
+class FakeBridge implements NativeBridge {
+  var grant = true;
+  PickedContact? contact;
+
+  @override
+  bool get supportsReminders => false;
+
+  @override
+  Future<void> syncReminders(List<Map<String, Object?>> reminders) async {}
+
+  @override
+  Future<bool> requestPermission(AppPermission permission) async => grant;
+
+  @override
+  Future<PickedContact?> pickContact() async => contact;
 }

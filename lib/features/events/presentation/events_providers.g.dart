@@ -108,15 +108,15 @@ final class EventOccurrencesProvider
 
 String _$eventOccurrencesHash() => r'e53a3cfe4631869a984c5b79694c1e90a3c03ec7';
 
-/// "Kunlar" ekranidagi toifa filtri. `null` — hammasi.
+/// "Kunlar" ekranidagi tur filtri (tayyor yoki o'z turi). `null` — hammasi.
 
 @ProviderFor(EventsFilter)
 final eventsFilterProvider = EventsFilterProvider._();
 
-/// "Kunlar" ekranidagi toifa filtri. `null` — hammasi.
+/// "Kunlar" ekranidagi tur filtri (tayyor yoki o'z turi). `null` — hammasi.
 final class EventsFilterProvider
-    extends $NotifierProvider<EventsFilter, EventCategory?> {
-  /// "Kunlar" ekranidagi toifa filtri. `null` — hammasi.
+    extends $NotifierProvider<EventsFilter, EventType?> {
+  /// "Kunlar" ekranidagi tur filtri (tayyor yoki o'z turi). `null` — hammasi.
   EventsFilterProvider._()
     : super(
         from: null,
@@ -136,29 +136,29 @@ final class EventsFilterProvider
   EventsFilter create() => EventsFilter();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(EventCategory? value) {
+  Override overrideWithValue(EventType? value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<EventCategory?>(value),
+      providerOverride: $SyncValueProvider<EventType?>(value),
     );
   }
 }
 
-String _$eventsFilterHash() => r'263ca117b252b1f97f98ee16e82b7943ea94c9e8';
+String _$eventsFilterHash() => r'b33ca7069c17c8d26bd2c40712a0d47905b7fcf2';
 
-/// "Kunlar" ekranidagi toifa filtri. `null` — hammasi.
+/// "Kunlar" ekranidagi tur filtri (tayyor yoki o'z turi). `null` — hammasi.
 
-abstract class _$EventsFilter extends $Notifier<EventCategory?> {
-  EventCategory? build();
+abstract class _$EventsFilter extends $Notifier<EventType?> {
+  EventType? build();
   @$mustCallSuper
   @override
   WhenComplete runBuild() {
-    final ref = this.ref as $Ref<EventCategory?, EventCategory?>;
+    final ref = this.ref as $Ref<EventType?, EventType?>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<EventCategory?, EventCategory?>,
-              EventCategory?,
+              AnyNotifier<EventType?, EventType?>,
+              EventType?,
               Object?,
               Object?
             >;

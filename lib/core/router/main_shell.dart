@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../features/reminders/presentation/reminder_sync.dart';
 import '../firebase/firebase_providers.dart';
 import '../l10n/l10n.dart';
 
@@ -34,6 +35,8 @@ class MainShell extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Kirgan foydalanuvchining eslatmalari telefonga yoziladi (Android).
+    ref.watch(reminderSyncProvider);
     final demo = !ref.watch(firebaseReadyProvider);
     return Scaffold(
       body: demo

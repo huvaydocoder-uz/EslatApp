@@ -628,12 +628,6 @@ abstract class AppLocalizations {
   /// **'Tabrik SMS'**
   String get formSms;
 
-  /// No description provided for @formSmsHint.
-  ///
-  /// In uz, this message translates to:
-  /// **'O\'sha kuni tayyor matnli SMS ochiladi — faqat \"Yuborish\"ni bosasiz.'**
-  String get formSmsHint;
-
   /// No description provided for @formPhone.
   ///
   /// In uz, this message translates to:
@@ -777,6 +771,126 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Sinov foydalanuvchisi'**
   String get demoUser;
+
+  /// No description provided for @formNotifyTime.
+  ///
+  /// In uz, this message translates to:
+  /// **'Eslatish vaqti'**
+  String get formNotifyTime;
+
+  /// No description provided for @formSmsAuto.
+  ///
+  /// In uz, this message translates to:
+  /// **'Tabrik SMS o\'zi yuborilsin'**
+  String get formSmsAuto;
+
+  /// No description provided for @formSmsAutoHint.
+  ///
+  /// In uz, this message translates to:
+  /// **'O\'sha kuni eslatish vaqtida telefoningizdan, o\'z raqamingizdan yuboriladi.'**
+  String get formSmsAutoHint;
+
+  /// No description provided for @formPickContact.
+  ///
+  /// In uz, this message translates to:
+  /// **'Kontaktlardan tanlash'**
+  String get formPickContact;
+
+  /// No description provided for @smsPermissionDenied.
+  ///
+  /// In uz, this message translates to:
+  /// **'SMS yuborishga ruxsat berilmadi. Uni telefon sozlamalarida yoqing.'**
+  String get smsPermissionDenied;
+
+  /// No description provided for @notifySmsSent.
+  ///
+  /// In uz, this message translates to:
+  /// **'Tabrik SMS yuborildi'**
+  String get notifySmsSent;
+
+  /// No description provided for @notifySmsFailed.
+  ///
+  /// In uz, this message translates to:
+  /// **'SMS yuborilmadi — o\'zingiz yuboring'**
+  String get notifySmsFailed;
+
+  /// No description provided for @detailsSmsAuto.
+  ///
+  /// In uz, this message translates to:
+  /// **'SMS avtomatik yuboriladi'**
+  String get detailsSmsAuto;
+
+  /// No description provided for @formNewType.
+  ///
+  /// In uz, this message translates to:
+  /// **'Yangi tur'**
+  String get formNewType;
+
+  /// No description provided for @newTypeTitle.
+  ///
+  /// In uz, this message translates to:
+  /// **'Yangi muhim kun turi'**
+  String get newTypeTitle;
+
+  /// No description provided for @newTypeName.
+  ///
+  /// In uz, this message translates to:
+  /// **'Tur nomi'**
+  String get newTypeName;
+
+  /// No description provided for @newTypeNameHint.
+  ///
+  /// In uz, this message translates to:
+  /// **'Masalan: Ish yubileyi'**
+  String get newTypeNameHint;
+
+  /// No description provided for @createAction.
+  ///
+  /// In uz, this message translates to:
+  /// **'Yaratish'**
+  String get createAction;
+
+  /// No description provided for @settingsCustomTypes.
+  ///
+  /// In uz, this message translates to:
+  /// **'Mening turlarim'**
+  String get settingsCustomTypes;
+
+  /// No description provided for @customTypesEmpty.
+  ///
+  /// In uz, this message translates to:
+  /// **'Hali o\'z turingiz yo\'q.'**
+  String get customTypesEmpty;
+
+  /// No description provided for @deleteTypeConfirmTitle.
+  ///
+  /// In uz, this message translates to:
+  /// **'Tur o\'chirilsinmi?'**
+  String get deleteTypeConfirmTitle;
+
+  /// No description provided for @deleteTypeConfirmMessage.
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu turdagi kunlar o\'chmaydi — ular \"Boshqa\" turiga o\'tadi.'**
+  String get deleteTypeConfirmMessage;
+
+  /// No description provided for @emojiOtherLabel.
+  ///
+  /// In uz, this message translates to:
+  /// **'Boshqa emoji (klaviaturadan)'**
+  String get emojiOtherLabel;
+
+  /// No description provided for @emojiOtherInvalid.
+  ///
+  /// In uz, this message translates to:
+  /// **'Bitta emoji kiriting'**
+  String get emojiOtherInvalid;
+
+  /// No description provided for @done.
+  ///
+  /// In uz, this message translates to:
+  /// **'Tayyor'**
+  String get done;
 }
 
 class _AppLocalizationsDelegate

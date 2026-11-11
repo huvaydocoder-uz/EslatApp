@@ -5,7 +5,7 @@ import '../../domain/phone_number.dart';
 
 part 'event_form_state.freezed.dart';
 
-enum EventFormField { title, phone, year }
+enum EventFormField { title, phone, smsText, year }
 
 enum EventFormError { required, invalidPhone, yearRequired }
 
@@ -27,6 +27,7 @@ abstract class EventFormState with _$EventFormState {
     @Default(false) bool submitted,
     @Default(false) bool isSaving,
     @Default(false) bool saveFailed,
+    @Default(false) bool smsPermissionDenied,
     @Default(2) int maxReminders,
   }) = _EventFormState;
 
@@ -38,6 +39,8 @@ abstract class EventFormState with _$EventFormState {
       EventFormField.phone: EventFormError.required
     else if (smsEnabled && PhoneNumber.normalize(phoneInput) == null)
       EventFormField.phone: EventFormError.invalidPhone,
+    if (smsEnabled && (draft.smsText?.trim().isEmpty ?? true))
+      EventFormField.smsText: EventFormError.required,
     if (!draft.repeatYearly && draft.year == null)
       EventFormField.year: EventFormError.yearRequired,
   };
@@ -53,7 +56,7 @@ abstract class EventFormState with _$EventFormState {
       title: draft.title.trim(),
       personName: clean(draft.personName),
       year: yearUnknown && draft.repeatYearly ? null : draft.year,
-      smsMode: smsEnabled ? SmsMode.manual : SmsMode.off,
+      smsMode: smsEnabled ? SmsMode.device : SmsMode.off,
       phone: smsEnabled ? PhoneNumber.normalize(phoneInput) : null,
       smsText: smsEnabled ? clean(draft.smsText) : null,
       note: clean(draft.note),

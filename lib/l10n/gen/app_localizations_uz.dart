@@ -321,10 +321,6 @@ class AppLocalizationsUz extends AppLocalizations {
   String get formSms => 'Tabrik SMS';
 
   @override
-  String get formSmsHint =>
-      'O\'sha kuni tayyor matnli SMS ochiladi — faqat \"Yuborish\"ni bosasiz.';
-
-  @override
   String get formPhone => 'Telefon raqami';
 
   @override
@@ -398,4 +394,67 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get demoUser => 'Sinov foydalanuvchisi';
+
+  @override
+  String get formNotifyTime => 'Eslatish vaqti';
+
+  @override
+  String get formSmsAuto => 'Tabrik SMS o\'zi yuborilsin';
+
+  @override
+  String get formSmsAutoHint =>
+      'O\'sha kuni eslatish vaqtida telefoningizdan, o\'z raqamingizdan yuboriladi.';
+
+  @override
+  String get formPickContact => 'Kontaktlardan tanlash';
+
+  @override
+  String get smsPermissionDenied =>
+      'SMS yuborishga ruxsat berilmadi. Uni telefon sozlamalarida yoqing.';
+
+  @override
+  String get notifySmsSent => 'Tabrik SMS yuborildi';
+
+  @override
+  String get notifySmsFailed => 'SMS yuborilmadi — o\'zingiz yuboring';
+
+  @override
+  String get detailsSmsAuto => 'SMS avtomatik yuboriladi';
+
+  @override
+  String get formNewType => 'Yangi tur';
+
+  @override
+  String get newTypeTitle => 'Yangi muhim kun turi';
+
+  @override
+  String get newTypeName => 'Tur nomi';
+
+  @override
+  String get newTypeNameHint => 'Masalan: Ish yubileyi';
+
+  @override
+  String get createAction => 'Yaratish';
+
+  @override
+  String get settingsCustomTypes => 'Mening turlarim';
+
+  @override
+  String get customTypesEmpty => 'Hali o\'z turingiz yo\'q.';
+
+  @override
+  String get deleteTypeConfirmTitle => 'Tur o\'chirilsinmi?';
+
+  @override
+  String get deleteTypeConfirmMessage =>
+      'Bu turdagi kunlar o\'chmaydi — ular \"Boshqa\" turiga o\'tadi.';
+
+  @override
+  String get emojiOtherLabel => 'Boshqa emoji (klaviaturadan)';
+
+  @override
+  String get emojiOtherInvalid => 'Bitta emoji kiriting';
+
+  @override
+  String get done => 'Tayyor';
 }

@@ -323,10 +323,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get formSms => 'Greeting SMS';
 
   @override
-  String get formSmsHint =>
-      'On the day, an SMS with ready text opens — just tap \"Send\".';
-
-  @override
   String get formPhone => 'Phone number';
 
   @override
@@ -399,4 +395,67 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get demoUser => 'Test user';
+
+  @override
+  String get formNotifyTime => 'Reminder time';
+
+  @override
+  String get formSmsAuto => 'Send greeting SMS automatically';
+
+  @override
+  String get formSmsAutoHint =>
+      'On the day, at the reminder time, it is sent from your phone and your own number.';
+
+  @override
+  String get formPickContact => 'Pick from contacts';
+
+  @override
+  String get smsPermissionDenied =>
+      'SMS permission was not granted. Turn it on in phone settings.';
+
+  @override
+  String get notifySmsSent => 'Greeting SMS sent';
+
+  @override
+  String get notifySmsFailed => 'SMS not sent — please send it yourself';
+
+  @override
+  String get detailsSmsAuto => 'SMS will be sent automatically';
+
+  @override
+  String get formNewType => 'New type';
+
+  @override
+  String get newTypeTitle => 'New type of day';
+
+  @override
+  String get newTypeName => 'Type name';
+
+  @override
+  String get newTypeNameHint => 'For example: Work anniversary';
+
+  @override
+  String get createAction => 'Create';
+
+  @override
+  String get settingsCustomTypes => 'My types';
+
+  @override
+  String get customTypesEmpty => 'You have no custom types yet.';
+
+  @override
+  String get deleteTypeConfirmTitle => 'Delete this type?';
+
+  @override
+  String get deleteTypeConfirmMessage =>
+      'Days of this type stay — they move to \"Other\".';
+
+  @override
+  String get emojiOtherLabel => 'Other emoji (from keyboard)';
+
+  @override
+  String get emojiOtherInvalid => 'Enter one emoji';
+
+  @override
+  String get done => 'Done';
 }

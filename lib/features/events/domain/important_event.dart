@@ -5,8 +5,15 @@ import 'event_category.dart';
 part 'important_event.freezed.dart';
 part 'important_event.g.dart';
 
-/// SMS rejimi (Firestore `smsMode`). `auto` — faqat Pro, server orqali.
-enum SmsMode { off, manual, auto }
+/// SMS rejimi (Firestore `smsMode`):
+/// - `device` — o'sha kuni eslatish vaqtida foydalanuvchining o'z telefonidan
+///   avtomatik yuboriladi (bepul, Android);
+/// - `manual` — SMS ilovasi tayyor matn bilan ochiladi;
+/// - `auto` — server (SMS shlyuz) orqali, faqat Pro (keyinroq, iOS uchun ham).
+enum SmsMode { off, manual, device, auto }
+
+/// Eslatish vaqti standarti (soat:daqiqa).
+const defaultNotifyTime = '09:00';
 
 /// Eslatma variantlari (kun oldin). Firestore qoidasidagi ro'yxatning qismi.
 const reminderOptions = <int>[0, 1, 3, 7];
@@ -27,6 +34,10 @@ abstract class ImportantEvent with _$ImportantEvent {
     String? personName,
     @JsonKey(unknownEnumValue: EventCategory.other)
     required EventCategory category,
+
+    /// Foydalanuvchi yaratgan tur (`users/{uid}/categories/{id}`); bo'lsa,
+    /// `category` = `other`.
+    String? customCategoryId,
     required String emoji,
     required int day,
     required int month,
@@ -34,6 +45,9 @@ abstract class ImportantEvent with _$ImportantEvent {
     String? time,
     @Default(true) bool repeatYearly,
     @Default(<int>[0, 1]) List<int> remindDaysBefore,
+
+    /// Eslatma (va avtomatik SMS) shu vaqtda: "HH:mm".
+    @Default(defaultNotifyTime) String notifyTime,
     @Default(true) bool alarmEnabled,
     @JsonKey(unknownEnumValue: SmsMode.off)
     @Default(SmsMode.off)
@@ -58,6 +72,7 @@ abstract class ImportantEvent with _$ImportantEvent {
   /// Ixtiyoriy maydonlar — tahrirlashda bo'shatilsa Firestore'dan o'chiriladi.
   static const optionalFields = [
     'personName',
+    'customCategoryId',
     'year',
     'time',
     'phone',

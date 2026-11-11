@@ -29,10 +29,15 @@ class EventFormScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final state = ref.watch(eventFormControllerProvider(eventId));
     ref.listen(eventFormControllerProvider(eventId), (previous, next) {
+      void show(String message) => ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text(message)));
       if (next.saveFailed && !(previous?.saveFailed ?? false)) {
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(SnackBar(content: Text(l10n.saveError)));
+        show(l10n.saveError);
+      }
+      if (next.smsPermissionDenied &&
+          !(previous?.smsPermissionDenied ?? false)) {
+        show(l10n.smsPermissionDenied);
       }
     });
 

@@ -18,12 +18,30 @@ class ReminderSection extends ConsumerWidget {
     final form = ref.read(eventFormControllerProvider(eventId).notifier);
     final selected = state.draft.remindDaysBefore;
     final atLimit = selected.length >= state.maxReminders;
+    final time = _parse(state.draft.notifyTime);
+
+    Future<void> pickTime() async {
+      final picked = await showTimePicker(context: context, initialTime: time);
+      if (picked == null) return;
+      String two(int v) => v.toString().padLeft(2, '0');
+      form.setNotifyTime('${two(picked.hour)}:${two(picked.minute)}');
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        ListTile(
+          leading: const Icon(Icons.schedule_rounded),
+          title: Text(l10n.formNotifyTime),
+          subtitle: Text(
+            MaterialLocalizations.of(context)
+                .formatTimeOfDay(time, alwaysUse24HourFormat: true),
+          ),
+          trailing: const Icon(Icons.edit_rounded),
+          onTap: pickTime,
+        ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+          padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
           child: Wrap(
             spacing: 8,
             runSpacing: 8,
@@ -61,4 +79,12 @@ class ReminderSection extends ConsumerWidget {
       ],
     );
   }
+}
+
+TimeOfDay _parse(String hhmm) {
+  final parts = hhmm.split(':');
+  return TimeOfDay(
+    hour: int.tryParse(parts.first) ?? 9,
+    minute: parts.length > 1 ? int.tryParse(parts[1]) ?? 0 : 0,
+  );
 }

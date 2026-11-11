@@ -15,6 +15,7 @@ _ImportantEvent _$ImportantEventFromJson(Map<String, dynamic> json) =>
         json['category'],
         unknownValue: EventCategory.other,
       ),
+      customCategoryId: json['customCategoryId'] as String?,
       emoji: json['emoji'] as String,
       day: (json['day'] as num).toInt(),
       month: (json['month'] as num).toInt(),
@@ -26,6 +27,7 @@ _ImportantEvent _$ImportantEventFromJson(Map<String, dynamic> json) =>
               ?.map((e) => (e as num).toInt())
               .toList() ??
           const <int>[0, 1],
+      notifyTime: json['notifyTime'] as String? ?? defaultNotifyTime,
       alarmEnabled: json['alarmEnabled'] as bool? ?? true,
       smsMode:
           $enumDecodeNullable(
@@ -44,6 +46,7 @@ Map<String, dynamic> _$ImportantEventToJson(_ImportantEvent instance) =>
       'title': instance.title,
       'personName': ?instance.personName,
       'category': _$EventCategoryEnumMap[instance.category]!,
+      'customCategoryId': ?instance.customCategoryId,
       'emoji': instance.emoji,
       'day': instance.day,
       'month': instance.month,
@@ -51,6 +54,7 @@ Map<String, dynamic> _$ImportantEventToJson(_ImportantEvent instance) =>
       'time': ?instance.time,
       'repeatYearly': instance.repeatYearly,
       'remindDaysBefore': instance.remindDaysBefore,
+      'notifyTime': instance.notifyTime,
       'alarmEnabled': instance.alarmEnabled,
       'smsMode': _$SmsModeEnumMap[instance.smsMode]!,
       'phone': ?instance.phone,
@@ -69,5 +73,6 @@ const _$EventCategoryEnumMap = {
 const _$SmsModeEnumMap = {
   SmsMode.off: 'off',
   SmsMode.manual: 'manual',
+  SmsMode.device: 'device',
   SmsMode.auto: 'auto',
 };

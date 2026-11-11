@@ -15,10 +15,12 @@ abstract final class FirestorePaths {
   static const devices = 'devices';
   static const smsLogs = 'smsLogs';
   static const plans = 'plans';
+  static const categories = 'categories';
 
   static String user(String uid) => '$users/$uid';
   static String userEvents(String uid) => '$users/$uid/$events';
   static String userDevices(String uid) => '$users/$uid/$devices';
+  static String userCategories(String uid) => '$users/$uid/$categories';
 }
 
 /// Firebase Storage yo'llari — `firebase/storage.rules` bilan mos.

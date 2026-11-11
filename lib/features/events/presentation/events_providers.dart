@@ -1,8 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/events_repository.dart';
-import '../domain/event_category.dart';
 import '../domain/event_occurrence.dart';
+import 'event_type.dart';
 
 part 'events_providers.g.dart';
 
@@ -22,13 +22,13 @@ AsyncValue<List<EventOccurrence>> eventOccurrences(Ref ref) {
       .whenData((events) => EventDates.sorted(events, today));
 }
 
-/// "Kunlar" ekranidagi toifa filtri. `null` — hammasi.
+/// "Kunlar" ekranidagi tur filtri (tayyor yoki o'z turi). `null` — hammasi.
 @riverpod
 class EventsFilter extends _$EventsFilter {
   @override
-  EventCategory? build() => null;
+  EventType? build() => null;
 
-  void select(EventCategory? category) => state = category;
+  void select(EventType? type) => state = type;
 }
 
 /// Bitta muhim kun (tafsilotlar ekrani uchun). Topilmasa — `null`.

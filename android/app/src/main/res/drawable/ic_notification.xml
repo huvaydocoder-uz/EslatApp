@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bildirishnoma ikonkasi: oq qo'ng'iroqcha (assets/branding/eslat_logo.svg dan). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="1024"
+    android:viewportHeight="1024">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M512 228c-24 0-44 20-44 44v20c-94 20-164 103-164 202v134l-50 66c-11 14-1 34 17 34h482c18 0 28-20 17-34l-50-66V494c0-99-70-182-164-202v-20c0-24-20-44-44-44z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M432 772h160c0 44-36 80-80 80s-80-36-80-80z" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="40"
+        android:strokeLineCap="round"
+        android:pathData="M246 318c-40 48-64 108-68 172M778 318c40 48 64 108 68 172" />
+</vector>

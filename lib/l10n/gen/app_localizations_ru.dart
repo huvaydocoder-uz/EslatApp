@@ -334,10 +334,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get formSms => 'SMS-поздравление';
 
   @override
-  String get formSmsHint =>
-      'В этот день откроется SMS с готовым текстом — останется нажать «Отправить».';
-
-  @override
   String get formPhone => 'Номер телефона';
 
   @override
@@ -411,4 +407,67 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get demoUser => 'Тестовый пользователь';
+
+  @override
+  String get formNotifyTime => 'Время напоминания';
+
+  @override
+  String get formSmsAuto => 'Отправить SMS-поздравление автоматически';
+
+  @override
+  String get formSmsAutoHint =>
+      'В этот день во время напоминания SMS уйдёт с вашего телефона, с вашего номера.';
+
+  @override
+  String get formPickContact => 'Выбрать из контактов';
+
+  @override
+  String get smsPermissionDenied =>
+      'Нет разрешения на отправку SMS. Включите его в настройках телефона.';
+
+  @override
+  String get notifySmsSent => 'SMS-поздравление отправлено';
+
+  @override
+  String get notifySmsFailed => 'SMS не отправлено — отправьте вручную';
+
+  @override
+  String get detailsSmsAuto => 'SMS отправится автоматически';
+
+  @override
+  String get formNewType => 'Новый тип';
+
+  @override
+  String get newTypeTitle => 'Новый тип даты';
+
+  @override
+  String get newTypeName => 'Название типа';
+
+  @override
+  String get newTypeNameHint => 'Например: Юбилей на работе';
+
+  @override
+  String get createAction => 'Создать';
+
+  @override
+  String get settingsCustomTypes => 'Мои типы';
+
+  @override
+  String get customTypesEmpty => 'У вас пока нет своих типов.';
+
+  @override
+  String get deleteTypeConfirmTitle => 'Удалить тип?';
+
+  @override
+  String get deleteTypeConfirmMessage =>
+      'Даты этого типа не удалятся — они перейдут в «Другое».';
+
+  @override
+  String get emojiOtherLabel => 'Другой эмодзи (с клавиатуры)';
+
+  @override
+  String get emojiOtherInvalid => 'Введите один эмодзи';
+
+  @override
+  String get done => 'Готово';
 }

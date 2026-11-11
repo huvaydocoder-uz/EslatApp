@@ -1,11 +1,15 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../../core/platform/native_bridge.dart';
+
 import '../../../auth/data/auth_repository.dart';
 import '../../../profile/data/profile_repository.dart';
 import '../../../subscription/domain/plan.dart';
 import '../../data/events_repository.dart';
+import '../../domain/custom_category.dart';
 import '../../domain/event_category.dart';
 import '../../domain/important_event.dart';
+import '../../domain/phone_number.dart';
 import '../events_providers.dart';
 import 'event_form_state.dart';
 
@@ -55,9 +59,49 @@ class EventFormController extends _$EventFormController {
   void setAlarm(bool on) => _draft((d) => d.copyWith(alarmEnabled: on));
   void setTime(String? hhmm) => _draft((d) => d.copyWith(time: hhmm));
 
+  void setNotifyTime(String hhmm) =>
+      _draft((d) => d.copyWith(notifyTime: hhmm));
+
   void setPhone(String value) => state = state.copyWith(phoneInput: value);
-  void setSmsEnabled(bool on) => state = state.copyWith(smsEnabled: on);
   void setYearUnknown(bool on) => state = state.copyWith(yearUnknown: on);
+
+  /// Avtomatik SMS: yoqishda telefondan SMS ruxsati so'raladi. Ruxsat
+  /// berilmasa — o'chiq qoladi va `smsPermissionDenied` (ekranda xabar).
+  Future<void> setSmsEnabled(bool on, {String? defaultText}) async {
+    state = state.copyWith(smsPermissionDenied: false);
+    if (!on) {
+      state = state.copyWith(smsEnabled: false);
+      return;
+    }
+    final granted = await ref
+        .read(nativeBridgeProvider)
+        .requestPermission(AppPermission.sms);
+    if (!ref.mounted) return;
+    if (!granted) {
+      state = state.copyWith(smsPermissionDenied: true);
+      return;
+    }
+    final needsText = state.draft.smsText?.trim().isEmpty ?? true;
+    state = state.copyWith(
+      smsEnabled: true,
+      draft: needsText && defaultText != null
+          ? state.draft.copyWith(smsText: defaultText)
+          : state.draft,
+    );
+  }
+
+  /// Tizimning kontakt oynasidan raqam (va bo'sh bo'lsa — ism) olinadi.
+  Future<void> pickContact() async {
+    final contact = await ref.read(nativeBridgeProvider).pickContact();
+    if (contact == null || !ref.mounted) return;
+    state = state.copyWith(
+      phoneInput: PhoneNumber.normalize(contact.phone) ?? contact.phone,
+    );
+    final name = contact.name;
+    if (name != null && (state.draft.personName?.trim().isEmpty ?? true)) {
+      setPerson(name);
+    }
+  }
 
   /// Toifa tanlansa: emoji (foydalanuvchi o'zi tanlamagan bo'lsa) va
   /// "har yili" standart qiymati moslashadi.
@@ -66,11 +110,25 @@ class EventFormController extends _$EventFormController {
     _draft(
       (d) => d.copyWith(
         category: category,
+        customCategoryId: null,
         emoji: keepEmoji ? d.emoji : category.defaultEmoji,
         repeatYearly: category.repeatsByDefault,
       ),
     );
     if (!category.repeatsByDefault) setYearUnknown(false);
+  }
+
+  /// Foydalanuvchining o'z turi ("Boshqa" sifatida, o'z emojisi bilan).
+  void setCustomCategory(CustomCategory custom) {
+    final keepEmoji = state.emojiChosenByUser;
+    _draft(
+      (d) => d.copyWith(
+        category: EventCategory.other,
+        customCategoryId: custom.id,
+        emoji: keepEmoji ? d.emoji : custom.emoji,
+        repeatYearly: true,
+      ),
+    );
   }
 
   void setEmoji(String emoji) {

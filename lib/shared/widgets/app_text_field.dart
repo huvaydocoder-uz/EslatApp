@@ -20,6 +20,7 @@ class AppTextField extends StatefulWidget {
     this.maxLength,
     this.textCapitalization = TextCapitalization.sentences,
     this.inputFormatters,
+    this.suffix,
   });
 
   final String initialValue;
@@ -34,12 +35,25 @@ class AppTextField extends StatefulWidget {
   final TextCapitalization textCapitalization;
   final List<TextInputFormatter>? inputFormatters;
 
+  /// Maydon oxiridagi tugma (masalan, "Kontaktlardan tanlash").
+  final Widget? suffix;
+
   @override
   State<AppTextField> createState() => _AppTextFieldState();
 }
 
 class _AppTextFieldState extends State<AppTextField> {
   late final _controller = TextEditingController(text: widget.initialValue);
+
+  /// Qiymat tashqaridan o'zgarsa (masalan, kontakt tanlandi) — maydon ham yangilanadi.
+  @override
+  void didUpdateWidget(AppTextField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialValue != oldWidget.initialValue &&
+        widget.initialValue != _controller.text) {
+      _controller.text = widget.initialValue;
+    }
+  }
 
   @override
   void dispose() {
@@ -63,6 +77,7 @@ class _AppTextFieldState extends State<AppTextField> {
         hintText: widget.hint,
         errorText: widget.errorText,
         prefixIcon: widget.icon == null ? null : Icon(widget.icon),
+        suffixIcon: widget.suffix,
         counterText: '',
       ),
     );

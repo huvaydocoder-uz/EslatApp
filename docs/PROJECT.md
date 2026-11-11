@@ -122,10 +122,13 @@ Emoji va rang tanlash uchun paket **kerak emas** — o'zimiz tayyor katta emoji 
 
 ## Muhim texnik qarorlar (halol cheklovlar)
 
-1. **SMS.** iOS umuman, Google Play esa (SEND_SMS ruxsati) ilovaga SMS'ni *jimgina* yuborishga
-   ruxsat bermaydi. Shuning uchun: **bepul** — SMS ilovasi tayyor matn va raqam bilan ochiladi,
-   foydalanuvchi 1 marta "Yuborish"ni bosadi; **Pro** — SMS server orqali avtomatik ketadi
-   (Cloud Functions + SMS shlyuz, masalan O'zbekiston uchun Eskiz.uz, xalqaro — Twilio).
+1. **SMS.** Android'da tabrik SMS o'sha kuni eslatish vaqtida **foydalanuvchining o'z
+   telefonidan, o'z raqamidan avtomatik** ketadi (`smsMode: device`, bepul; AlarmManager +
+   SmsManager, `android/app/src/main/kotlin/uz/eslat/`). Natija bildirishnoma bilan
+   ("yuborildi" / "yuborilmadi"). Cheklovlar: iOS ilovaga SMS'ni o'zi yuborishga umuman
+   ruxsat bermaydi; Google Play SEND_SMS ruxsatini qattiq tekshiradi (APK tarqatishda muammo
+   yo'q, Play Market uchun alohida ko'rib chiqiladi). iOS va Pro uchun keyinroq — server orqali
+   (Cloud Functions + SMS shlyuz, masalan Eskiz.uz / Twilio; Blaze tarif va shartnoma kerak).
 2. **Tinimsiz budilnik.** Android'da to'liq ekranli, to'xtatilmaguncha chaladi. iOS'da ilova
    yopib tashlansa (swipe) uchinchi tomon ilovasi cheksiz chala olmaydi — bildirishnoma
    ovozi chaladi va foydalanuvchi ochganda budilnik ekrani davom etadi. iOS 26+ dagi
@@ -170,6 +173,7 @@ Emoji va rang tanlash uchun paket **kerak emas** — o'zimiz tayyor katta emoji 
 |-------|---------------|
 | **2** ✅ | Gmail orqali kirish (bepul, kodsiz), `users` profili, 3 til, Sozlamalar (til, mavzu, rang, chiqish), Android APK |
 | **3** ✅ | Muhim kunlar: model, repository, qo'shish/tahrirlash/o'chirish (emoji to'plami), Asosiy (bugun + 30 kun), Kunlar (filtr), Taqvim; sinov rejimi |
-| **4** | Eslatmalar: lokal bildirishnoma, budilnik ekrani, FCM, SMS ilovasini ochish |
+| **4** ✅ | Eslatmalar (Android): har bir kun uchun eslatish vaqti, aniq vaqtli bildirishnoma, qayta yoqilganda tiklash, avtomatik tabrik SMS (o'z SIM'dan), kontaktdan raqam tanlash, o'z turlari + istalgan emoji |
+| **4b** | To'xtatilmaguncha chaladigan budilnik ekrani, FCM push, iOS eslatmalari |
 | **5** | Server (Cloud Functions): Telegram bot orqali kirish, server eslatmalari, App Check |
 | **6** | Pro (to'lov), rus/ingliz tillari, ilova ikonkasi, do'konlarga chiqarish |

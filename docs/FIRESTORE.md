@@ -9,6 +9,7 @@ Belgilar: **M** — majburiy, ixtiyoriy maydon `null` yoki umuman yo'q bo'lishi 
 ```
 users/{uid}
  ├── events/{eventId}
+ ├── categories/{categoryId}  — o'z turlari ("Ish yubileyi 🏆")
  ├── devices/{deviceId}
  └── smsLogs/{logId}          🔒 server
 plans/{planId}                🔒 server
@@ -45,6 +46,7 @@ kolleksiyalar va Storage fayllari bilan birga; App Store talabi).
 | `title` | string | M | 1–80, masalan "Onamning tug'ilgan kuni" |
 | `personName` | string | | ≤ 60, "Onam" |
 | `category` | string | M | `birthday` \| `anniversary` \| `parentBirthday` \| `meeting` \| `other` |
+| `customCategoryId` | string | | ≤ 64; o'z turi bo'lsa (`category` = `other`) |
 | `emoji` | string | M | 1–16 belgi (🎂 💍 👵 📅 …) |
 | `day` | int | M | 1–31 |
 | `month` | int | M | 1–12 |
@@ -52,9 +54,9 @@ kolleksiyalar va Storage fayllari bilan birga; App Store talabi).
 | `time` | string | | `HH:mm` — uchrashuvlar uchun |
 | `repeatYearly` | bool | M | Tug'ilgan kunlar — `true`, bir martalik uchrashuv — `false` |
 | `remindDaysBefore` | list\<int\> | M | 1–5 ta, qiymatlar `{0,1,2,3,7,14,30}`; **bepul ≤ 2**, Pro ≤ 5 |
-| `notifyTime` | string | | `HH:mm`, bo'lmasa profil sozlamasi |
+| `notifyTime` | string | | `HH:mm` — eslatma va avtomatik SMS vaqti (standart `09:00`) |
 | `alarmEnabled` | bool | M | O'sha kuni tinimsiz budilnik chalsinmi |
-| `smsMode` | string | M | `off` \| `manual` (SMS ilovasini ochish) \| `auto` (**faqat Pro**) |
+| `smsMode` | string | M | `off` \| `manual` (SMS ilovasini ochish) \| `device` (o'sha kuni telefondan avtomatik, bepul) \| `auto` (server orqali, **faqat Pro**) |
 | `phone` | string | | E.164; `smsMode != off` bo'lsa **majburiy** |
 | `smsText` | string | | ≤ 300 |
 | `note` | string | | ≤ 500 |
@@ -68,6 +70,16 @@ mintaqasiga bog'liq emas; yil ko'pincha noma'lum. Ro'yxatni tartiblash va filtrl
 **Indeks:** `nextReminderAt` — `COLLECTION_GROUP` (server har 15 daqiqada vaqti kelgan
 eslatmalarni barcha foydalanuvchilar bo'yicha bitta so'rov bilan topadi) —
 [`firestore.indexes.json`](../firebase/firestore.indexes.json).
+
+## `users/{uid}/categories/{categoryId}` — o'z turlari
+
+| Maydon | Tur | M | Cheklov |
+|--------|-----|---|---------|
+| `name` | string | M | 1–40 |
+| `emoji` | string | M | 1–16 |
+| `createdAt` / `updatedAt` | timestamp | M | server vaqti |
+
+Tur o'chirilsa, unga bog'langan kunlar o'chmaydi — "Boshqa" sifatida ko'rinadi.
 
 ## `users/{uid}/devices/{deviceId}` — push uchun qurilmalar
 

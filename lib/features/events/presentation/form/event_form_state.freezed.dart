@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$EventFormState {
 
- ImportantEvent get draft; bool get isEditing; bool get yearUnknown; bool get smsEnabled; String get phoneInput; bool get emojiChosenByUser; bool get submitted; bool get isSaving; bool get saveFailed; int get maxReminders;
+ ImportantEvent get draft; bool get isEditing; bool get yearUnknown; bool get smsEnabled; String get phoneInput; bool get emojiChosenByUser; bool get submitted; bool get isSaving; bool get saveFailed; bool get smsPermissionDenied; int get maxReminders;
 /// Create a copy of EventFormState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,20 +27,20 @@ $EventFormStateCopyWith<EventFormState> get copyWith => _$EventFormStateCopyWith
 @override
 bool operator ==(Object other) {
   final _this = this as EventFormState;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EventFormState&&(identical(other.draft, _this.draft) || other.draft == _this.draft)&&(identical(other.isEditing, _this.isEditing) || other.isEditing == _this.isEditing)&&(identical(other.yearUnknown, _this.yearUnknown) || other.yearUnknown == _this.yearUnknown)&&(identical(other.smsEnabled, _this.smsEnabled) || other.smsEnabled == _this.smsEnabled)&&(identical(other.phoneInput, _this.phoneInput) || other.phoneInput == _this.phoneInput)&&(identical(other.emojiChosenByUser, _this.emojiChosenByUser) || other.emojiChosenByUser == _this.emojiChosenByUser)&&(identical(other.submitted, _this.submitted) || other.submitted == _this.submitted)&&(identical(other.isSaving, _this.isSaving) || other.isSaving == _this.isSaving)&&(identical(other.saveFailed, _this.saveFailed) || other.saveFailed == _this.saveFailed)&&(identical(other.maxReminders, _this.maxReminders) || other.maxReminders == _this.maxReminders));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EventFormState&&(identical(other.draft, _this.draft) || other.draft == _this.draft)&&(identical(other.isEditing, _this.isEditing) || other.isEditing == _this.isEditing)&&(identical(other.yearUnknown, _this.yearUnknown) || other.yearUnknown == _this.yearUnknown)&&(identical(other.smsEnabled, _this.smsEnabled) || other.smsEnabled == _this.smsEnabled)&&(identical(other.phoneInput, _this.phoneInput) || other.phoneInput == _this.phoneInput)&&(identical(other.emojiChosenByUser, _this.emojiChosenByUser) || other.emojiChosenByUser == _this.emojiChosenByUser)&&(identical(other.submitted, _this.submitted) || other.submitted == _this.submitted)&&(identical(other.isSaving, _this.isSaving) || other.isSaving == _this.isSaving)&&(identical(other.saveFailed, _this.saveFailed) || other.saveFailed == _this.saveFailed)&&(identical(other.smsPermissionDenied, _this.smsPermissionDenied) || other.smsPermissionDenied == _this.smsPermissionDenied)&&(identical(other.maxReminders, _this.maxReminders) || other.maxReminders == _this.maxReminders));
 }
 
 
 @override
 int get hashCode {
   final _this = this as EventFormState;
-  return Object.hash(runtimeType,_this.draft,_this.isEditing,_this.yearUnknown,_this.smsEnabled,_this.phoneInput,_this.emojiChosenByUser,_this.submitted,_this.isSaving,_this.saveFailed,_this.maxReminders);
+  return Object.hash(runtimeType,_this.draft,_this.isEditing,_this.yearUnknown,_this.smsEnabled,_this.phoneInput,_this.emojiChosenByUser,_this.submitted,_this.isSaving,_this.saveFailed,_this.smsPermissionDenied,_this.maxReminders);
 }
 
 @override
 String toString() {
   final _this = this as EventFormState;
-  return 'EventFormState(draft: ${_this.draft}, isEditing: ${_this.isEditing}, yearUnknown: ${_this.yearUnknown}, smsEnabled: ${_this.smsEnabled}, phoneInput: ${_this.phoneInput}, emojiChosenByUser: ${_this.emojiChosenByUser}, submitted: ${_this.submitted}, isSaving: ${_this.isSaving}, saveFailed: ${_this.saveFailed}, maxReminders: ${_this.maxReminders})';
+  return 'EventFormState(draft: ${_this.draft}, isEditing: ${_this.isEditing}, yearUnknown: ${_this.yearUnknown}, smsEnabled: ${_this.smsEnabled}, phoneInput: ${_this.phoneInput}, emojiChosenByUser: ${_this.emojiChosenByUser}, submitted: ${_this.submitted}, isSaving: ${_this.isSaving}, saveFailed: ${_this.saveFailed}, smsPermissionDenied: ${_this.smsPermissionDenied}, maxReminders: ${_this.maxReminders})';
 }
 
 
@@ -51,7 +51,7 @@ abstract mixin class $EventFormStateCopyWith<$Res>  {
   factory $EventFormStateCopyWith(EventFormState value, $Res Function(EventFormState) _then) = _$EventFormStateCopyWithImpl;
 @useResult
 $Res call({
- ImportantEvent draft, bool isEditing, bool yearUnknown, bool smsEnabled, String phoneInput, bool emojiChosenByUser, bool submitted, bool isSaving, bool saveFailed, int maxReminders
+ ImportantEvent draft, bool isEditing, bool yearUnknown, bool smsEnabled, String phoneInput, bool emojiChosenByUser, bool submitted, bool isSaving, bool saveFailed, bool smsPermissionDenied, int maxReminders
 });
 
 
@@ -68,7 +68,7 @@ class _$EventFormStateCopyWithImpl<$Res>
 
 /// Create a copy of EventFormState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? draft = null,Object? isEditing = null,Object? yearUnknown = null,Object? smsEnabled = null,Object? phoneInput = null,Object? emojiChosenByUser = null,Object? submitted = null,Object? isSaving = null,Object? saveFailed = null,Object? maxReminders = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? draft = null,Object? isEditing = null,Object? yearUnknown = null,Object? smsEnabled = null,Object? phoneInput = null,Object? emojiChosenByUser = null,Object? submitted = null,Object? isSaving = null,Object? saveFailed = null,Object? smsPermissionDenied = null,Object? maxReminders = null,}) {
   return _then(EventFormState(
 draft: null == draft ? _self.draft : draft // ignore: cast_nullable_to_non_nullable
 as ImportantEvent,isEditing: null == isEditing ? _self.isEditing : isEditing // ignore: cast_nullable_to_non_nullable
@@ -79,6 +79,7 @@ as String,emojiChosenByUser: null == emojiChosenByUser ? _self.emojiChosenByUser
 as bool,submitted: null == submitted ? _self.submitted : submitted // ignore: cast_nullable_to_non_nullable
 as bool,isSaving: null == isSaving ? _self.isSaving : isSaving // ignore: cast_nullable_to_non_nullable
 as bool,saveFailed: null == saveFailed ? _self.saveFailed : saveFailed // ignore: cast_nullable_to_non_nullable
+as bool,smsPermissionDenied: null == smsPermissionDenied ? _self.smsPermissionDenied : smsPermissionDenied // ignore: cast_nullable_to_non_nullable
 as bool,maxReminders: null == maxReminders ? _self.maxReminders : maxReminders // ignore: cast_nullable_to_non_nullable
 as int,
   ));
@@ -174,10 +175,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ImportantEvent draft,  bool isEditing,  bool yearUnknown,  bool smsEnabled,  String phoneInput,  bool emojiChosenByUser,  bool submitted,  bool isSaving,  bool saveFailed,  int maxReminders)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ImportantEvent draft,  bool isEditing,  bool yearUnknown,  bool smsEnabled,  String phoneInput,  bool emojiChosenByUser,  bool submitted,  bool isSaving,  bool saveFailed,  bool smsPermissionDenied,  int maxReminders)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _EventFormState() when $default != null:
-return $default(_that.draft,_that.isEditing,_that.yearUnknown,_that.smsEnabled,_that.phoneInput,_that.emojiChosenByUser,_that.submitted,_that.isSaving,_that.saveFailed,_that.maxReminders);case _:
+return $default(_that.draft,_that.isEditing,_that.yearUnknown,_that.smsEnabled,_that.phoneInput,_that.emojiChosenByUser,_that.submitted,_that.isSaving,_that.saveFailed,_that.smsPermissionDenied,_that.maxReminders);case _:
   return orElse();
 
 }
@@ -195,10 +196,10 @@ return $default(_that.draft,_that.isEditing,_that.yearUnknown,_that.smsEnabled,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ImportantEvent draft,  bool isEditing,  bool yearUnknown,  bool smsEnabled,  String phoneInput,  bool emojiChosenByUser,  bool submitted,  bool isSaving,  bool saveFailed,  int maxReminders)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ImportantEvent draft,  bool isEditing,  bool yearUnknown,  bool smsEnabled,  String phoneInput,  bool emojiChosenByUser,  bool submitted,  bool isSaving,  bool saveFailed,  bool smsPermissionDenied,  int maxReminders)  $default,) {final _that = this;
 switch (_that) {
 case _EventFormState():
-return $default(_that.draft,_that.isEditing,_that.yearUnknown,_that.smsEnabled,_that.phoneInput,_that.emojiChosenByUser,_that.submitted,_that.isSaving,_that.saveFailed,_that.maxReminders);case _:
+return $default(_that.draft,_that.isEditing,_that.yearUnknown,_that.smsEnabled,_that.phoneInput,_that.emojiChosenByUser,_that.submitted,_that.isSaving,_that.saveFailed,_that.smsPermissionDenied,_that.maxReminders);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -215,10 +216,10 @@ return $default(_that.draft,_that.isEditing,_that.yearUnknown,_that.smsEnabled,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ImportantEvent draft,  bool isEditing,  bool yearUnknown,  bool smsEnabled,  String phoneInput,  bool emojiChosenByUser,  bool submitted,  bool isSaving,  bool saveFailed,  int maxReminders)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ImportantEvent draft,  bool isEditing,  bool yearUnknown,  bool smsEnabled,  String phoneInput,  bool emojiChosenByUser,  bool submitted,  bool isSaving,  bool saveFailed,  bool smsPermissionDenied,  int maxReminders)?  $default,) {final _that = this;
 switch (_that) {
 case _EventFormState() when $default != null:
-return $default(_that.draft,_that.isEditing,_that.yearUnknown,_that.smsEnabled,_that.phoneInput,_that.emojiChosenByUser,_that.submitted,_that.isSaving,_that.saveFailed,_that.maxReminders);case _:
+return $default(_that.draft,_that.isEditing,_that.yearUnknown,_that.smsEnabled,_that.phoneInput,_that.emojiChosenByUser,_that.submitted,_that.isSaving,_that.saveFailed,_that.smsPermissionDenied,_that.maxReminders);case _:
   return null;
 
 }
@@ -230,7 +231,7 @@ return $default(_that.draft,_that.isEditing,_that.yearUnknown,_that.smsEnabled,_
 
 
 class _EventFormState extends EventFormState {
-  const _EventFormState({required this.draft, this.isEditing = false, this.yearUnknown = false, this.smsEnabled = false, this.phoneInput = '', this.emojiChosenByUser = false, this.submitted = false, this.isSaving = false, this.saveFailed = false, this.maxReminders = 2}): super._();
+  const _EventFormState({required this.draft, this.isEditing = false, this.yearUnknown = false, this.smsEnabled = false, this.phoneInput = '', this.emojiChosenByUser = false, this.submitted = false, this.isSaving = false, this.saveFailed = false, this.smsPermissionDenied = false, this.maxReminders = 2}): super._();
   
 
 @override final  ImportantEvent draft;
@@ -242,6 +243,7 @@ class _EventFormState extends EventFormState {
 @override@JsonKey() final  bool submitted;
 @override@JsonKey() final  bool isSaving;
 @override@JsonKey() final  bool saveFailed;
+@override@JsonKey() final  bool smsPermissionDenied;
 @override@JsonKey() final  int maxReminders;
 
 /// Create a copy of EventFormState
@@ -254,18 +256,18 @@ _$EventFormStateCopyWith<_EventFormState> get copyWith => __$EventFormStateCopyW
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _EventFormState&&(identical(other.draft, draft) || other.draft == draft)&&(identical(other.isEditing, isEditing) || other.isEditing == isEditing)&&(identical(other.yearUnknown, yearUnknown) || other.yearUnknown == yearUnknown)&&(identical(other.smsEnabled, smsEnabled) || other.smsEnabled == smsEnabled)&&(identical(other.phoneInput, phoneInput) || other.phoneInput == phoneInput)&&(identical(other.emojiChosenByUser, emojiChosenByUser) || other.emojiChosenByUser == emojiChosenByUser)&&(identical(other.submitted, submitted) || other.submitted == submitted)&&(identical(other.isSaving, isSaving) || other.isSaving == isSaving)&&(identical(other.saveFailed, saveFailed) || other.saveFailed == saveFailed)&&(identical(other.maxReminders, maxReminders) || other.maxReminders == maxReminders));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _EventFormState&&(identical(other.draft, draft) || other.draft == draft)&&(identical(other.isEditing, isEditing) || other.isEditing == isEditing)&&(identical(other.yearUnknown, yearUnknown) || other.yearUnknown == yearUnknown)&&(identical(other.smsEnabled, smsEnabled) || other.smsEnabled == smsEnabled)&&(identical(other.phoneInput, phoneInput) || other.phoneInput == phoneInput)&&(identical(other.emojiChosenByUser, emojiChosenByUser) || other.emojiChosenByUser == emojiChosenByUser)&&(identical(other.submitted, submitted) || other.submitted == submitted)&&(identical(other.isSaving, isSaving) || other.isSaving == isSaving)&&(identical(other.saveFailed, saveFailed) || other.saveFailed == saveFailed)&&(identical(other.smsPermissionDenied, smsPermissionDenied) || other.smsPermissionDenied == smsPermissionDenied)&&(identical(other.maxReminders, maxReminders) || other.maxReminders == maxReminders));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,draft,isEditing,yearUnknown,smsEnabled,phoneInput,emojiChosenByUser,submitted,isSaving,saveFailed,maxReminders);
+    return Object.hash(runtimeType,draft,isEditing,yearUnknown,smsEnabled,phoneInput,emojiChosenByUser,submitted,isSaving,saveFailed,smsPermissionDenied,maxReminders);
 }
 
 @override
 String toString() {
-    return 'EventFormState(draft: $draft, isEditing: $isEditing, yearUnknown: $yearUnknown, smsEnabled: $smsEnabled, phoneInput: $phoneInput, emojiChosenByUser: $emojiChosenByUser, submitted: $submitted, isSaving: $isSaving, saveFailed: $saveFailed, maxReminders: $maxReminders)';
+    return 'EventFormState(draft: $draft, isEditing: $isEditing, yearUnknown: $yearUnknown, smsEnabled: $smsEnabled, phoneInput: $phoneInput, emojiChosenByUser: $emojiChosenByUser, submitted: $submitted, isSaving: $isSaving, saveFailed: $saveFailed, smsPermissionDenied: $smsPermissionDenied, maxReminders: $maxReminders)';
 }
 
 
@@ -276,7 +278,7 @@ abstract mixin class _$EventFormStateCopyWith<$Res> implements $EventFormStateCo
   factory _$EventFormStateCopyWith(_EventFormState value, $Res Function(_EventFormState) _then) = __$EventFormStateCopyWithImpl;
 @override @useResult
 $Res call({
- ImportantEvent draft, bool isEditing, bool yearUnknown, bool smsEnabled, String phoneInput, bool emojiChosenByUser, bool submitted, bool isSaving, bool saveFailed, int maxReminders
+ ImportantEvent draft, bool isEditing, bool yearUnknown, bool smsEnabled, String phoneInput, bool emojiChosenByUser, bool submitted, bool isSaving, bool saveFailed, bool smsPermissionDenied, int maxReminders
 });
 
 
@@ -293,7 +295,7 @@ class __$EventFormStateCopyWithImpl<$Res>
 
 /// Create a copy of EventFormState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? draft = null,Object? isEditing = null,Object? yearUnknown = null,Object? smsEnabled = null,Object? phoneInput = null,Object? emojiChosenByUser = null,Object? submitted = null,Object? isSaving = null,Object? saveFailed = null,Object? maxReminders = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? draft = null,Object? isEditing = null,Object? yearUnknown = null,Object? smsEnabled = null,Object? phoneInput = null,Object? emojiChosenByUser = null,Object? submitted = null,Object? isSaving = null,Object? saveFailed = null,Object? smsPermissionDenied = null,Object? maxReminders = null,}) {
   return _then(_EventFormState(
 draft: null == draft ? _self.draft : draft // ignore: cast_nullable_to_non_nullable
 as ImportantEvent,isEditing: null == isEditing ? _self.isEditing : isEditing // ignore: cast_nullable_to_non_nullable
@@ -304,6 +306,7 @@ as String,emojiChosenByUser: null == emojiChosenByUser ? _self.emojiChosenByUser
 as bool,submitted: null == submitted ? _self.submitted : submitted // ignore: cast_nullable_to_non_nullable
 as bool,isSaving: null == isSaving ? _self.isSaving : isSaving // ignore: cast_nullable_to_non_nullable
 as bool,saveFailed: null == saveFailed ? _self.saveFailed : saveFailed // ignore: cast_nullable_to_non_nullable
+as bool,smsPermissionDenied: null == smsPermissionDenied ? _self.smsPermissionDenied : smsPermissionDenied // ignore: cast_nullable_to_non_nullable
 as bool,maxReminders: null == maxReminders ? _self.maxReminders : maxReminders // ignore: cast_nullable_to_non_nullable
 as int,
   ));

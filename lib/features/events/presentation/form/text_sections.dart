@@ -67,10 +67,11 @@ class SmsSection extends ConsumerWidget {
       children: [
         SwitchListTile(
           secondary: const Icon(Icons.sms_rounded),
-          title: Text(l10n.formSms),
-          subtitle: Text(l10n.formSmsHint),
+          title: Text(l10n.formSmsAuto),
+          subtitle: Text(l10n.formSmsAutoHint),
           value: state.smsEnabled,
-          onChanged: form.setSmsEnabled,
+          onChanged: (on) =>
+              form.setSmsEnabled(on, defaultText: l10n.formSmsTextHint),
         ),
         if (state.smsEnabled)
           Padding(
@@ -87,6 +88,11 @@ class SmsSection extends ConsumerWidget {
                   keyboardType: TextInputType.phone,
                   maxLength: 24,
                   errorText: phoneError,
+                  suffix: IconButton(
+                    tooltip: l10n.formPickContact,
+                    icon: const Icon(Icons.contacts_rounded),
+                    onPressed: form.pickContact,
+                  ),
                 ),
                 AppTextField(
                   initialValue: state.draft.smsText ?? '',
@@ -96,6 +102,9 @@ class SmsSection extends ConsumerWidget {
                   icon: Icons.message_rounded,
                   maxLines: 3,
                   maxLength: 300,
+                  errorText: state.visibleError(EventFormField.smsText) == null
+                      ? null
+                      : l10n.formErrorRequired,
                 ),
               ],
             ),

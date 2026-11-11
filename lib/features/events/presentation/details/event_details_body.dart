@@ -1,24 +1,30 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../../../core/l10n/l10n.dart';
+import '../../data/categories_repository.dart';
 import '../../domain/event_occurrence.dart';
 import '../../domain/important_event.dart';
-import '../event_category_ui.dart';
+import '../event_type.dart';
 import '../widgets/event_texts.dart';
 
 /// Tafsilotlar: katta emoji, nomi, qachon, eslatmalar, SMS, izoh.
-class EventDetailsBody extends StatelessWidget {
+class EventDetailsBody extends ConsumerWidget {
   const EventDetailsBody({super.key, required this.occurrence});
 
   final EventOccurrence occurrence;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final text = Theme.of(context).textTheme;
     final scheme = Theme.of(context).colorScheme;
     final event = occurrence.event;
     final years = EventTexts.years(l10n, occurrence);
+    final type = EventType.of(
+      event,
+      ref.watch(customCategoriesProvider).value ?? const [],
+    );
     final reminders = event.remindDaysBefore
         .map((d) => d == 0 ? l10n.reminderOnDay : l10n.reminderDaysBefore(d))
         .join(', ');
@@ -41,10 +47,7 @@ class EventDetailsBody extends StatelessWidget {
           ),
         const SizedBox(height: 16),
         Center(
-          child: Chip(
-            avatar: Icon(event.category.icon, size: 20),
-            label: Text(event.category.label(l10n)),
-          ),
+          child: Chip(avatar: Text(type.emoji), label: Text(type.label(l10n))),
         ),
         const SizedBox(height: 16),
         Card(
@@ -61,7 +64,7 @@ class EventDetailsBody extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.notifications_active_rounded),
                 title: Text(l10n.detailsReminders),
-                subtitle: Text(reminders),
+                subtitle: Text('$reminders · ${event.notifyTime}'),
               ),
               ListTile(
                 leading: Icon(
@@ -78,7 +81,11 @@ class EventDetailsBody extends StatelessWidget {
               if (event.smsMode != SmsMode.off && event.phone != null)
                 ListTile(
                   leading: const Icon(Icons.sms_rounded),
-                  title: Text(event.phone!),
+                  title: Text(
+                    event.smsMode == SmsMode.device
+                        ? '${l10n.detailsSmsAuto}: ${event.phone}'
+                        : event.phone!,
+                  ),
                   subtitle: event.smsText == null ? null : Text(event.smsText!),
                 ),
             ],

@@ -227,6 +227,28 @@ describe('users/{uid}/events', () => {
     );
   });
 
+  test("telefondan SMS ('device') bepul tarifda ham mumkin, server SMS ('auto') — yo'q", async () => {
+    await assertSucceeds(
+      setDoc(eventRef('alice', 'alice', 'd1'), eventDoc({ smsMode: 'device', notifyTime: '07:45' })),
+    );
+    await assertFails(setDoc(eventRef('alice', 'alice', 'd2'), eventDoc({ smsMode: 'auto' })));
+    await assertFails(
+      setDoc(eventRef('alice', 'alice', 'd3'), eventDoc({ smsMode: 'device', phone: null })),
+    );
+  });
+
+  test("o'z turiga bog'langan kun (customCategoryId)", async () => {
+    await assertSucceeds(
+      setDoc(eventRef('alice', 'alice', 'c1'), eventDoc({ category: 'other', customCategoryId: 'type1' })),
+    );
+    await assertFails(
+      setDoc(eventRef('alice', 'alice', 'c2'), eventDoc({ customCategoryId: 'x'.repeat(65) })),
+    );
+    await assertFails(
+      setDoc(eventRef('alice', 'alice', 'c3'), eventDoc({ customCategoryId: 42 })),
+    );
+  });
+
   test("bepul tarif: avto-SMS va 2 tadan ortiq eslatma yo'q", async () => {
     await assertFails(setDoc(eventRef('alice'), eventDoc({ smsMode: 'auto' })));
     await assertFails(setDoc(eventRef('alice'), eventDoc({ remindDaysBefore: [0, 1, 7] })));
@@ -252,6 +274,33 @@ describe('users/{uid}/events', () => {
     await assertFails(
       updateDoc(ref, { createdAt: Timestamp.fromDate(new Date('2020-01-01')), updatedAt: serverTimestamp() }),
     );
+  });
+});
+
+describe('users/{uid}/categories (o\'z turlari)', () => {
+  const typeDoc = (extra = {}) => ({
+    name: 'Ish yubileyi',
+    emoji: '🏆',
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+    ...extra,
+  });
+  const ref = (uid, owner = 'alice', id = 't1') =>
+    doc(db(uid), `users/${owner}/categories/${id}`);
+
+  test("o'z turini yaratadi, o'qiydi, o'chiradi", async () => {
+    await assertSucceeds(setDoc(ref('alice'), typeDoc()));
+    await assertSucceeds(getDoc(ref('alice')));
+    await assertSucceeds(deleteDoc(ref('alice')));
+  });
+
+  test("begona foydalanuvchi va noto'g'ri ma'lumot — rad", async () => {
+    await assertFails(setDoc(ref('bob'), typeDoc()));
+    await seed(env, 'users/alice/categories/t2', { name: 'X', emoji: '⭐', createdAt: Timestamp.now(), updatedAt: Timestamp.now() });
+    await assertFails(getDoc(ref('bob', 'alice', 't2')));
+    for (const extra of [{ name: '' }, { name: 'x'.repeat(41) }, { emoji: '' }, { color: 'red' }]) {
+      await assertFails(setDoc(ref('alice', 'alice', 't3'), typeDoc(extra)), JSON.stringify(extra));
+    }
   });
 });
 

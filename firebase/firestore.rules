@@ -131,7 +131,8 @@ service cloud.firestore {
       // ------------------------------------------------------------ events
       function validEvent(d) {
         return d.keys().hasOnly([
-            'title', 'personName', 'category', 'emoji', 'day', 'month', 'year',
+            'title', 'personName', 'category', 'customCategoryId', 'emoji',
+            'day', 'month', 'year',
             'time', 'repeatYearly', 'remindDaysBefore', 'notifyTime',
             'alarmEnabled', 'smsMode', 'phone', 'smsText', 'note',
             'nextReminderAt', 'createdAt', 'updatedAt'
@@ -143,6 +144,7 @@ service cloud.firestore {
           ])
           && reqString(d, 'title', 1, 80)
           && optString(d, 'personName', 60)
+          && optString(d, 'customCategoryId', 64)
           && d.category in [
             'birthday', 'anniversary', 'parentBirthday', 'meeting', 'other'
           ]
@@ -159,7 +161,7 @@ service cloud.firestore {
           && d.remindDaysBefore.hasOnly([0, 1, 2, 3, 7, 14, 30])
           && (!('notifyTime' in d) || isTime(d.notifyTime))
           && d.alarmEnabled is bool
-          && d.smsMode in ['off', 'manual', 'auto']
+          && d.smsMode in ['off', 'manual', 'device', 'auto']
           && (d.smsMode == 'off' || isPhone(d.get('phone', null)))
           && (d.get('phone', null) == null || isPhone(d.phone))
           && optString(d, 'smsText', 300)
@@ -168,7 +170,8 @@ service cloud.firestore {
               || d.nextReminderAt is timestamp);
       }
 
-      // Pro imkoniyatlari: 2 tadan ortiq eslatma va avtomatik SMS.
+      // Pro imkoniyatlari: 2 tadan ortiq eslatma va SERVER orqali SMS ('auto').
+      // 'device' (o'z telefonidan, bepul) bepul tarifda ham mumkin.
       function withinPlan(d) {
         return (d.remindDaysBefore.size() <= 2 || isPro(uid))
           && (d.smsMode != 'auto' || isPro(uid));
@@ -186,6 +189,25 @@ service cloud.firestore {
           && withinPlan(incoming())
           && updatedNow();
         allow delete: if isOwner(uid);
+      }
+
+      // ------------------------------------- categories (o'z turlari)
+      function validCategory(d) {
+        return d.keys().hasOnly(['name', 'emoji', 'createdAt', 'updatedAt'])
+          && d.keys().hasAll(['name', 'emoji', 'createdAt', 'updatedAt'])
+          && reqString(d, 'name', 1, 40)
+          && reqString(d, 'emoji', 1, 16);
+      }
+
+      match /categories/{categoryId} {
+        allow read, delete: if isOwner(uid);
+        allow create: if isOwner(uid)
+          && categoryId.size() <= 64
+          && validCategory(incoming())
+          && createdNow();
+        allow update: if isOwner(uid)
+          && validCategory(incoming())
+          && updatedNow();
       }
 
       // ----------------------------------------------------------- devices

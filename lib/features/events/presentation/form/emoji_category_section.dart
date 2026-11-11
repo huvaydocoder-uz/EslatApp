@@ -2,25 +2,42 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../../../core/l10n/l10n.dart';
+import '../../data/categories_repository.dart';
+import '../../domain/custom_category.dart';
 import '../../domain/event_category.dart';
+import '../categories_controller.dart';
 import '../event_category_ui.dart';
+import '../event_type.dart';
+import '../widgets/emoji_picker_sheet.dart';
+import '../widgets/new_type_dialog.dart';
 import 'event_form_controller.dart';
 
-/// Katta emoji tugmasi (bosilsa — tanlash oynasi) va toifa tanlovi.
+/// Katta emoji tugmasi va tur tanlovi: tayyor turlar, o'z turlari, "Yangi tur".
 class EmojiCategorySection extends ConsumerWidget {
   const EmojiCategorySection({super.key, required this.eventId});
 
   final String? eventId;
 
   Future<void> _pickEmoji(BuildContext context, WidgetRef ref) async {
-    final emoji = await showModalBottomSheet<String>(
-      context: context,
-      showDragHandle: true,
-      builder: (context) => _EmojiGrid(title: context.l10n.formChooseEmoji),
-    );
+    final emoji = await showEmojiPicker(context);
     if (emoji != null) {
       ref.read(eventFormControllerProvider(eventId).notifier).setEmoji(emoji);
     }
+  }
+
+  Future<void> _newType(BuildContext context, WidgetRef ref) async {
+    final type = await showNewTypeDialog(context);
+    if (type == null) return;
+    final id = await ref
+        .read(categoriesControllerProvider.notifier)
+        .create(type.name, type.emoji);
+    if (id == null) return;
+    // Ro'yxat yangilanishini kutmasdan darhol tanlanadi.
+    ref
+        .read(eventFormControllerProvider(eventId).notifier)
+        .setCustomCategory(
+          CustomCategory(id: id, name: type.name, emoji: type.emoji),
+        );
   }
 
   @override
@@ -28,6 +45,9 @@ class EmojiCategorySection extends ConsumerWidget {
     final l10n = context.l10n;
     final draft = ref.watch(eventFormControllerProvider(eventId)).draft;
     final form = ref.read(eventFormControllerProvider(eventId).notifier);
+    final customs = ref.watch(customCategoriesProvider).value ?? const [];
+    final selected = EventType.of(draft, customs);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -65,47 +85,24 @@ class EmojiCategorySection extends ConsumerWidget {
               ChoiceChip(
                 avatar: Icon(category.icon, size: 20),
                 label: Text(category.label(l10n)),
-                selected: draft.category == category,
+                selected: selected == EventType.builtIn(category),
                 onSelected: (_) => form.setCategory(category),
               ),
+            for (final custom in customs)
+              ChoiceChip(
+                avatar: Text(custom.emoji),
+                label: Text(custom.name),
+                selected: selected == EventType.custom(custom),
+                onSelected: (_) => form.setCustomCategory(custom),
+              ),
+            ActionChip(
+              avatar: const Icon(Icons.add_rounded, size: 20),
+              label: Text(l10n.formNewType),
+              onPressed: () => _newType(context, ref),
+            ),
           ],
         ),
       ],
-    );
-  }
-}
-
-class _EmojiGrid extends StatelessWidget {
-  const _EmojiGrid({required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(title, style: Theme.of(context).textTheme.titleMedium),
-          Flexible(
-            child: GridView.extent(
-              shrinkWrap: true,
-              maxCrossAxisExtent: 64,
-              padding: const EdgeInsets.all(16),
-              children: [
-                for (final emoji in eventEmojis)
-                  InkWell(
-                    borderRadius: BorderRadius.circular(16),
-                    onTap: () => Navigator.of(context).pop(emoji),
-                    child: Center(
-                      child: Text(emoji, style: const TextStyle(fontSize: 34)),
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

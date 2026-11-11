@@ -13,6 +13,7 @@ import '../data/app_preferences.dart';
 import 'settings_controller.dart';
 import 'widgets/account_card.dart';
 import 'widgets/color_palette_selector.dart';
+import 'widgets/custom_types_section.dart';
 import 'widgets/language_selector.dart';
 import 'widgets/sign_out_button.dart';
 import 'widgets/theme_mode_selector.dart';
@@ -86,6 +87,10 @@ class _SettingsList extends ConsumerWidget {
             selected: theme.seedColor,
             onSelected: controller.setSeedColor,
           ),
+        ),
+        CardSection(
+          title: l10n.settingsCustomTypes,
+          child: const CustomTypesSection(),
         ),
         const SizedBox(height: 32),
         const SignOutButton(),

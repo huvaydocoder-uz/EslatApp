@@ -2,6 +2,7 @@ import 'package:eslat/app.dart';
 import 'package:eslat/core/firebase/firebase_providers.dart';
 import 'package:eslat/features/auth/data/auth_repository.dart';
 import 'package:eslat/features/auth/domain/app_user.dart';
+import 'package:eslat/features/events/data/categories_repository.dart';
 import 'package:eslat/features/events/data/events_repository.dart';
 import 'package:eslat/features/events/domain/event_category.dart';
 import 'package:eslat/features/events/domain/important_event.dart';
@@ -55,6 +56,9 @@ Widget testApp({
       currentProfileProvider.overrideWith((ref) => Stream.value(profile)),
       profileRepositoryProvider.overrideWithValue(InMemoryProfileRepository()),
       eventsRepositoryProvider.overrideWithValue(repo),
+      categoriesRepositoryProvider.overrideWithValue(
+        InMemoryCategoriesRepository(),
+      ),
       todayProvider.overrideWithValue(testToday),
     ],
     child: const EslatApp(),

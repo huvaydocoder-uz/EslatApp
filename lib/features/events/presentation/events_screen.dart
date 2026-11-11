@@ -4,9 +4,11 @@ import 'package:material_ui/material_ui.dart';
 import '../../../core/l10n/l10n.dart';
 import '../../../shared/widgets/async_value_view.dart';
 import '../../../shared/widgets/state_views.dart';
+import '../data/categories_repository.dart';
 import '../domain/event_category.dart';
 import '../domain/event_occurrence.dart';
 import 'event_category_ui.dart';
+import 'event_type.dart';
 import 'events_providers.dart';
 import 'widgets/add_event_fab.dart';
 import 'widgets/event_card.dart';
@@ -32,7 +34,7 @@ class EventsScreen extends ConsumerWidget {
                   .whenData(
                     (all) => filter == null
                         ? all
-                        : all.where((o) => o.event.category == filter).toList(),
+                        : all.where((o) => filter.matches(o.event)).toList(),
                   ),
               onRetry: () => ref.invalidate(eventOccurrencesProvider),
               isEmpty: (list) => list.isEmpty,
@@ -58,12 +60,13 @@ class EventsScreen extends ConsumerWidget {
 class _FilterBar extends ConsumerWidget {
   const _FilterBar({required this.selected});
 
-  final EventCategory? selected;
+  final EventType? selected;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final filter = ref.read(eventsFilterProvider.notifier);
+    final customs = ref.watch(customCategoriesProvider).value ?? const [];
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -79,8 +82,15 @@ class _FilterBar extends ConsumerWidget {
             ChoiceChip(
               avatar: Text(category.defaultEmoji),
               label: Text(category.label(l10n)),
-              selected: selected == category,
-              onSelected: (_) => filter.select(category),
+              selected: selected == EventType.builtIn(category),
+              onSelected: (_) => filter.select(EventType.builtIn(category)),
+            ),
+          for (final custom in customs)
+            ChoiceChip(
+              avatar: Text(custom.emoji),
+              label: Text(custom.name),
+              selected: selected == EventType.custom(custom),
+              onSelected: (_) => filter.select(EventType.custom(custom)),
             ),
         ],
       ),
