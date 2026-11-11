@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="reminders_channel">Напоминания</string>
+    <string name="alarm_channel">Будильник</string>
+    <string name="alarm_stop">Остановить</string>
 </resources>

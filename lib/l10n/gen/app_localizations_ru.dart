@@ -480,4 +480,26 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get openSettings => 'Открыть настройки';
+
+  @override
+  String get alarmSound => 'Мелодия будильника';
+
+  @override
+  String get alarmSoundDefault => 'Стандартный сигнал будильника';
+
+  @override
+  String get alarmSoundHint =>
+      'В важный день эта музыка будет играть, пока вы её не остановите.';
+
+  @override
+  String get alarmSoundPick => 'Выбрать музыку с телефона';
+
+  @override
+  String get alarmSoundPreview => 'Прослушать';
+
+  @override
+  String get alarmSoundReset => 'Вернуть стандартный сигнал';
+
+  @override
+  String get alarmStop => 'Остановить';
 }

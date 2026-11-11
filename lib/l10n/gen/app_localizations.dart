@@ -909,6 +909,48 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Sozlamalarni ochish'**
   String get openSettings;
+
+  /// No description provided for @alarmSound.
+  ///
+  /// In uz, this message translates to:
+  /// **'Budilnik musiqasi'**
+  String get alarmSound;
+
+  /// No description provided for @alarmSoundDefault.
+  ///
+  /// In uz, this message translates to:
+  /// **'Standart budilnik ovozi'**
+  String get alarmSoundDefault;
+
+  /// No description provided for @alarmSoundHint.
+  ///
+  /// In uz, this message translates to:
+  /// **'Muhim kun kelganda shu musiqa siz to\'xtatmaguningizcha chaladi.'**
+  String get alarmSoundHint;
+
+  /// No description provided for @alarmSoundPick.
+  ///
+  /// In uz, this message translates to:
+  /// **'Telefondan musiqa tanlash'**
+  String get alarmSoundPick;
+
+  /// No description provided for @alarmSoundPreview.
+  ///
+  /// In uz, this message translates to:
+  /// **'Tinglab ko\'rish'**
+  String get alarmSoundPreview;
+
+  /// No description provided for @alarmSoundReset.
+  ///
+  /// In uz, this message translates to:
+  /// **'Standart ovozga qaytarish'**
+  String get alarmSoundReset;
+
+  /// No description provided for @alarmStop.
+  ///
+  /// In uz, this message translates to:
+  /// **'To\'xtatish'**
+  String get alarmStop;
 }
 
 class _AppLocalizationsDelegate

@@ -169,5 +169,12 @@
   "formYearUnknownHint": "Yoqsangiz, yosh hisoblanmaydi — faqat kun va oy bo'yicha eslatiladi. Yilini bilsangiz, o'chiq qoldiring: \"60 yoshga to'ladi\" deb ko'rsatiladi.",
   "smsPermissionTitle": "SMS ruxsati kerak",
   "smsPermissionSteps": "Telefon APK fayldan o'rnatilgan ilovalarga SMS ruxsatini yopib qo'yadi. Uni bir marta yoqish kerak:\n\n1. \"Sozlamalarni ochish\" ni bosing.\n2. \"Ruxsatlar\" → \"SMS\" ni bosing. \"Cheklangan sozlama\" degan oyna chiqsa — OK bosib, orqaga qayting.\n3. Tepada o'ngdagi ⋮ belgisini bosing → \"Cheklangan sozlamalarga ruxsat berish\" (ruscha: «Разрешить ограниченные настройки»). Telefon PIN-kodini so'rashi mumkin.\n4. Yana \"Ruxsatlar\" → \"SMS\" → \"Ruxsat berish\".\n5. Ilovaga qaytib, \"Tabrik SMS o'zi yuborilsin\" ni qayta yoqing.\n\nXiaomi / Redmi: \"Boshqa ruxsatlar\" ichida \"SMS yuborish\" ham yoqilgan bo'lsin.",
-  "openSettings": "Sozlamalarni ochish"
+  "openSettings": "Sozlamalarni ochish",
+  "alarmSound": "Budilnik musiqasi",
+  "alarmSoundDefault": "Standart budilnik ovozi",
+  "alarmSoundHint": "Muhim kun kelganda shu musiqa siz to'xtatmaguningizcha chaladi.",
+  "alarmSoundPick": "Telefondan musiqa tanlash",
+  "alarmSoundPreview": "Tinglab ko'rish",
+  "alarmSoundReset": "Standart ovozga qaytarish",
+  "alarmStop": "To'xtatish"
 }

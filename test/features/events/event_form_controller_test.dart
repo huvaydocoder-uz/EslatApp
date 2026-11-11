@@ -178,7 +178,7 @@ void main() {
   });
 }
 
-class FakeBridge implements NativeBridge {
+class FakeBridge extends NoopNativeBridge {
   var grant = true;
   PickedContact? contact;
 

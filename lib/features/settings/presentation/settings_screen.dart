@@ -11,6 +11,7 @@ import '../../subscription/domain/plan.dart';
 import '../data/app_preferences.dart';
 import 'settings_controller.dart';
 import 'widgets/account_card.dart';
+import 'widgets/alarm_sound_section.dart';
 import 'widgets/color_palette_selector.dart';
 import 'widgets/custom_types_section.dart';
 import 'widgets/language_selector.dart';
@@ -84,6 +85,7 @@ class _SettingsList extends ConsumerWidget {
             onSelected: controller.setSeedColor,
           ),
         ),
+        CardSection(title: l10n.alarmSound, child: const AlarmSoundSection()),
         CardSection(
           title: l10n.settingsCustomTypes,
           child: const CustomTypesSection(),

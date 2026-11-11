@@ -467,4 +467,26 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get openSettings => 'Sozlamalarni ochish';
+
+  @override
+  String get alarmSound => 'Budilnik musiqasi';
+
+  @override
+  String get alarmSoundDefault => 'Standart budilnik ovozi';
+
+  @override
+  String get alarmSoundHint =>
+      'Muhim kun kelganda shu musiqa siz to\'xtatmaguningizcha chaladi.';
+
+  @override
+  String get alarmSoundPick => 'Telefondan musiqa tanlash';
+
+  @override
+  String get alarmSoundPreview => 'Tinglab ko\'rish';
+
+  @override
+  String get alarmSoundReset => 'Standart ovozga qaytarish';
+
+  @override
+  String get alarmStop => 'To\'xtatish';
 }

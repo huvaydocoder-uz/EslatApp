@@ -10,6 +10,11 @@
         android:maxSdkVersion="32" />
     <!-- Avtomatik tabrik SMS (foydalanuvchining o'z SIM kartasidan). -->
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <!-- Musiqali budilnik: fon xizmati, tebranish, qulflangan ekranda ko'rinish. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <!-- SIM kartasiz planshetlarga ham o'rnatilsin (SMS'siz ishlaydi). -->
     <uses-feature android:name="android.hardware.telephony" android:required="false" />
 
@@ -39,6 +44,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <service
+            android:name=".AlarmService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
         <receiver android:name=".ReminderReceiver" android:exported="false" />
         <receiver android:name=".SmsResultReceiver" android:exported="false" />
         <receiver android:name=".BootReceiver" android:exported="true">

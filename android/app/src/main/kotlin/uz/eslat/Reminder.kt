@@ -10,6 +10,8 @@ data class Reminder(
     val body: String,
     val route: String,
     val repeatYearly: Boolean,
+    /** O'sha kuni musiqali budilnik chalinsinmi. */
+    val alarm: Boolean,
     val smsPhone: String?,
     val smsText: String?,
     val smsSentTitle: String?,
@@ -19,7 +21,7 @@ data class Reminder(
 
     fun toJson(): JSONObject = JSONObject().apply {
         put("id", id); put("at", at); put("title", title); put("body", body)
-        put("route", route); put("repeatYearly", repeatYearly)
+        put("route", route); put("repeatYearly", repeatYearly); put("alarm", alarm)
         put("smsPhone", smsPhone); put("smsText", smsText)
         put("smsSentTitle", smsSentTitle); put("smsFailedTitle", smsFailedTitle)
     }
@@ -32,6 +34,7 @@ data class Reminder(
             body = m["body"] as String,
             route = m["route"] as String,
             repeatYearly = m["repeatYearly"] as Boolean,
+            alarm = m["alarm"] as Boolean? ?: false,
             smsPhone = m["smsPhone"] as String?,
             smsText = m["smsText"] as String?,
             smsSentTitle = m["smsSentTitle"] as String?,
@@ -45,6 +48,7 @@ data class Reminder(
             body = o.getString("body"),
             route = o.getString("route"),
             repeatYearly = o.getBoolean("repeatYearly"),
+            alarm = o.optBoolean("alarm", false),
             smsPhone = o.optStringOrNull("smsPhone"),
             smsText = o.optStringOrNull("smsText"),
             smsSentTitle = o.optStringOrNull("smsSentTitle"),

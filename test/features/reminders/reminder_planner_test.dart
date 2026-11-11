@@ -18,6 +18,7 @@ ImportantEvent event({
   bool repeat = true,
   int? year,
   SmsMode sms = SmsMode.off,
+  bool alarm = true,
 }) => ImportantEvent(
   id: id,
   title: 'Onam',
@@ -29,6 +30,7 @@ ImportantEvent event({
   repeatYearly: repeat,
   remindDaysBefore: remind,
   notifyTime: notifyTime,
+  alarmEnabled: alarm,
   smsMode: sms,
   phone: sms == SmsMode.off ? null : '+998901234567',
   smsText: sms == SmsMode.off ? null : "Tug'ilgan kuningiz muborak!",
@@ -124,5 +126,45 @@ void main() {
     expect(map.keys, containsAll(['id', 'at', 'title', 'body', 'route']));
     expect(map['at'], DateTime(2026, 3, 14, 9, 30).millisecondsSinceEpoch);
     expect(map['repeatYearly'], isTrue);
+  });
+
+  test('budilnik faqat o\'sha kuni, budilnik sahifasini ochadi', () {
+    final plan = ReminderPlanner.plan([event()], now, texts);
+    final dayBefore = plan.first;
+    final onDay = plan.last;
+    expect(dayBefore.alarm, isFalse);
+    expect(dayBefore.route, '/event/e1');
+    expect(onDay.alarm, isTrue);
+    expect(onDay.route, '/alarm/e1');
+    expect(onDay.toMap()['alarm'], isTrue);
+  });
+
+  test(
+    'budilnik o\'chiq — oddiy eslatma; "o\'sha kuni" tanlanmasa qo\'shilmaydi',
+    () {
+      final off = ReminderPlanner.plan([event(alarm: false)], now, texts);
+      expect(off.any((r) => r.alarm), isFalse);
+      final onlyBefore = ReminderPlanner.plan(
+        [
+          event(alarm: false, remind: const [1]),
+        ],
+        now,
+        texts,
+      );
+      expect(onlyBefore, hasLength(1));
+    },
+  );
+
+  test('budilnik yoqiq — "o\'sha kuni" tanlanmagan bo\'lsa ham chaladi', () {
+    final plan = ReminderPlanner.plan(
+      [
+        event(remind: const [7]),
+      ],
+      now,
+      texts,
+    );
+    // 7 kun oldingisi bu yil o'tib ketgan — kelasi yilga; o'sha kuni — bu yil.
+    expect(plan, hasLength(2));
+    expect(plan.singleWhere((r) => r.alarm).at, DateTime(2026, 3, 14, 9, 30));
   });
 }

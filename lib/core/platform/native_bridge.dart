@@ -24,6 +24,20 @@ abstract interface class NativeBridge {
 
   /// Foydalanuvchi bekor qilsa — `null`.
   Future<PickedContact?> pickContact();
+
+  /// Tanlangan budilnik musiqasi nomi; `null` — standart ovoz.
+  Future<String?> alarmSoundName();
+
+  /// Telefon xotirasidan musiqa tanlash. Bekor qilinsa — `null`.
+  Future<String?> pickAlarmSound();
+
+  Future<void> resetAlarmSound();
+
+  /// 10 soniya tinglab ko'rish (`false` — to'xtatish).
+  Future<void> previewAlarmSound({required bool play});
+
+  /// Chalayotgan budilnikni to'xtatish.
+  Future<void> stopAlarm();
 }
 
 class AndroidNativeBridge implements NativeBridge {
@@ -52,6 +66,24 @@ class AndroidNativeBridge implements NativeBridge {
   Future<void> openAppSettings() => _channel.invokeMethod('openAppSettings');
 
   @override
+  Future<String?> alarmSoundName() =>
+      _channel.invokeMethod<String>('alarmSound');
+
+  @override
+  Future<String?> pickAlarmSound() =>
+      _channel.invokeMethod<String>('pickAlarmSound');
+
+  @override
+  Future<void> resetAlarmSound() => _channel.invokeMethod('resetAlarmSound');
+
+  @override
+  Future<void> previewAlarmSound({required bool play}) =>
+      _channel.invokeMethod('previewAlarmSound', {'play': play});
+
+  @override
+  Future<void> stopAlarm() => _channel.invokeMethod('stopAlarm');
+
+  @override
   Future<PickedContact?> pickContact() async {
     final result = await _channel.invokeMapMethod<String, String?>(
       'pickContact',
@@ -78,6 +110,21 @@ class NoopNativeBridge implements NativeBridge {
 
   @override
   Future<PickedContact?> pickContact() async => null;
+
+  @override
+  Future<String?> alarmSoundName() async => null;
+
+  @override
+  Future<String?> pickAlarmSound() async => null;
+
+  @override
+  Future<void> resetAlarmSound() async {}
+
+  @override
+  Future<void> previewAlarmSound({required bool play}) async {}
+
+  @override
+  Future<void> stopAlarm() async {}
 }
 
 @Riverpod(keepAlive: true)

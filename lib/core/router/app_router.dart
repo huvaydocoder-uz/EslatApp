@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../features/alarm/presentation/alarm_screen.dart';
 import '../../features/auth/data/auth_repository.dart';
 import '../../features/auth/domain/app_user.dart';
 import '../../features/auth/presentation/login_screen.dart';
@@ -81,8 +82,8 @@ GoRouter appRouter(Ref ref) {
       ),
       GoRoute(
         path: AppRoutes.alarmPattern,
-        builder: (context, _) =>
-            ComingSoonScreen(title: context.l10n.alarmTitle),
+        builder: (_, state) =>
+            AlarmScreen(eventId: state.pathParameters[AppRoutes.idParam]!),
       ),
       GoRoute(
         path: AppRoutes.pro,

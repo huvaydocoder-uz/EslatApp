@@ -468,4 +468,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get openSettings => 'Open settings';
+
+  @override
+  String get alarmSound => 'Alarm music';
+
+  @override
+  String get alarmSoundDefault => 'Default alarm sound';
+
+  @override
+  String get alarmSoundHint =>
+      'On the special day, this music plays until you stop it.';
+
+  @override
+  String get alarmSoundPick => 'Choose music from phone';
+
+  @override
+  String get alarmSoundPreview => 'Preview';
+
+  @override
+  String get alarmSoundReset => 'Reset to default sound';
+
+  @override
+  String get alarmStop => 'Stop';
 }

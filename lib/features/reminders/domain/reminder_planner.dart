@@ -19,8 +19,9 @@ class ReminderTexts {
 /// Muhim kunlardan telefonga qo'yiladigan eslatmalar ro'yxati.
 ///
 /// - Har bir "necha kun oldin" uchun bittadan, `notifyTime` soatida.
-/// - Avtomatik SMS (`SmsMode.device`) — faqat o'sha kunning o'zida; agar
-///   "o'sha kuni" eslatmasi tanlanmagan bo'lsa ham, SMS uchun qo'shiladi.
+/// - Avtomatik SMS (`SmsMode.device`) va musiqali budilnik (`alarmEnabled`) —
+///   faqat o'sha kunning o'zida; "o'sha kuni" eslatmasi tanlanmagan bo'lsa ham
+///   ular uchun qo'shiladi.
 /// - Vaqti o'tgan bo'lsa: har yilgisi — kelasi yilga, bir martaligi — tashlanadi.
 abstract final class ReminderPlanner {
   /// Android bir ilova uchun 500 tagacha alarm ruxsat beradi.
@@ -38,7 +39,10 @@ abstract final class ReminderPlanner {
           event.smsMode == SmsMode.device &&
           event.phone != null &&
           (event.smsText?.trim().isNotEmpty ?? false);
-      final offsets = {...event.remindDaysBefore, if (sends) 0};
+      final offsets = {
+        ...event.remindDaysBefore,
+        if (sends || event.alarmEnabled) 0,
+      };
       for (final daysBefore in offsets) {
         final reminder = _reminder(event, daysBefore, today, now, texts, sends);
         if (reminder != null) result.add(reminder);
@@ -65,13 +69,15 @@ abstract final class ReminderPlanner {
       at = _fireTime(occurrence.date, daysBefore, event.notifyTime);
     }
     final withSms = sends && daysBefore == 0;
+    final alarm = event.alarmEnabled && daysBefore == 0;
     return ScheduledReminder(
       id: stableId('${event.id}#$daysBefore'),
       at: at,
       title: '${event.emoji} ${event.title}',
       body: texts.body(occurrence, daysBefore),
-      route: '/event/${event.id}',
+      route: alarm ? '/alarm/${event.id}' : '/event/${event.id}',
       repeatYearly: event.repeatYearly,
+      alarm: alarm,
       smsPhone: withSms ? event.phone : null,
       smsText: withSms ? event.smsText!.trim() : null,
       smsSentTitle: withSms ? texts.smsSentTitle : null,

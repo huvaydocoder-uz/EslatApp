@@ -7,6 +7,7 @@ class ScheduledReminder {
     required this.body,
     required this.route,
     required this.repeatYearly,
+    this.alarm = false,
     this.smsPhone,
     this.smsText,
     this.smsSentTitle,
@@ -22,6 +23,9 @@ class ScheduledReminder {
   /// Bildirishnoma bosilganda ochiladigan sahifa (masalan `/event/abc`).
   final String route;
   final bool repeatYearly;
+
+  /// O'sha kuni musiqali budilnik (to'xtatilmaguncha chaladi).
+  final bool alarm;
   final String? smsPhone;
   final String? smsText;
   final String? smsSentTitle;
@@ -36,6 +40,7 @@ class ScheduledReminder {
     'body': body,
     'route': route,
     'repeatYearly': repeatYearly,
+    'alarm': alarm,
     'smsPhone': smsPhone,
     'smsText': smsText,
     'smsSentTitle': smsSentTitle,

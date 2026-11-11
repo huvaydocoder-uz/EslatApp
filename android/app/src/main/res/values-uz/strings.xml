@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="reminders_channel">Eslatmalar</string>
+    <string name="alarm_channel">Budilnik</string>
+    <string name="alarm_stop">To\'xtatish</string>
 </resources>

@@ -4,11 +4,19 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 
-/** Vaqti kelganda: bildirishnoma + (kerak bo'lsa) avtomatik tabrik SMS. */
+/** Vaqti kelganda: budilnik yoki bildirishnoma + (kerak bo'lsa) avtomatik tabrik SMS. */
 class ReminderReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val reminder = ReminderScheduler.find(context, ReminderScheduler.reminderId(intent)) ?: return
-        Notifier.show(context, reminder.id, reminder.title, reminder.body, reminder.route)
+        val ringing = reminder.alarm && try {
+            AlarmService.start(context, reminder.title, reminder.body, reminder.route)
+            true
+        } catch (e: Exception) {
+            false // fon xizmati taqiqlangan bo'lsa — oddiy bildirishnoma
+        }
+        if (!ringing) {
+            Notifier.show(context, reminder.id, reminder.title, reminder.body, reminder.route)
+        }
         if (reminder.hasSms) SmsSender.send(context, reminder)
         ReminderScheduler.afterFired(context, reminder)
     }

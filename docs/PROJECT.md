@@ -174,6 +174,7 @@ Emoji va rang tanlash uchun paket **kerak emas** — o'zimiz tayyor katta emoji 
 | **2** ✅ | Gmail orqali kirish (bepul, kodsiz), `users` profili, 3 til, Sozlamalar (til, mavzu, rang, chiqish), Android APK |
 | **3** ✅ | Muhim kunlar: model, repository, qo'shish/tahrirlash/o'chirish (emoji to'plami), Asosiy (bugun + 30 kun), Kunlar (filtr), Taqvim; sinov rejimi |
 | **4** ✅ | Eslatmalar (Android): har bir kun uchun eslatish vaqti, aniq vaqtli bildirishnoma, qayta yoqilganda tiklash, avtomatik tabrik SMS (o'z SIM'dan), kontaktdan raqam tanlash, o'z turlari + istalgan emoji |
-| **4b** | To'xtatilmaguncha chaladigan budilnik ekrani, FCM push, iOS eslatmalari |
+| **4b** ✅ | Musiqali budilnik: telefon xotirasidan musiqa tanlash (tinglab ko'rish, standartga qaytarish), o'sha kuni to'xtatilmaguncha chaladi + tebranish, qulflangan ekranda budilnik sahifasi, 30 daqiqalik xavfsizlik chegarasi; o'zbek tili standart, bayroqli til tanlash |
+| **4c** | FCM push, iOS eslatmalari, telefon raqami orqali kirish (Blaze tarifi kerak) |
 | **5** | Server (Cloud Functions): Telegram bot orqali kirish, server eslatmalari, App Check |
 | **6** | Pro (to'lov), rus/ingliz tillari, ilova ikonkasi, do'konlarga chiqarish |

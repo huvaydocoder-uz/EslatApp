@@ -5,7 +5,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../helpers.dart';
 
-class DeniedBridge implements NativeBridge {
+class DeniedBridge extends NoopNativeBridge {
   var settingsOpened = 0;
 
   @override
